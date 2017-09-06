@@ -230,6 +230,7 @@ public class NewWorkerFrame
 		);
 		
 		JLabel lblInformacjeDodatkowe = new JLabel("Informacje dodatkowe:");
+		lblInformacjeDodatkowe.setFont(new Font("Tahoma", Font.ITALIC, 14));
 		
 		JLabel lblJniemiecki = new JLabel("j.niemiecki:");
 		
@@ -266,6 +267,7 @@ public class NewWorkerFrame
 								.addGroup(gl_panel.createSequentialGroup()
 									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 										.addGroup(gl_panel.createSequentialGroup()
+											.addPreferredGap(ComponentPlacement.RELATED)
 											.addComponent(lblJniemiecki)
 											.addPreferredGap(ComponentPlacement.UNRELATED)
 											.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -280,6 +282,7 @@ public class NewWorkerFrame
 											.addPreferredGap(ComponentPlacement.UNRELATED)
 											.addComponent(chckbxTak))
 										.addGroup(gl_panel.createSequentialGroup()
+											.addPreferredGap(ComponentPlacement.RELATED)
 											.addComponent(lblDowiadczenie)
 											.addPreferredGap(ComponentPlacement.UNRELATED)
 											.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
@@ -287,8 +290,9 @@ public class NewWorkerFrame
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(lblNewLabel)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(textField_9, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
-					.addContainerGap(69, Short.MAX_VALUE))
+									.addComponent(textField_9, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addContainerGap(78, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -298,10 +302,10 @@ public class NewWorkerFrame
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblJniemiecki)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblDowiadczenie)
-						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(30)
+						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblMattaonaty)
 						.addComponent(chckbxTak_1)

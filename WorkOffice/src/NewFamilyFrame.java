@@ -16,6 +16,8 @@ import javax.swing.JCheckBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NewFamilyFrame extends JFrame
 {
@@ -199,8 +201,18 @@ public class NewFamilyFrame extends JFrame
 		JLabel lblNrmieszkania = new JLabel("nr.mieszkania:");
 		
 		JButton btnZapisz = new JButton("Zapisz");
+		btnZapisz.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConnectionDB conn=new ConnectionDB();
+			}
+		});
 		
 		JButton btnZamknij = new JButton("Zamknij");
+		btnZamknij.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

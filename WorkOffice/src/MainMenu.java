@@ -89,18 +89,24 @@ public class MainMenu
 		
 		JPanel panel_family = new JPanel();
 		panel_family.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		
+		JButton btnGetWorker = new JButton("Przypisz pracownika");
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(10)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(panel_table, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addComponent(panel_worker, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)
 							.addGap(10)
 							.addComponent(panel_family, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)))
 					.addGap(16))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnGetWorker)
+					.addContainerGap(745, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -109,8 +115,10 @@ public class MainMenu
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel_family, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panel_worker, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE))
-					.addGap(17)
-					.addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+					.addGap(18)
+					.addComponent(btnGetWorker)
+					.addPreferredGap(ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+					.addComponent(panel_table, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		
@@ -158,8 +166,6 @@ public class MainMenu
 				nff.setVisible(true);
 			}
 		});
-		
-		JButton btnGetWorker = new JButton("Przypisz pracownika");
 		GroupLayout gl_panel_family = new GroupLayout(panel_family);
 		gl_panel_family.setHorizontalGroup(
 			gl_panel_family.createParallelGroup(Alignment.LEADING)
@@ -169,13 +175,8 @@ public class MainMenu
 					.addContainerGap(313, Short.MAX_VALUE))
 				.addGroup(gl_panel_family.createSequentialGroup()
 					.addGap(179)
-					.addGroup(gl_panel_family.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_family.createSequentialGroup()
-							.addComponent(btnGetWorker)
-							.addContainerGap())
-						.addGroup(gl_panel_family.createSequentialGroup()
-							.addComponent(lblFamily, GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-							.addGap(176))))
+					.addComponent(lblFamily, GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+					.addGap(176))
 		);
 		gl_panel_family.setVerticalGroup(
 			gl_panel_family.createParallelGroup(Alignment.LEADING)
@@ -184,9 +185,7 @@ public class MainMenu
 					.addComponent(lblFamily, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnNFamily)
-					.addGap(193)
-					.addComponent(btnGetWorker)
-					.addContainerGap())
+					.addGap(227))
 		);
 		panel_family.setLayout(gl_panel_family);
 		frame.getContentPane().setLayout(groupLayout);
@@ -198,6 +197,11 @@ public class MainMenu
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		mnFile.add(mntmExit);
 		
 		
