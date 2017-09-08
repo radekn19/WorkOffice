@@ -25,18 +25,18 @@ public class NewFamilyFrame extends JFrame
 	private JPanel contentPane;
 
 	
-	private JTextField textField_10;
-	private JTextField textField_11;
-	private JTextField textField_12;
-	private JTextField textField_13;
-	private JTextField textField_14;
-	private JTextField textField_16;
-	private JTextField textField_17;
-	private JTextField textField_19;
-	private JTextField textField_20;
-	private JTextField textField_15;
-	private JTextField textField_18;
-	private JTextField textField;
+	private JTextField cityField;
+	private JTextField postcodeField;
+	private JTextField housNrField;
+	private JTextField flatNrField;
+	private JTextField streetField;
+	private JTextField birthDateField;
+	private JTextField phoneField;
+	private JTextField phoneToFamilyField;
+	private JTextField infoField;
+	private JTextField nameField;
+	private JTextField surnameField;
+	private JTextField rateField;
 	/**
 	 * Launch the application.
 	 */
@@ -69,29 +69,29 @@ public class NewFamilyFrame extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
+		cityField = new JTextField();
+		cityField.setColumns(10);
 		
-		textField_11 = new JTextField();
-		textField_11.setColumns(10);
+		postcodeField = new JTextField();
+		postcodeField.setColumns(10);
 		
-		textField_12 = new JTextField();
-		textField_12.setColumns(10);
+		housNrField = new JTextField();
+		housNrField.setColumns(10);
 		
-		textField_13 = new JTextField();
-		textField_13.setColumns(10);
+		flatNrField = new JTextField();
+		flatNrField.setColumns(10);
 		
-		textField_14 = new JTextField();
-		textField_14.setColumns(10);
+		streetField = new JTextField();
+		streetField.setColumns(10);
 		
 		JLabel label_5 = new JLabel("Adres zamieszkania:");
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		textField_16 = new JTextField();
-		textField_16.setColumns(10);
+		birthDateField = new JTextField();
+		birthDateField.setColumns(10);
 		
-		textField_17 = new JTextField();
-		textField_17.setColumns(10);
+		phoneField = new JTextField();
+		phoneField.setColumns(10);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -101,13 +101,13 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel lblTelDoRodziny = new JLabel("Tel. do rodziny:");
 		
-		textField_19 = new JTextField();
-		textField_19.setColumns(10);
+		phoneToFamilyField = new JTextField();
+		phoneToFamilyField.setColumns(10);
 		
 		JLabel lblOpisChoroby = new JLabel("Dodatkowe informacje:");
 		
-		textField_20 = new JTextField();
-		textField_20.setColumns(10);
+		infoField = new JTextField();
+		infoField.setColumns(10);
 		
 		JLabel lblSprawnoFizyczna = new JLabel("Sprawno\u015B\u0107 fizyczna:");
 		
@@ -116,8 +116,8 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel lblStawka = new JLabel("Stawka:");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		rateField = new JTextField();
+		rateField.setColumns(10);
 		
 		JLabel lblEutyg = new JLabel("EU/tyg.");
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -137,12 +137,12 @@ public class NewFamilyFrame extends JFrame
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblTelDoRodziny)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(textField_20, GroupLayout.PREFERRED_SIZE, 257, GroupLayout.PREFERRED_SIZE)
+							.addComponent(phoneToFamilyField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(infoField, GroupLayout.PREFERRED_SIZE, 257, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblStawka)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+							.addComponent(rateField, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblEutyg)))
 					.addContainerGap())
@@ -155,7 +155,7 @@ public class NewFamilyFrame extends JFrame
 					.addGap(27)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblTelDoRodziny)
-						.addComponent(textField_19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(phoneToFamilyField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(39)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSprawnoFizyczna)
@@ -163,12 +163,12 @@ public class NewFamilyFrame extends JFrame
 					.addGap(33)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblStawka)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(rateField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblEutyg))
 					.addPreferredGap(ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
 					.addComponent(lblOpisChoroby)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField_20, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(infoField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(28))
 		);
 		panel.setLayout(gl_panel);
@@ -178,13 +178,13 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel lblImie = new JLabel("Imie:");
 		
-		textField_15 = new JTextField();
-		textField_15.setColumns(10);
+		nameField = new JTextField();
+		nameField.setColumns(10);
 		
 		JLabel lblNazwisko = new JLabel("Nazwisko:");
 		
-		textField_18 = new JTextField();
-		textField_18.setColumns(10);
+		surnameField = new JTextField();
+		surnameField.setColumns(10);
 		
 		JLabel lblDataUrodzenia = new JLabel("Data urodzenia:");
 		
@@ -203,7 +203,7 @@ public class NewFamilyFrame extends JFrame
 		JButton btnZapisz = new JButton("Zapisz");
 		btnZapisz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ConnectionDB conn=new ConnectionDB();
+				WorkOfficeDAO conn=new WorkOfficeDAO();
 			}
 		});
 		
@@ -227,7 +227,7 @@ public class NewFamilyFrame extends JFrame
 									.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(62)
-									.addComponent(textField_10, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))))
+									.addComponent(cityField, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))))
 						.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
@@ -241,30 +241,30 @@ public class NewFamilyFrame extends JFrame
 									.addGap(323)
 									.addComponent(lblNrdomu)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textField_12, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-								.addComponent(textField_14, GroupLayout.PREFERRED_SIZE, 313, GroupLayout.PREFERRED_SIZE))
+									.addComponent(housNrField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+								.addComponent(streetField, GroupLayout.PREFERRED_SIZE, 313, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
 							.addComponent(lblNrmieszkania)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_13, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+							.addComponent(flatNrField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(33)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblImie)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textField_15, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
+									.addComponent(nameField, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(10)
 									.addComponent(lblDataUrodzenia)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textField_16, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+									.addComponent(birthDateField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblNazwisko)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textField_18, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE))
+									.addComponent(surnameField, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(44)
 									.addComponent(lblNewLabel)
@@ -273,11 +273,11 @@ public class NewFamilyFrame extends JFrame
 										.addGroup(gl_contentPane.createSequentialGroup()
 											.addComponent(lblTelefon)
 											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(textField_17, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
-										.addComponent(textField_11, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)))))
+											.addComponent(phoneField, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+										.addComponent(postcodeField, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnZapisz)
-							.addPreferredGap(ComponentPlacement.RELATED, 512, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 532, Short.MAX_VALUE)
 							.addComponent(btnZamknij)))
 					.addContainerGap())
 		);
@@ -287,31 +287,31 @@ public class NewFamilyFrame extends JFrame
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblImie)
-						.addComponent(textField_15, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNazwisko)
-						.addComponent(textField_18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(surnameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblTelefon)
-						.addComponent(textField_17, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(phoneField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblDataUrodzenia)
-						.addComponent(textField_16, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(birthDateField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblMiejscowo)
-						.addComponent(textField_10, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cityField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel)
-						.addComponent(textField_11, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(postcodeField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblUlica)
-						.addComponent(textField_14, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(streetField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNrdomu)
-						.addComponent(textField_12, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(housNrField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNrmieszkania)
-						.addComponent(textField_13, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(flatNrField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(25)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -394,7 +394,7 @@ public class NewFamilyFrame extends JFrame
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
-		//pack();
+		
 		
 	}
 }

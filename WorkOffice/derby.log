@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Sep 06 10:29:28 BST 2017:
- Uruchamianie wersji The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088) systemu Derby: instancja a816c00e-015e-5685-dfad-000002dc5bf0
+Thu Sep 07 20:21:54 BST 2017:
+ Uruchamianie wersji The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088) systemu Derby: instancja a816c00e-015e-5dca-9db0-000002e572a8
 w katalogu bazy danych C:\Users\Janki\Desktop\WorkOfficeDB sun.misc.Launcher$AppClassLoader@73d16e93 
 
 java.vendor=Oracle Corporation
@@ -12,8 +12,8 @@ os.version=10.0
 derby.system.home=null
 Uruchomiono program ³aduj¹cy klasê bazy danych - derby.database.classpath=''
 ----------------------------------------------------------------
-Wed Sep 06 10:29:28 BST 2017: Shutting down Derby engine
+Thu Sep 07 20:22:01 BST 2017: Shutting down Derby engine
 ----------------------------------------------------------------
-Wed Sep 06 10:29:28 BST 2017:
-Wy³¹czanie instancji a816c00e-015e-5685-dfad-000002dc5bf0
+Thu Sep 07 20:22:01 BST 2017:
+Wy³¹czanie instancji a816c00e-015e-5dca-9db0-000002e572a8
 ----------------------------------------------------------------
