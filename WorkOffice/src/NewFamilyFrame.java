@@ -111,8 +111,8 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel lblSprawnoFizyczna = new JLabel("Sprawno\u015B\u0107 fizyczna:");
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"", "chodz\u0105ca", "le\u017C\u0105ca"}));
+		JComboBox physicalFit = new JComboBox();
+		physicalFit.setModel(new DefaultComboBoxModel(new String[] {"", "chodzaca", "lezaca"}));
 		
 		JLabel lblStawka = new JLabel("Stawka:");
 		
@@ -133,7 +133,7 @@ public class NewFamilyFrame extends JFrame
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblSprawnoFizyczna)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(physicalFit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblTelDoRodziny)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -159,7 +159,7 @@ public class NewFamilyFrame extends JFrame
 					.addGap(39)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSprawnoFizyczna)
-						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(physicalFit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(33)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblStawka)
@@ -201,11 +201,9 @@ public class NewFamilyFrame extends JFrame
 		JLabel lblNrmieszkania = new JLabel("nr.mieszkania:");
 		
 		JButton btnZapisz = new JButton("Zapisz");
-		btnZapisz.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				WorkOfficeDAO conn=new WorkOfficeDAO();
-			}
-		});
+		
+		
+		
 		
 		JButton btnZamknij = new JButton("Zamknij");
 		btnZamknij.addActionListener(new ActionListener() {
@@ -328,22 +326,23 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel label_11 = new JLabel("j.niemiecki:");
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "s\u0142aby", "\u015Bredni", "dobry"}));
+		JComboBox languagelvl = new JComboBox();
+		languagelvl.setModel(new DefaultComboBoxModel(new String[] {"", "slaby", "sredni", "dobry"}));
 		
 		JLabel label_14 = new JLabel("do\u015Bwiadczenie:");
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "ma\u0142e", "du\u017Ce"}));
+		JComboBox experience = new JComboBox();
+		experience.setModel(new DefaultComboBoxModel(new String[] {"", "male", "duze"}));
 		
 		JLabel label_13 = new JLabel("praca fizyczna:");
 		
-		JCheckBox checkBox_1 = new JCheckBox("TAK");
-		
 		JLabel lblWiekOpiekunki = new JLabel("wiek opiekunki:");
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"", "<25", "25>35", "35>45", "45>55", ">55"}));
+		JComboBox employeeAge = new JComboBox();
+		employeeAge.setModel(new DefaultComboBoxModel(new String[] {"", "<25", "25>35", "35>45", "45>55", ">55"}));
+		
+		JComboBox physicalWork = new JComboBox();
+		physicalWork.setModel(new DefaultComboBoxModel(new String[] {"", "TAK", "NIE"}));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -354,19 +353,20 @@ public class NewFamilyFrame extends JFrame
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(lblWiekOpiekunki)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(label_13)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(checkBox_1))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(label_14)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(employeeAge, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(label_11)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(languagelvl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
+							.addGroup(gl_panel_1.createSequentialGroup()
+								.addComponent(label_13)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(physicalWork, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
+								.addComponent(label_14)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(experience, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap(149, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
@@ -377,24 +377,42 @@ public class NewFamilyFrame extends JFrame
 					.addGap(41)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label_11, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(languagelvl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(33)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label_14)
-						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(experience, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(26)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label_13)
-						.addComponent(checkBox_1))
+						.addComponent(physicalWork, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(31)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblWiekOpiekunki)
-						.addComponent(comboBox_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(employeeAge, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(55))
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
 		
+		
+		btnZapisz.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				WorkOfficeDAO conn = new WorkOfficeDAO();
+				conn.ifTablesExist();
+				
+				conn.insertData(nameField.getText(),surnameField.getText(),birthDateField.getText(),phoneField.getText(),
+						cityField.getText(),postcodeField.getText(),streetField.getText(),housNrField.getText(),flatNrField.getText(),
+						phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),rateField.getText(),infoField.getText(),
+						languagelvl.getSelectedItem().toString(),experience.getSelectedItem().toString(),
+						physicalWork.getSelectedItem().toString(),employeeAge.getSelectedItem().toString());
+				
+//				conn.insertData(nameField.getText(),surnameField.getText(),employeeAge.getSelectedItem().toString());
+				
+				conn.showTable();
+				conn.closeConnection();
+			}
+		});
 		
 	}
 }

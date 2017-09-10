@@ -164,6 +164,7 @@ public class MainMenu
 			public void actionPerformed(ActionEvent arg0) {
 				NewFamilyFrame nff= new NewFamilyFrame();
 				nff.setVisible(true);
+			
 			}
 		});
 		GroupLayout gl_panel_family = new GroupLayout(panel_family);
