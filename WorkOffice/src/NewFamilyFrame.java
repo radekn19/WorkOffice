@@ -1,6 +1,4 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -8,14 +6,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -24,7 +21,6 @@ public class NewFamilyFrame extends JFrame
 
 	private JPanel contentPane;
 
-	
 	private JTextField cityField;
 	private JTextField postcodeField;
 	private JTextField housNrField;
@@ -37,6 +33,14 @@ public class NewFamilyFrame extends JFrame
 	private JTextField nameField;
 	private JTextField surnameField;
 	private JTextField rateField;
+	
+	private JComboBox physicalFit;
+	private JComboBox languagelvl;
+	private JComboBox experience;
+	private JComboBox employeeAge;
+	private JComboBox physicalWork;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -111,7 +115,7 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel lblSprawnoFizyczna = new JLabel("Sprawno\u015B\u0107 fizyczna:");
 		
-		JComboBox physicalFit = new JComboBox();
+		physicalFit = new JComboBox();
 		physicalFit.setModel(new DefaultComboBoxModel(new String[] {"", "chodzaca", "lezaca"}));
 		
 		JLabel lblStawka = new JLabel("Stawka:");
@@ -119,7 +123,7 @@ public class NewFamilyFrame extends JFrame
 		rateField = new JTextField();
 		rateField.setColumns(10);
 		
-		JLabel lblEutyg = new JLabel("EU/tyg.");
+		JLabel lblEutyg = new JLabel("EUR/tyg.");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -326,22 +330,22 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel label_11 = new JLabel("j.niemiecki:");
 		
-		JComboBox languagelvl = new JComboBox();
+		languagelvl = new JComboBox();
 		languagelvl.setModel(new DefaultComboBoxModel(new String[] {"", "slaby", "sredni", "dobry"}));
 		
-		JLabel label_14 = new JLabel("do\u015Bwiadczenie:");
+		JLabel label_14 = new JLabel("doswiadczenie:");
 		
-		JComboBox experience = new JComboBox();
+		experience = new JComboBox();
 		experience.setModel(new DefaultComboBoxModel(new String[] {"", "male", "duze"}));
 		
 		JLabel label_13 = new JLabel("praca fizyczna:");
 		
 		JLabel lblWiekOpiekunki = new JLabel("wiek opiekunki:");
 		
-		JComboBox employeeAge = new JComboBox();
+		employeeAge = new JComboBox();
 		employeeAge.setModel(new DefaultComboBoxModel(new String[] {"", "<25", "25>35", "35>45", "45>55", ">55"}));
 		
-		JComboBox physicalWork = new JComboBox();
+		physicalWork = new JComboBox();
 		physicalWork.setModel(new DefaultComboBoxModel(new String[] {"", "TAK", "NIE"}));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
@@ -397,22 +401,57 @@ public class NewFamilyFrame extends JFrame
 		
 		
 		btnZapisz.addActionListener(new ActionListener() {
+			boolean insertProof=false;
 			public void actionPerformed(ActionEvent arg0) {
 				WorkOfficeDAO conn = new WorkOfficeDAO();
 				conn.ifTablesExist();
 				
-				conn.insertData(nameField.getText(),surnameField.getText(),birthDateField.getText(),phoneField.getText(),
-						cityField.getText(),postcodeField.getText(),streetField.getText(),housNrField.getText(),flatNrField.getText(),
-						phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),rateField.getText(),infoField.getText(),
-						languagelvl.getSelectedItem().toString(),experience.getSelectedItem().toString(),
-						physicalWork.getSelectedItem().toString(),employeeAge.getSelectedItem().toString());
-				
-//				conn.insertData(nameField.getText(),surnameField.getText(),employeeAge.getSelectedItem().toString());
-				
+				insertProof=conn.insertData(nameField.getText(),surnameField.getText(),birthDateField.getText(),
+						phoneField.getText(),cityField.getText(),postcodeField.getText(),
+						streetField.getText(),housNrField.getText(),flatNrField.getText(),
+						phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),
+						rateField.getText(),infoField.getText(),languagelvl.getSelectedItem().toString(),
+						experience.getSelectedItem().toString(),physicalWork.getSelectedItem().toString(),
+						employeeAge.getSelectedItem().toString());
+					
 				conn.showTable();
 				conn.closeConnection();
+				
+				if(insertProof==true){
+					JOptionPane.showMessageDialog(null, "Family added");
+					clearFields();
+				    }
+				else{
+						JOptionPane.showMessageDialog(null, "Error with insert family do data base");
+					}
+				
 			}
 		});
+		
+	}
+	
+// Method to clear all fields in Family frame class.
+	
+public void clearFields(){
+	 cityField.setText("");
+	 postcodeField.setText("");
+	 housNrField.setText("");
+	 flatNrField.setText("");
+	 streetField.setText("");
+	 birthDateField.setText("");
+	 phoneField.setText("");
+	 phoneToFamilyField.setText("");
+	 infoField.setText("");
+	 nameField.setText("");
+	 surnameField.setText("");
+	 rateField.setText("");
+	 
+	 physicalFit.setSelectedItem("");
+	 languagelvl.setSelectedItem("");
+	 experience.setSelectedItem("");
+	 employeeAge.setSelectedItem("");
+	 physicalWork.setSelectedItem("");
+	 
 		
 	}
 }

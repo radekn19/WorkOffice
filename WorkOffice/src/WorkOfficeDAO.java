@@ -7,6 +7,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 public class WorkOfficeDAO
 {
 
@@ -18,23 +20,22 @@ public class WorkOfficeDAO
 	
 	public WorkOfficeDAO(){
 		
-        
+//Connection to DataBase        
+		
 		try
-		{	
-			//Connection to DataBase
+		{		
 			conn=DriverManager.getConnection(protocol+dbName+";create=true");
 			System.out.println("Connected");
 		} 
 		catch (SQLException e)
 		{
+			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
-			e.printStackTrace();
+			
 		}	
 	}
 	
-	
-	
-	
+
 	
 	
 	
@@ -55,6 +56,7 @@ public class WorkOfficeDAO
 			tables.close();
 		} catch (SQLException e)
 		{
+			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 		}
 		
@@ -96,22 +98,26 @@ public class WorkOfficeDAO
 		} catch (SQLException e)
 		{
 			System.out.println("Problem with created tables Families");
+			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 		}
 	
 	}
 	
-// Insert data.
-	public void insertData(String name,String surname,String birthdate,String phone,String city,String postcode,String street,String housnr,
-			String flatnr,String familyphone,String physicalfit,String rate,String info,String languagelvl,String experiencce,
-			String physicalwork,String employeeage){
+// Insert data to family table.
+	
+	public boolean insertData(String name,String surname,String birthdate,String phone,String city,String postcode,
+			String street,String housnr,String flatnr,String familyphone,String physicalfit,String rate,String info,
+			String languagelvl,String experiencce,String physicalwork,String employeeage){
 
 		try
 		{
 
-			PreparedStatement prst=conn.prepareStatement("insert into FAMILIES(Name,Surname,Birth_Date,Phone,City,Post_Code,Street,HousNr,FlatNr,"
-					                                    + "FamilyPhone,Physical_Fit,Rate,Info,LanguageLvl,Experience,Physical_Work,Employee_Age) "
-					                                    + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement prst=conn.prepareStatement(
+					"insert into FAMILIES(Name,Surname,Birth_Date,Phone,City,Post_Code,Street,HousNr,FlatNr,"
+			      + "FamilyPhone,Physical_Fit,Rate,Info,LanguageLvl,Experience,Physical_Work,Employee_Age) "
+				  + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			
 			prst.setString(1, name);
 			prst.setString(2, surname);
 			prst.setString(3, birthdate);
@@ -130,13 +136,16 @@ public class WorkOfficeDAO
 			prst.setString(16, physicalwork);
 			prst.setString(17, employeeage);
 			prst.execute();
-			System.out.print("Data inserted");
-			
 			prst.close();
+			
+			System.out.print("Data inserted");	
+			return true;
 		} catch (SQLException e)
 		{
 			System.out.print("Problem with insert data.");
+			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
+			return false;
 		}
 	}
 	
@@ -166,9 +175,6 @@ public class WorkOfficeDAO
 				System.out.println("");
 			}
 			res.close();
-			stm.close();
-		
-		
 		} catch (SQLException e)
 		{
 			printSQLException(e);
@@ -200,12 +206,9 @@ public class WorkOfficeDAO
 		}
 		
 	}
-	
-
-	
-	
+			
 //Print SQL exception	
-	public static void printSQLException(SQLException e)
+	private static void printSQLException(SQLException e)
     {
       
         while (e != null)
