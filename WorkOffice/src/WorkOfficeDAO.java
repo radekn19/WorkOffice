@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -16,6 +17,7 @@ public class WorkOfficeDAO
 	private String dbName="C:/Users/Janki/Desktop/WorkOfficeDB";
 	private Connection conn=null;
 	private Statement stm=null;
+	
 		
 	
 	public WorkOfficeDAO(){
@@ -35,25 +37,22 @@ public class WorkOfficeDAO
 		}	
 	}
 	
-
-	
-	
-	
 //Method to check if tables exist;
 	
 	public void ifTablesExist(){
 		try
 		{
 			DatabaseMetaData dbmd=conn.getMetaData();
-			ResultSet tables=dbmd.getTables(null, null, "FAMILIES", null);
-			if(tables.next()){
+			ResultSet res=dbmd.getTables(null, null, "FAMILIES", null);
+			if(res.next()){
 				System.out.println("tables exists");
+				
 			}
 			else{
 				createTables();
 				System.out.println("Tables has been created");
 			}
-			tables.close();
+			res.close();
 		} catch (SQLException e)
 		{
 			JOptionPane.showMessageDialog(null, e.toString());
@@ -63,12 +62,9 @@ public class WorkOfficeDAO
 	}
 	
 	
-	
-	
-//Method to creating Families Table;
+//Method to creating Families Table into Database;
 	
 	public void createTables(){
-	
 		String createFamiliesT="create table Families("
 				+ "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
 				+ "Name VARCHAR(20) NOT NULL,"
@@ -95,6 +91,7 @@ public class WorkOfficeDAO
 			stm=conn.createStatement();
 			stm.execute(createFamiliesT);
 			stm.close();
+			
 		} catch (SQLException e)
 		{
 			System.out.println("Problem with created tables Families");
@@ -104,7 +101,7 @@ public class WorkOfficeDAO
 	
 	}
 	
-// Insert data to family table.
+// Insert data to family table into Database.
 	
 	public boolean insertData(String name,String surname,String birthdate,String phone,String city,String postcode,
 			String street,String housnr,String flatnr,String familyphone,String physicalfit,String rate,String info,
@@ -139,6 +136,7 @@ public class WorkOfficeDAO
 			prst.close();
 			
 			System.out.print("Data inserted");	
+			prst.close();
 			return true;
 		} catch (SQLException e)
 		{
@@ -149,7 +147,47 @@ public class WorkOfficeDAO
 		}
 	}
 	
+// Loading data from Database to Family Model.
 	
+	
+	public ArrayList<FamilyModel>getFamilyList(){
+		
+		ArrayList<FamilyModel>familyList=new ArrayList<>();
+			String sqlList="select * FROM Families";
+			try
+			{	
+				ResultSet res;
+				stm = conn.createStatement();
+				res=stm.executeQuery(sqlList);
+				FamilyModel person;
+				while(res.next()){
+					person=new FamilyModel(res.getInt("id"),res.getString("Name"),res.getString("Surname"),res.getString("Birth_Date"),
+							res.getString("Phone"),res.getString("City"),res.getString("Post_Code"),res.getString("Street"),
+							res.getString("HousNr"),res.getString("FlatNr"),res.getString("FamilyPhone"),res.getString("Physical_Fit"),
+							res.getString("Rate"),res.getString("Info"),res.getString("LanguageLvl"),res.getString("Experience"),
+							res.getString("Physical_Work"),res.getString("Employee_Age"));
+					
+					
+					familyList.add(person);
+				} 
+				
+				 stm.close();   
+				 conn.close();
+				 res.close();
+				 
+				 System.out.println("DB loaded to Family List");
+			}
+				
+			catch (SQLException e)
+			{
+			
+				e.printStackTrace();
+				System.out.println("Problem z wczytaniem listy");
+			}
+			return familyList;
+			
+		}
+
 
 //Method to print table.
 	
@@ -158,6 +196,7 @@ public class WorkOfficeDAO
 	 
 		try
 		{
+			System.out.println("Wyswietlam liste");
 			stm=conn.createStatement();
 			ResultSet res=stm.executeQuery(sqlSelect);
 			ResultSetMetaData rsmd=res.getMetaData();
@@ -175,22 +214,20 @@ public class WorkOfficeDAO
 				System.out.println("");
 			}
 			res.close();
+			conn.close();
 		} catch (SQLException e)
 		{
 			printSQLException(e);
 		}
 	}
 	
-	
-	
-	
-//Method to close connection.
+
+//Method to close connection-----------------------------------------------------------------------------------
 	public void closeConnection(){
 		try
 		{
 			DriverManager.getConnection("jdbc:derby:;shutdown=true");
-			conn.close();
-			stm.close();
+		
 		} 
 		catch (SQLException e)
 		{

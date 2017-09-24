@@ -20,6 +20,7 @@ public class NewFamilyFrame extends JFrame
 {
 
 	private JPanel contentPane;
+	private WorkOfficeDAO dao;
 
 	private JTextField cityField;
 	private JTextField postcodeField;
@@ -403,10 +404,10 @@ public class NewFamilyFrame extends JFrame
 		btnZapisz.addActionListener(new ActionListener() {
 			boolean insertProof=false;
 			public void actionPerformed(ActionEvent arg0) {
-				WorkOfficeDAO conn = new WorkOfficeDAO();
-				conn.ifTablesExist();
+				dao=new WorkOfficeDAO();
+				dao.ifTablesExist();
 				
-				insertProof=conn.insertData(nameField.getText(),surnameField.getText(),birthDateField.getText(),
+				insertProof=dao.insertData(nameField.getText(),surnameField.getText(),birthDateField.getText(),
 						phoneField.getText(),cityField.getText(),postcodeField.getText(),
 						streetField.getText(),housNrField.getText(),flatNrField.getText(),
 						phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),
@@ -414,8 +415,8 @@ public class NewFamilyFrame extends JFrame
 						experience.getSelectedItem().toString(),physicalWork.getSelectedItem().toString(),
 						employeeAge.getSelectedItem().toString());
 					
-				conn.showTable();
-				conn.closeConnection();
+				dao.showTable();
+			
 				
 				if(insertProof==true){
 					JOptionPane.showMessageDialog(null, "Family added");

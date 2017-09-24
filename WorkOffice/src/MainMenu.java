@@ -167,6 +167,14 @@ public class MainMenu
 			
 			}
 		});
+		
+		JButton btnListaRodzin = new JButton("Lista rodzin");
+		btnListaRodzin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FamiliesList flist= new FamiliesList();
+				flist.setVisible(true);
+			}
+		});
 		GroupLayout gl_panel_family = new GroupLayout(panel_family);
 		gl_panel_family.setHorizontalGroup(
 			gl_panel_family.createParallelGroup(Alignment.LEADING)
@@ -178,6 +186,10 @@ public class MainMenu
 					.addGap(179)
 					.addComponent(lblFamily, GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
 					.addGap(176))
+				.addGroup(gl_panel_family.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnListaRodzin)
+					.addContainerGap(321, Short.MAX_VALUE))
 		);
 		gl_panel_family.setVerticalGroup(
 			gl_panel_family.createParallelGroup(Alignment.LEADING)
@@ -186,7 +198,9 @@ public class MainMenu
 					.addComponent(lblFamily, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnNFamily)
-					.addGap(227))
+					.addGap(18)
+					.addComponent(btnListaRodzin)
+					.addGap(186))
 		);
 		panel_family.setLayout(gl_panel_family);
 		frame.getContentPane().setLayout(groupLayout);
@@ -207,6 +221,4 @@ public class MainMenu
 		
 		
 	}
-	
-	
 }
