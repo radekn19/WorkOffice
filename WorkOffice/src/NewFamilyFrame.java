@@ -14,13 +14,16 @@ import javax.swing.JComboBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class NewFamilyFrame extends JFrame
 {
-
+	private boolean insertProof=false;
 	private JPanel contentPane;
 	private WorkOfficeDAO dao;
+	private ArrayList<FamilyModel>model;
+	private int id;
 
 	private JTextField cityField;
 	private JTextField postcodeField;
@@ -402,33 +405,61 @@ public class NewFamilyFrame extends JFrame
 		
 		
 		btnZapisz.addActionListener(new ActionListener() {
-			boolean insertProof=false;
 			public void actionPerformed(ActionEvent arg0) {
-				dao=new WorkOfficeDAO();
-				dao.ifTablesExist();
-				
-				insertProof=dao.insertData(nameField.getText(),surnameField.getText(),birthDateField.getText(),
-						phoneField.getText(),cityField.getText(),postcodeField.getText(),
-						streetField.getText(),housNrField.getText(),flatNrField.getText(),
-						phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),
-						rateField.getText(),infoField.getText(),languagelvl.getSelectedItem().toString(),
-						experience.getSelectedItem().toString(),physicalWork.getSelectedItem().toString(),
-						employeeAge.getSelectedItem().toString());
+				if(id==0){
+				saveData();
+				System.out.println("ID wynosi 0-zapisuje");
+				}else{
+					System.out.println("id pracownika to="+id);
+					updateData();
 					
-				dao.showTable();
-			
-				
-				if(insertProof==true){
-					JOptionPane.showMessageDialog(null, "Family added");
-					clearFields();
-				    }
-				else{
-						JOptionPane.showMessageDialog(null, "Error with insert family do data base");
-					}
-				
+				}
 			}
 		});
 		
+	}
+	
+	
+//Method to update data
+	public void updateData(){
+		dao=new WorkOfficeDAO();
+		
+		dao.updateData(id,nameField.getText(),surnameField.getText(),birthDateField.getText(),
+				phoneField.getText(),cityField.getText(),postcodeField.getText(),
+				streetField.getText(),housNrField.getText(),flatNrField.getText(),
+				phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),
+				rateField.getText(),infoField.getText(),languagelvl.getSelectedItem().toString(),
+				experience.getSelectedItem().toString(),physicalWork.getSelectedItem().toString(),
+				employeeAge.getSelectedItem().toString());
+		
+		FamiliesList flist=new FamiliesList();
+		flist.refreshTabel();
+		
+	}
+	
+//	Save data
+	public void saveData(){
+		dao=new WorkOfficeDAO();
+		dao.ifTablesExist();
+		
+		insertProof=dao.insertData(nameField.getText(),surnameField.getText(),birthDateField.getText(),
+				phoneField.getText(),cityField.getText(),postcodeField.getText(),
+				streetField.getText(),housNrField.getText(),flatNrField.getText(),
+				phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),
+				rateField.getText(),infoField.getText(),languagelvl.getSelectedItem().toString(),
+				experience.getSelectedItem().toString(),physicalWork.getSelectedItem().toString(),
+				employeeAge.getSelectedItem().toString());
+		
+			
+		dao.showTable();
+	
+		if(insertProof==true){
+			JOptionPane.showMessageDialog(null, "Family added");
+			clearFields();
+		    }
+		else{
+				JOptionPane.showMessageDialog(null, "Error with insert family do data base");
+			}
 	}
 	
 // Method to clear all fields in Family frame class.
@@ -455,4 +486,78 @@ public void clearFields(){
 	 
 		
 	}
+
+
+public void setId(int id){
+	this.id=id;
+}
+
+public void setName(String name){
+	nameField.setText(name);
+}
+
+public void setSurname(String surname){
+	surnameField.setText(surname);
+}
+public void setBirthDate(String birthDate){
+	birthDateField.setText(birthDate);
+}
+
+public void setPhoneField(String phone){
+	phoneField.setText(phone);
+}
+public void setCityField(String city){
+	cityField.setText(city);
+}
+
+public void setPostcodeField(String postcode){
+	postcodeField.setText(postcode);
+}
+public void setStreetField(String street){
+	streetField.setText(street);
+}
+
+public void setHousNrField(String housNr){
+	housNrField.setText(housNr);
+}
+public void setFlatNrField(String flatNr){
+	flatNrField.setText(flatNr);
+}
+
+public void setPhoneToFamilyField(String phoneToFamily){
+	phoneToFamilyField.setText(phoneToFamily);
+}
+public void setPhysicalFit(String physicalFitA){
+	physicalFit.setSelectedItem(physicalFitA);
+}
+
+public void setRateField(String rate){
+	rateField.setText(rate);
+}
+public void setInfoField(String info){
+	infoField.setText(info);
+}
+
+public void setLanguagelvl(String language){
+	languagelvl.setSelectedItem(language);
+}
+public void setExperience(String experienceA){
+	experience.setSelectedItem(experienceA);
+}
+
+public void setPhysicalWork(String physicalWorkA){
+	physicalWork.setSelectedItem(physicalWorkA);
+}
+public void setEmployeeAge(String employeeAgeA){
+	employeeAge.setSelectedItem(employeeAgeA);
+}
+
+
+
+
+
+ 
+
+
+
 }

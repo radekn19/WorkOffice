@@ -17,6 +17,7 @@ public class WorkOfficeDAO
 	private String dbName="C:/Users/Janki/Desktop/WorkOfficeDB";
 	private Connection conn=null;
 	private Statement stm=null;
+	private NewFamilyFrame famFrame;
 	
 		
 	
@@ -144,6 +145,53 @@ public class WorkOfficeDAO
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 			return false;
+		}
+	}
+	
+//Update data to DataBase
+	public void updateData(int id,String name,String surname,String birthdate,String phone,String city,String postcode,
+			String street,String housnr,String flatnr,String familyphone,String physicalfit,String rate,String info,
+			String languagelvl,String experiencce,String physicalwork,String employeeage)
+	{
+		try
+		{
+			PreparedStatement prst=conn.prepareStatement("UPDATE FAMILIES SET Name=?,Surname=?,Birth_Date=?,Phone=?,City=?,"
+					+ "Post_Code=?,Street=?,HousNr=?,FlatNr=?,FamilyPhone=?,Physical_Fit=?,Rate=?,Info=?,LanguageLvl=?,"
+					+ "Experience=?,Physical_Work=?,Employee_Age=? WHERE id=?");
+				
+			prst.setString(1, name);
+			prst.setString(2, surname);
+			prst.setString(3, birthdate);
+			prst.setString(4, phone);
+			prst.setString(5, city);
+			prst.setString(6, postcode);
+			prst.setString(7, street);
+			prst.setString(8, housnr);
+			prst.setString(9, flatnr);
+			prst.setString(10, familyphone);
+			prst.setString(11, physicalfit);
+			prst.setString(12, rate);
+			prst.setString(13, info);
+			prst.setString(14, languagelvl);
+			prst.setString(15, experiencce);
+			prst.setString(16, physicalwork);
+			prst.setString(17, employeeage);
+			prst.setInt(18, id);
+			
+			prst.executeUpdate();
+			
+			prst.close();
+			conn.close();
+			
+			System.out.println("Data updated");
+			JOptionPane.showMessageDialog(null, "Data updated");
+			
+			
+		} catch (SQLException e)
+		{
+			System.out.println("Error updateData");
+			
+			printSQLException(e);		
 		}
 	}
 	
