@@ -14,10 +14,10 @@ public class WorkOfficeDAO
 {
 
 	private String protocol = "jdbc:derby:";
-	private String dbName="C:/Users/Janki/Desktop/WorkOfficeDB";
+	private String dbName="C:/WorkOfficeDB";
 	private Connection conn=null;
 	private Statement stm=null;
-	private NewFamilyFrame famFrame;
+	//private NewFamilyFrame famFrame;
 	
 		
 	
@@ -193,6 +193,21 @@ public class WorkOfficeDAO
 			
 			printSQLException(e);		
 		}
+	}
+	
+// Delete family from DataBase
+	
+	public void deleteData(int id){
+		try {
+			PreparedStatement prst=conn.prepareStatement("DELETE FROM FAMILIES WHERE id=?");
+			prst.setInt(1, id);
+			prst.executeUpdate();
+			prst.close();
+			System.out.println("Pozycja usunieta");
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+		
 	}
 	
 // Loading data from Database to Family Model.

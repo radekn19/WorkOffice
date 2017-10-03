@@ -1,42 +1,18 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
-import java.awt.Panel;
-import java.awt.ScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.JSplitPane;
-import java.awt.GridBagLayout;
-import javax.swing.JSeparator;
-import java.awt.GridBagConstraints;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import java.awt.Insets;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
 import javax.swing.JMenuBar;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
-import javax.swing.SpringLayout;
-import net.miginfocom.swing.MigLayout;
 import java.awt.Font;
 
 public class MainMenu
@@ -218,7 +194,8 @@ public class MainMenu
 			}
 		});
 		mnFile.add(mntmExit);
-		
+
 		
 	}
+	
 }

@@ -22,7 +22,7 @@ public class NewFamilyFrame extends JFrame
 	private boolean insertProof=false;
 	private JPanel contentPane;
 	private WorkOfficeDAO dao;
-	private ArrayList<FamilyModel>model;
+	private FamiliesList flist;
 	private int id;
 
 	private JTextField cityField;
@@ -72,7 +72,7 @@ public class NewFamilyFrame extends JFrame
 	public NewFamilyFrame()
 	{
 		setTitle("Dodaj rodzin\u0119");
-		setBounds(100, 100, 700, 600);
+		//setBounds(100, 100, 700, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -411,13 +411,13 @@ public class NewFamilyFrame extends JFrame
 				System.out.println("ID wynosi 0-zapisuje");
 				}else{
 					System.out.println("id pracownika to="+id);
-					updateData();
-					
+					updateData();		
 				}
 			}
 		});
-		
+		pack();
 	}
+
 	
 	
 //Method to update data
@@ -430,11 +430,7 @@ public class NewFamilyFrame extends JFrame
 				phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),
 				rateField.getText(),infoField.getText(),languagelvl.getSelectedItem().toString(),
 				experience.getSelectedItem().toString(),physicalWork.getSelectedItem().toString(),
-				employeeAge.getSelectedItem().toString());
-		
-		FamiliesList flist=new FamiliesList();
-		flist.refreshTabel();
-		
+				employeeAge.getSelectedItem().toString());	
 	}
 	
 //	Save data

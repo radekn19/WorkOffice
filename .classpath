@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="WorkOffice/src"/>
+	<classpathentry kind="lib" path="WorkOffice/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="WorkOffice/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="WorkOffice/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="D:/ddb-derby-10.13.1.1-bin (1)/db-derby-10.13.1.1-bin/lib/derby.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

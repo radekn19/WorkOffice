@@ -1,17 +1,10 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import java.awt.Font;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -51,7 +44,7 @@ public class InfoFamilyFrame extends JFrame
 	{
 		setTitle("Informacje o rodzinie");
 		
-		setBounds(100, 100, 450, 550);
+		setBounds(100, 100, 460, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

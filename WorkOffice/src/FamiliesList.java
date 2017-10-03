@@ -35,6 +35,7 @@ public class FamiliesList extends JFrame
 	private ArrayList<FamilyModel> lista;
 	private DefaultTableModel model;
 	private NewFamilyFrame familyFrame;
+	private InfoFamilyFrame info;
 
 	/**
 	 * Launch the application.
@@ -73,13 +74,15 @@ public class FamiliesList extends JFrame
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setEdit();
+				familyFrame.setVisible(true);
 			}
 		});
 		
 		JButton btnInfo = new JButton("Informacje");
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getInfo();	
+				getInfo();
+				info.setVisible(true);
 			}
 		});
 		
@@ -96,17 +99,35 @@ public class FamiliesList extends JFrame
 		JLabel lblsearch = new JLabel("Wyszukaj:");
 		lblsearch.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
+		JButton btnCloseWindow = new JButton("Zamknij");
+		btnCloseWindow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
+		
+		JButton btnDelete = new JButton("Usun");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteData();
+			}
+		});
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnInfo)
-							.addPreferredGap(ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
-							.addComponent(btnEdit))
+							.addGap(18)
+							.addComponent(btnEdit)
+							.addGap(18)
+							.addComponent(btnDelete)
+							.addPreferredGap(ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+							.addComponent(btnCloseWindow))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblsearch, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -125,7 +146,9 @@ public class FamiliesList extends JFrame
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnInfo)
-						.addComponent(btnEdit))
+						.addComponent(btnEdit)
+						.addComponent(btnCloseWindow)
+						.addComponent(btnDelete))
 					.addContainerGap())
 		);
 		
@@ -143,22 +166,26 @@ public class FamiliesList extends JFrame
 				return columnEditables[column];
 			}
 		});
+		
+		
 		table.getColumnModel().getColumn(0).setPreferredWidth(25);
 		table.getColumnModel().getColumn(0).setMaxWidth(25);
 		scrollPane.setViewportView(table);
 		
-      //Initiate populate the ArrayList lista from database data.		
+ //Initiate populate the ArrayList lista from database data.		
 		dao=new WorkOfficeDAO();	
-		lista=dao.getFamilyList();
-		
-		populateTabel();
+		lista=dao.getFamilyList();	
+		populateTable();
 		
 		contentPane.setLayout(gl_contentPane);
 		pack();
 	}
 	
+	
+//-----------------------ALL CLASS METHOD-----------------------------------------------------	
+	
 //Method populate Table	
-	public void populateTabel(){
+	public void populateTable(){
 		
 		model=(DefaultTableModel) table.getModel();
 		Object[]tablerow=new Object[4];
@@ -170,24 +197,31 @@ public class FamiliesList extends JFrame
 			tablerow[3] = lista.get(i).getCity();
 	        model.addRow(tablerow);
 		}
-		System.out.println("Tablica uzupe³niona");
+		System.out.println("Tablica uzupelniona");
 	}
-
-//Method to refresh tabel
-	public void refreshTabel(){
-		dao=new WorkOfficeDAO();
+	
+//Refresh jTable
+	public void refreshTable() {
 		lista=dao.getFamilyList();
-		populateTabel();
-		table.repaint();
+		model=(DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		populateTable();
+	}
+	
+//Delete selected row
+	public void deleteData() {
+		dao=new WorkOfficeDAO();
+		int delID=lista.get(table.convertRowIndexToModel(table.getSelectedRow())).getId();
+		dao.deleteData(delID);
+		refreshTable();
 		
-		System.out.println("Data refreshed");
 	}
 	
 // Selected row info
 	public void getInfo(){
 		
 		int modelrow=table.convertRowIndexToModel(table.getSelectedRow());
-		InfoFamilyFrame info=new InfoFamilyFrame();
+		info=new InfoFamilyFrame();
 		
 		info.setName(lista.get(modelrow).getName());
 		info.setSurname(lista.get(modelrow).getSurname());
@@ -205,10 +239,9 @@ public class FamiliesList extends JFrame
 		info.setInfo(lista.get(modelrow).getInfo());
 		info.setPhysicalWork(lista.get(modelrow).getPhysicalWork());
 		info.setExperience(lista.get(modelrow).getExperience());
-		info.setEmployeeAge(lista.get(modelrow).getEmployeeAge());
-	
-	    info.setVisible(true);			
+		info.setEmployeeAge(lista.get(modelrow).getEmployeeAge());			
 		}
+	
 // Find user method
 	public void findUser(String query){
 		TableRowSorter<DefaultTableModel> trs=new TableRowSorter<DefaultTableModel>(model);
@@ -222,7 +255,6 @@ public class FamiliesList extends JFrame
 		int modelrow=table.convertRowIndexToModel(table.getSelectedRow());
 		
 		familyFrame.setId(lista.get(modelrow).getId());
-		
 		familyFrame.setName(lista.get(modelrow).getName());
 		familyFrame.setSurname(lista.get(modelrow).getSurname());
 		familyFrame.setPhoneField(lista.get(modelrow).getPhone());
@@ -240,8 +272,5 @@ public class FamiliesList extends JFrame
 		familyFrame.setPhysicalWork(lista.get(modelrow).getPhysicalWork());
 		familyFrame.setExperience(lista.get(modelrow).getExperience());
 		familyFrame.setEmployeeAge(lista.get(modelrow).getEmployeeAge());
-		
-		
-		familyFrame.setVisible(true);
 	}
 }
