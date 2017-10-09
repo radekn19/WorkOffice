@@ -14,7 +14,6 @@ import javax.swing.JComboBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class NewFamilyFrame extends JFrame
@@ -22,7 +21,6 @@ public class NewFamilyFrame extends JFrame
 	private boolean insertProof=false;
 	private JPanel contentPane;
 	private WorkOfficeDAO dao;
-	private FamiliesList flist;
 	private int id;
 
 	private JTextField cityField;
@@ -71,7 +69,7 @@ public class NewFamilyFrame extends JFrame
 	 */
 	public NewFamilyFrame()
 	{
-		setTitle("Dodaj rodzin\u0119");
+		setTitle("Dodaj rodzine");
 		//setBounds(100, 100, 700, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -117,7 +115,7 @@ public class NewFamilyFrame extends JFrame
 		infoField = new JTextField();
 		infoField.setColumns(10);
 		
-		JLabel lblSprawnoFizyczna = new JLabel("Sprawno\u015B\u0107 fizyczna:");
+		JLabel lblSprawnoFizyczna = new JLabel("Sprawnosc fizyczna:");
 		
 		physicalFit = new JComboBox();
 		physicalFit.setModel(new DefaultComboBoxModel(new String[] {"", "chodzaca", "lezaca"}));
@@ -198,7 +196,7 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel lblTelefon = new JLabel("telefon:");
 		
-		JLabel lblMiejscowo = new JLabel("Miejscowo\u015B\u0107:");
+		JLabel lblMiejscowo = new JLabel("Miejscowosc");
 		
 		JLabel lblNewLabel = new JLabel("Kod pocztowy:\r\n");
 		
@@ -208,13 +206,13 @@ public class NewFamilyFrame extends JFrame
 		
 		JLabel lblNrmieszkania = new JLabel("nr.mieszkania:");
 		
-		JButton btnZapisz = new JButton("Zapisz");
+		JButton btnSave = new JButton("Zapisz");
 		
 		
 		
 		
-		JButton btnZamknij = new JButton("Zamknij");
-		btnZamknij.addActionListener(new ActionListener() {
+		JButton btnClose = new JButton("Zamknij");
+		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
 			}
@@ -228,9 +226,9 @@ public class NewFamilyFrame extends JFrame
 							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(panel, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+									.addComponent(panel, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+									.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(62)
 									.addComponent(cityField, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))))
@@ -281,10 +279,11 @@ public class NewFamilyFrame extends JFrame
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addComponent(phoneField, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
 										.addComponent(postcodeField, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnZapisz)
-							.addPreferredGap(ComponentPlacement.RELATED, 532, Short.MAX_VALUE)
-							.addComponent(btnZamknij)))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnSave)
+							.addPreferredGap(ComponentPlacement.RELATED, 520, Short.MAX_VALUE)
+							.addComponent(btnClose)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -321,11 +320,11 @@ public class NewFamilyFrame extends JFrame
 					.addGap(25)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 278, Short.MAX_VALUE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnZapisz)
-						.addComponent(btnZamknij))
+						.addComponent(btnClose)
+						.addComponent(btnSave))
 					.addContainerGap())
 		);
 		
@@ -402,9 +401,8 @@ public class NewFamilyFrame extends JFrame
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
-		
-		
-		btnZapisz.addActionListener(new ActionListener() {
+				
+		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(id==0){
 				saveData();
@@ -417,8 +415,6 @@ public class NewFamilyFrame extends JFrame
 		});
 		pack();
 	}
-
-	
 	
 //Method to update data
 	public void updateData(){
@@ -444,9 +440,7 @@ public class NewFamilyFrame extends JFrame
 				phoneToFamilyField.getText(),physicalFit.getSelectedItem().toString(),
 				rateField.getText(),infoField.getText(),languagelvl.getSelectedItem().toString(),
 				experience.getSelectedItem().toString(),physicalWork.getSelectedItem().toString(),
-				employeeAge.getSelectedItem().toString());
-		
-			
+				employeeAge.getSelectedItem().toString());	
 		dao.showTable();
 	
 		if(insertProof==true){
@@ -461,6 +455,7 @@ public class NewFamilyFrame extends JFrame
 // Method to clear all fields in Family frame class.
 	
 public void clearFields(){
+	
 	 cityField.setText("");
 	 postcodeField.setText("");
 	 housNrField.setText("");
@@ -479,10 +474,9 @@ public void clearFields(){
 	 experience.setSelectedItem("");
 	 employeeAge.setSelectedItem("");
 	 physicalWork.setSelectedItem("");
-	 
-		
 	}
 
+// Set textfields and combo box.
 
 public void setId(int id){
 	this.id=id;

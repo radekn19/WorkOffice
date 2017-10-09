@@ -105,7 +105,8 @@ public class MainMenu
 		btnNWorker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
-				NewWorkerFrame.NewWorkerScreen();
+				NewEmployeeFrame eFrame=new NewEmployeeFrame();
+				eFrame.setVisible(true);
 			}
 		});
 		GroupLayout gl_panel_worker = new GroupLayout(panel_worker);

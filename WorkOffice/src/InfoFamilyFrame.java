@@ -44,7 +44,7 @@ public class InfoFamilyFrame extends JFrame
 	{
 		setTitle("Informacje o rodzinie");
 		
-		setBounds(100, 100, 460, 550);
+		setBounds(100, 100, 450, 560);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

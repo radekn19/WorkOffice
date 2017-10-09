@@ -17,7 +17,6 @@ public class WorkOfficeDAO
 	private String dbName="C:/WorkOfficeDB";
 	private Connection conn=null;
 	private Statement stm=null;
-	//private NewFamilyFrame famFrame;
 	
 		
 	
@@ -38,7 +37,9 @@ public class WorkOfficeDAO
 		}	
 	}
 	
-//Method to check if tables exist;
+//------------------------------------------------FAMILIES METHODS---------------------------------------------------------
+	
+//Method to check if Families tables exist;
 	
 	public void ifTablesExist(){
 		try
@@ -284,8 +285,143 @@ public class WorkOfficeDAO
 		}
 	}
 	
+	
+	
+//------------------------------------EMPLOYEE METHODS-----------------------------------------------------------
+	
+//Method to check if Families tables exist
+	
+		public void ifEmpTablesExist(){
+			try
+			{
+				DatabaseMetaData dbmd=conn.getMetaData();
+				ResultSet res=dbmd.getTables(null, null, "EMPLOYEE", null);
+				if(res.next()){
+					System.out.println("EMPLOYEE table exists");
+					
+				}
+				else{
+					createEmployeeTables();
+					System.out.println("EMPLOYEE table has been created");
+				}
+				res.close();
+			} catch (SQLException e)
+			{
+				JOptionPane.showMessageDialog(null, e.toString());
+				printSQLException(e);
+			}
+			
+		}
+	
+//Create a Employee table.
+	
+	public void createEmployeeTables(){
+		String createEmployeeT="create table EMPLOYEE("
+				+ "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+				+ "Name VARCHAR(20) NOT NULL,"
+				+ "Surname VARCHAR(20) NOT NULL,"
+				+ "Birth_Date VARCHAR(20) NOT NULL,"
+				+ "Phone VARCHAR(20) NOT NULL,"
+				+ "City VARCHAR(20) NOT NULL,"
+				+ "Post_Code VARCHAR(20) NOT NULL,"
+				+ "Street VARCHAR(20) NOT NULL,"
+				+ "HousNr VARCHAR(20) NOT NULL,"
+				+ "FlatNr VARCHAR(20) NOT NULL,"
+				+ "LanguageLvl VARCHAR(20) NOT NULL,"
+				+ "Experience VARCHAR(20) NOT NULL,"
+				+ "Physical_Work VARCHAR(20) NOT NULL,"
+				+ "Married VARCHAR(20) NOT NULL,"
+				+ "Availability VARCHAR(20) NOT NULL"
+				+ ")";		
+		try
+		{
+			stm=conn.createStatement();
+			stm.execute(createEmployeeT);
+			stm.close();
+			
+		} catch (SQLException e)
+		{
+			System.out.println("Problem with created tables Employee");
+			JOptionPane.showMessageDialog(null, e.toString());
+			printSQLException(e);
+		}
+	
+	}
+	
+	
+// Insert data to Employee table into Database.
+	
+	public void insertDataEmp(String name,String surname,String birthdate,String phone,String city,
+				String postcode,String street,String nrhouse,String nrflat,String language,
+				String experience,String physicalwork,String married,String availability){
+			try
+			{
+				PreparedStatement prst=conn.prepareStatement(
+						"insert into EMPLOYEE(Name,Surname,Birth_Date,Phone,City,Post_Code,Street,HousNr,FlatNr,"
+				      + "LanguageLvl,Experience,Physical_Work,Married,Availability) "
+					  + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				
+				prst.setString(1, name);
+				prst.setString(2, surname);
+				prst.setString(3, birthdate);
+				prst.setString(4, phone);
+				prst.setString(5, city);
+				prst.setString(6, postcode);
+				prst.setString(7, street);
+				prst.setString(8, nrhouse);
+				prst.setString(9, nrflat);
+				prst.setString(10, language);
+				prst.setString(11, experience);
+				prst.setString(12, physicalwork);
+				prst.setString(13, married);
+				prst.setString(14, availability);
+				prst.execute();
+				prst.close();
+			
+				System.out.print("EMPLOYEE data inserted");	
+			} catch (SQLException e)
+			 {
+				System.out.print("Problem with insert data to EMPLOYEE.");
+				JOptionPane.showMessageDialog(null, e.toString());
+				printSQLException(e);
+			}
+		}
+	
+	
+	
+	//Method to print table.
+	
+		public void showEmployeeTable(){
+		 String sqlSelect="select * from EMPLOYEE";
+		 
+			try
+			{
+				stm=conn.createStatement();
+				ResultSet res=stm.executeQuery(sqlSelect);
+				ResultSetMetaData rsmd=res.getMetaData();
+				int columnCount=rsmd.getColumnCount();
+				System.out.println("");
+				for(int i=1; i<=columnCount; i++){
+					System.out.format("%20s", rsmd.getColumnName(i)+"|");
+				}
+				System.out.println("");
+				
+				while(res.next()){
+					for(int i=1; i<=columnCount; i++){
+						System.out.format("%20s", res.getString(i)+"|");
+					}
+					System.out.println("");
+				}
+				res.close();
+				conn.close();
+			} catch (SQLException e)
+			{
+				printSQLException(e);
+			}
+		}
+	
 
-//Method to close connection-----------------------------------------------------------------------------------
+//Method to close connection
 	public void closeConnection(){
 		try
 		{
