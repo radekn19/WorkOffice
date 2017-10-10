@@ -476,7 +476,7 @@ public void clearFields(){
 	 physicalWork.setSelectedItem("");
 	}
 
-// Set textfields and combo box.
+// Set textFields and combo box.
 
 public void setId(int id){
 	this.id=id;

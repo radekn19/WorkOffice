@@ -18,7 +18,7 @@ import java.awt.Font;
 public class MainMenu
 {
 
-	private JFrame frame;
+	private JFrame frmWorkOffice;
 
 	/**
 	 * Launch the application.
@@ -32,7 +32,7 @@ public class MainMenu
 				try
 				{
 					MainMenu window = new MainMenu();
-					window.frame.setVisible(true);
+					window.frmWorkOffice.setVisible(true);
 				} catch (Exception e)
 				{
 					e.printStackTrace();
@@ -54,9 +54,10 @@ public class MainMenu
 	 */
 	private void initialize()
 	{
-		frame = new JFrame();
-		frame.setBounds(100, 100, 900, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmWorkOffice = new JFrame();
+		frmWorkOffice.setTitle("WORK OFFICE");
+		frmWorkOffice.setBounds(100, 100, 900, 600);
+		frmWorkOffice.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel_table = new JPanel();
 		
@@ -67,7 +68,7 @@ public class MainMenu
 		panel_family.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
 		JButton btnGetWorker = new JButton("Przypisz pracownika");
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		GroupLayout groupLayout = new GroupLayout(frmWorkOffice.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -101,12 +102,21 @@ public class MainMenu
 		JLabel lblWorker = new JLabel("Pracownik");
 		lblWorker.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JButton btnNWorker = new JButton("Nowy pracownik");
-		btnNWorker.addActionListener(new ActionListener() {
+		JButton btnNewEmployee = new JButton("Nowy pracownik");
+		btnNewEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
 				NewEmployeeFrame eFrame=new NewEmployeeFrame();
 				eFrame.setVisible(true);
+			}
+		});
+		
+		JButton btnEmployeeList = new JButton("Lista pracownikow");
+		btnEmployeeList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EmployeeList employeeList=new EmployeeList();
+				employeeList.setVisible(true);
+				
 			}
 		});
 		GroupLayout gl_panel_worker = new GroupLayout(panel_worker);
@@ -119,7 +129,10 @@ public class MainMenu
 							.addComponent(lblWorker))
 						.addGroup(gl_panel_worker.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnNWorker)))
+							.addComponent(btnNewEmployee))
+						.addGroup(gl_panel_worker.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnEmployeeList)))
 					.addContainerGap(172, Short.MAX_VALUE))
 		);
 		gl_panel_worker.setVerticalGroup(
@@ -128,8 +141,10 @@ public class MainMenu
 					.addContainerGap()
 					.addComponent(lblWorker)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNWorker)
-					.addContainerGap(227, Short.MAX_VALUE))
+					.addComponent(btnNewEmployee)
+					.addGap(18)
+					.addComponent(btnEmployeeList)
+					.addContainerGap(179, Short.MAX_VALUE))
 		);
 		panel_worker.setLayout(gl_panel_worker);
 		
@@ -180,10 +195,10 @@ public class MainMenu
 					.addGap(186))
 		);
 		panel_family.setLayout(gl_panel_family);
-		frame.getContentPane().setLayout(groupLayout);
+		frmWorkOffice.getContentPane().setLayout(groupLayout);
 		
 		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		frmWorkOffice.setJMenuBar(menuBar);
 		
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
@@ -198,5 +213,4 @@ public class MainMenu
 
 		
 	}
-	
 }

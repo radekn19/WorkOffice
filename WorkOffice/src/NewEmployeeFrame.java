@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
@@ -21,8 +22,9 @@ public class NewEmployeeFrame extends JFrame {
 	
 	private WorkOfficeDAO dao;
 	private JPanel contentPane;
-	private int id;
+	private boolean insertProof=false;
 	
+	private int id;
 	private JTextField nameField;
 	private JTextField surnameField;
 	private JTextField birthDateField;
@@ -34,10 +36,10 @@ public class NewEmployeeFrame extends JFrame {
 	private JTextField phoneField;
 	private JTextField availabilityField;
 	
-	JComboBox<String> languageBox;
-	JComboBox<String> experienceBox;
-	JComboBox<String> marriedBox;
-	JComboBox<String> physicalWorkBox;
+	private JComboBox<String> languageBox;
+	private JComboBox<String> experienceBox;
+	private JComboBox<String> marriedBox;
+	private JComboBox<String> physicalWorkBox;
 	/**
 	 * Launch the application.
 	 */
@@ -119,8 +121,13 @@ JLabel lblName = new JLabel("Imie:");
 		JButton btnSave = new JButton("Zapisz");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					insertData();	
-					dao.showEmployeeTable();
+				if(id==0){
+					insertData();
+					System.out.println("ID wynosi 0-zapisuje");
+					}else{
+						System.out.println("id pracownika to="+id);
+						updateData();		
+					}
 			}
 		});
 		
@@ -335,14 +342,53 @@ JLabel lblName = new JLabel("Imie:");
 		dao=new WorkOfficeDAO();
 		dao.ifEmpTablesExist();
 		
-		dao.insertDataEmp(nameField.getText(),surnameField.getText(),birthDateField.getText(),streetField.getText(),
+		insertProof=dao.insertDataEmp(nameField.getText(),surnameField.getText(),birthDateField.getText(),streetField.getText(),
 				cityField.getText(),postCodeField.getText(),houseNrField.getText(),flatNrField.getText(),
 				phoneField.getText(),availabilityField.getText(),languageBox.getSelectedItem().toString(),
 				experienceBox.getSelectedItem().toString(),marriedBox.getSelectedItem().toString(),
 				physicalWorkBox.getSelectedItem().toString());
 		
+		if(insertProof==true){
+			JOptionPane.showMessageDialog(null, "Employee added");
+			clearFields();
+			dao.showEmployeeTable();
+		    }
+		else{
+				JOptionPane.showMessageDialog(null, "Error with insert employee do data base");
+			}
+		
 	}
 	
+//Method to update data
+		public void updateData(){
+			dao=new WorkOfficeDAO();
+			
+			dao.updateEmployeeData(id,nameField.getText(),surnameField.getText(),birthDateField.getText(),
+					streetField.getText(),cityField.getText(),postCodeField.getText(),houseNrField.getText(),
+					flatNrField.getText(),phoneField.getText(),availabilityField.getText(),
+					languageBox.getSelectedItem().toString(),experienceBox.getSelectedItem().toString(),
+					marriedBox.getSelectedItem().toString(),physicalWorkBox.getSelectedItem().toString());		
+		}
+		
+//Clear fields.
+		public void clearFields() {
+			
+			  nameField.setText("");
+			  surnameField.setText("");
+			  birthDateField.setText("");
+			  streetField.setText("");
+			  cityField.setText("");
+			  postCodeField.setText("");
+			  houseNrField.setText("");
+			  flatNrField.setText("");
+			  phoneField.setText("");
+			  availabilityField.setText("");
+			
+			  languageBox.setSelectedItem("");
+			  experienceBox.setSelectedItem("");
+			  marriedBox.setSelectedItem("");
+			  physicalWorkBox.setSelectedItem("");
+		}
 	
 //Get and set fields.
 	
