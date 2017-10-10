@@ -342,11 +342,11 @@ JLabel lblName = new JLabel("Imie:");
 		dao=new WorkOfficeDAO();
 		dao.ifEmpTablesExist();
 		
-		insertProof=dao.insertDataEmp(nameField.getText(),surnameField.getText(),birthDateField.getText(),streetField.getText(),
-				cityField.getText(),postCodeField.getText(),houseNrField.getText(),flatNrField.getText(),
-				phoneField.getText(),availabilityField.getText(),languageBox.getSelectedItem().toString(),
-				experienceBox.getSelectedItem().toString(),marriedBox.getSelectedItem().toString(),
-				physicalWorkBox.getSelectedItem().toString());
+		insertProof=dao.insertDataEmp(nameField.getText(),surnameField.getText(),birthDateField.getText(),
+				phoneField.getText(),cityField.getText(),postCodeField.getText(),streetField.getText(),
+				houseNrField.getText(),flatNrField.getText(),languageBox.getSelectedItem().toString(),
+				experienceBox.getSelectedItem().toString(),physicalWorkBox.getSelectedItem().toString(),
+				marriedBox.getSelectedItem().toString(),availabilityField.getText());
 		
 		if(insertProof==true){
 			JOptionPane.showMessageDialog(null, "Employee added");
@@ -364,10 +364,10 @@ JLabel lblName = new JLabel("Imie:");
 			dao=new WorkOfficeDAO();
 			
 			dao.updateEmployeeData(id,nameField.getText(),surnameField.getText(),birthDateField.getText(),
-					streetField.getText(),cityField.getText(),postCodeField.getText(),houseNrField.getText(),
-					flatNrField.getText(),phoneField.getText(),availabilityField.getText(),
-					languageBox.getSelectedItem().toString(),experienceBox.getSelectedItem().toString(),
-					marriedBox.getSelectedItem().toString(),physicalWorkBox.getSelectedItem().toString());		
+					phoneField.getText(),cityField.getText(),postCodeField.getText(),streetField.getText(),
+					houseNrField.getText(),flatNrField.getText(),languageBox.getSelectedItem().toString(),
+					experienceBox.getSelectedItem().toString(),physicalWorkBox.getSelectedItem().toString(),
+					marriedBox.getSelectedItem().toString(),availabilityField.getText());		
 		}
 		
 //Clear fields.
