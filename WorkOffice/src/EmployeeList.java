@@ -31,6 +31,7 @@ public class EmployeeList extends JFrame {
 	private ArrayList<EmployeeModel> lista;
 	private DefaultTableModel model;
 	private NewEmployeeFrame employeeFrame;
+	private InfoEmployeeFrame infoframe;
 
 	/**
 	 * Launch the application.
@@ -71,6 +72,8 @@ public class EmployeeList extends JFrame {
 		JButton btnInfo = new JButton("Informacje");
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				getInfo();
+				infoframe.setVisible(true);
 				
 			}
 		});
@@ -231,5 +234,27 @@ public class EmployeeList extends JFrame {
 			employeeFrame.setMattied(lista.get(modelrow).getMarried());
 			employeeFrame.setAvailability(lista.get(modelrow).getAvailability());
 		}
+		
+ // Selected row info
+		public void getInfo(){
+			
+			int modelrow=table.convertRowIndexToModel(table.getSelectedRow());
+			infoframe=new InfoEmployeeFrame();
+			
+			infoframe.setName(lista.get(modelrow).getName());
+			infoframe.setSurname(lista.get(modelrow).getSurname());
+			infoframe.setPhone(lista.get(modelrow).getPhone());
+			infoframe.setBirthdate(lista.get(modelrow).getBirthDate());
+			infoframe.setCity(lista.get(modelrow).getCity());
+			infoframe.setStreet(lista.get(modelrow).getStreet());
+			infoframe.setPostCode(lista.get(modelrow).getPostCode());
+			infoframe.setHouseNr(lista.get(modelrow).getHouseNr());
+			infoframe.setFlatNr(lista.get(modelrow).getFlatNr());
+			infoframe.setLanguage(lista.get(modelrow).getLanguage());
+			infoframe.setMarried(lista.get(modelrow).getMarried());
+			infoframe.setPhysicalWork(lista.get(modelrow).getPhysicalWork());
+			infoframe.setExperience(lista.get(modelrow).getExperience());
+			infoframe.setAvailability(lista.get(modelrow).getAvailability());			
+			}
 }
 
