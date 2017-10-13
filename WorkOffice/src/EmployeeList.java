@@ -72,7 +72,8 @@ public class EmployeeList extends JFrame {
 		JButton btnInfo = new JButton("Informacje");
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getInfo();
+				int modelrow=table.convertRowIndexToModel(table.getSelectedRow());
+				getInfo(modelrow);
 				infoframe.setVisible(true);
 				
 			}
@@ -164,8 +165,7 @@ public class EmployeeList extends JFrame {
 		scrollPane.setViewportView(table);
 		
 	//Initiate populate the ArrayList lista from database data.		
-		dao=new WorkOfficeDAO();
-		lista=dao.getEmployeeListList();
+		
 		populateTable();
 		
 		contentPane.setLayout(gl_contentPane);
@@ -176,7 +176,8 @@ public class EmployeeList extends JFrame {
 	
 	//Method populate Table	
 		public void populateTable(){
-			
+			dao=new WorkOfficeDAO();
+			lista=dao.getEmployeeListList();
 			model=(DefaultTableModel) table.getModel();
 			Object[]tablerow=new Object[4];
 			
@@ -236,9 +237,8 @@ public class EmployeeList extends JFrame {
 		}
 		
  // Selected row info
-		public void getInfo(){
+		public void getInfo(int modelrow){
 			
-			int modelrow=table.convertRowIndexToModel(table.getSelectedRow());
 			infoframe=new InfoEmployeeFrame();
 			
 			infoframe.setName(lista.get(modelrow).getName());

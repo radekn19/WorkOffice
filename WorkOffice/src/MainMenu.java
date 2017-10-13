@@ -68,34 +68,40 @@ public class MainMenu
 		panel_family.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
 		JButton btnGetWorker = new JButton("Przypisz pracownika");
+		btnGetWorker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LinkFrame link=new LinkFrame();
+				link.setVisible(true);
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frmWorkOffice.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnGetWorker)
+					.addContainerGap(723, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(10)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_table, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_table, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
 						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addComponent(panel_worker, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)
 							.addGap(10)
 							.addComponent(panel_family, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)))
 					.addGap(16))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnGetWorker)
-					.addContainerGap(745, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(17)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_family, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_worker, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(panel_family, 0, 0, Short.MAX_VALUE)
+						.addComponent(panel_worker, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+					.addGap(31)
 					.addComponent(btnGetWorker)
-					.addPreferredGap(ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-					.addComponent(panel_table, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -129,22 +135,23 @@ public class MainMenu
 							.addComponent(lblWorker))
 						.addGroup(gl_panel_worker.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnNewEmployee))
-						.addGroup(gl_panel_worker.createSequentialGroup()
-							.addContainerGap()
 							.addComponent(btnEmployeeList)))
 					.addContainerGap(172, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel_worker.createSequentialGroup()
+					.addContainerGap(234, Short.MAX_VALUE)
+					.addComponent(btnNewEmployee)
+					.addGap(61))
 		);
 		gl_panel_worker.setVerticalGroup(
 			gl_panel_worker.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_worker.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblWorker)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(35)
 					.addComponent(btnNewEmployee)
-					.addGap(18)
+					.addGap(26)
 					.addComponent(btnEmployeeList)
-					.addContainerGap(179, Short.MAX_VALUE))
+					.addContainerGap(56, Short.MAX_VALUE))
 		);
 		panel_worker.setLayout(gl_panel_worker);
 		
@@ -171,28 +178,28 @@ public class MainMenu
 		gl_panel_family.setHorizontalGroup(
 			gl_panel_family.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_family.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnNFamily)
-					.addContainerGap(313, Short.MAX_VALUE))
-				.addGroup(gl_panel_family.createSequentialGroup()
 					.addGap(179)
 					.addComponent(lblFamily, GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
 					.addGap(176))
 				.addGroup(gl_panel_family.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(btnListaRodzin)
-					.addContainerGap(321, Short.MAX_VALUE))
+					.addContainerGap(311, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel_family.createSequentialGroup()
+					.addContainerGap(232, Short.MAX_VALUE)
+					.addComponent(btnNFamily)
+					.addGap(77))
 		);
 		gl_panel_family.setVerticalGroup(
 			gl_panel_family.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_family.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblFamily, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(37)
 					.addComponent(btnNFamily)
-					.addGap(18)
+					.addGap(21)
 					.addComponent(btnListaRodzin)
-					.addGap(186))
+					.addGap(59))
 		);
 		panel_family.setLayout(gl_panel_family);
 		frmWorkOffice.getContentPane().setLayout(groupLayout);

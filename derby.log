@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Wed Oct 11 21:49:54 BST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015f-0d33-6b64-000006987068 
-on database directory C:\WorkOfficeDB with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
+Fri Oct 13 22:46:10 BST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015f-17b3-a4da-0000068bfaa0 
+on database directory C:\WorkOfficeDB with class loader sun.misc.Launcher$AppClassLoader@2a139a55 
 Loaded from file:/D:/ddb-derby-10.13.1.1-bin%20(1)/db-derby-10.13.1.1-bin/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_144-b01
