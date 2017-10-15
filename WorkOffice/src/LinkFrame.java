@@ -6,14 +6,19 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
+import java.awt.Label;
+import com.toedter.calendar.JDateChooser;
 
 public class LinkFrame extends JFrame {
 
@@ -27,6 +32,11 @@ public class LinkFrame extends JFrame {
 	private DefaultTableModel modelEmp;
 	private InfoEmployeeFrame infoFrameEmpl;
 	private InfoFamilyFrame infoFrameFam;
+	private SimpleDateFormat date=new SimpleDateFormat("dd-MM-yyyy");
+	private String fromDate=null;
+	private String toDate=null;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -49,7 +59,7 @@ public class LinkFrame extends JFrame {
 	 */
 	public LinkFrame() {
 		setTitle("Powiaz");
-		setBounds(100, 100, 1150, 500);
+		setBounds(100, 100, 1150, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -94,8 +104,7 @@ public class LinkFrame extends JFrame {
 		JButton btnEmploInfo = new JButton("Informacje");
 		btnEmploInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int modelrow = employeeTable.convertRowIndexToModel(employeeTable.getSelectedRow());
-				getInfoEmp(modelrow);
+				getInfoEmp();
 				infoFrameEmpl.setVisible(true);
 			}
 		});
@@ -135,8 +144,7 @@ public class LinkFrame extends JFrame {
 		JButton btnFamInfo = new JButton("Informacje");
 		btnFamInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int modelrow = familyTable.convertRowIndexToModel(familyTable.getSelectedRow());
-				getInfoFam(modelrow);
+				getInfoFam();
 				infoFrameFam.setVisible(true);
 			}
 		});
@@ -145,8 +153,33 @@ public class LinkFrame extends JFrame {
 		
 // ===========================================================================================================================================================
 
+		Label labelFrom = new Label("From");
+		labelFrom.setBounds(12, 401, 70, 24);
+		contentPane.add(labelFrom);
+		
+		JDateChooser dateChooserFrom = new JDateChooser();
+		dateChooserFrom.setBounds(88, 403, 131, 22);
+		contentPane.add(dateChooserFrom);
+		
+		
+		JLabel lblTo = new JLabel("to");
+		lblTo.setBounds(241, 409, 38, 16);
+		contentPane.add(lblTo);
+		
+		JDateChooser dateChooserTo = new JDateChooser();
+		dateChooserTo.setBounds(281, 403, 131, 22);
+		contentPane.add(dateChooserTo);
+		
 		JButton btnLink = new JButton("Powiaz");
-		btnLink.setBounds(12, 415, 97, 25);
+		btnLink.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				fromDate=date.format(dateChooserFrom.getDate());
+				toDate=date.format(dateChooserTo.getDate());
+				insertLinkRows(fromDate,toDate);
+			}
+		});
+		btnLink.setBounds(12, 465, 97, 25);
 		contentPane.add(btnLink);
 
 		JButton btnClose = new JButton("Zamknij");
@@ -155,8 +188,10 @@ public class LinkFrame extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnClose.setBounds(1023, 415, 97, 25);
+		btnClose.setBounds(1023, 465, 97, 25);
 		contentPane.add(btnClose);
+		
+		
 
 		populateEmpTable();
 		populateFamTable();
@@ -200,8 +235,8 @@ public class LinkFrame extends JFrame {
 	}
 
 	// Selected row info Employee
-	public void getInfoEmp(int modelrow) {
-
+	public void getInfoEmp() {
+		int modelrow = employeeTable.convertRowIndexToModel(employeeTable.getSelectedRow());
 		infoFrameEmpl = new InfoEmployeeFrame();
 		infoFrameEmpl.setName(empList.get(modelrow).getName());
 		infoFrameEmpl.setSurname(empList.get(modelrow).getSurname());
@@ -220,10 +255,10 @@ public class LinkFrame extends JFrame {
 	}
 
 	// Selected row info
-	public void getInfoFam(int modelrow) {
+	public void getInfoFam() {
 
-		infoFrameFam = new InfoFamilyFrame();
-
+		int modelrow = familyTable.convertRowIndexToModel(familyTable.getSelectedRow());
+		infoFrameFam=new InfoFamilyFrame();
 		infoFrameFam.setName(famList.get(modelrow).getName());
 		infoFrameFam.setSurname(famList.get(modelrow).getSurname());
 		infoFrameFam.setPhone(famList.get(modelrow).getPhone());
@@ -241,5 +276,20 @@ public class LinkFrame extends JFrame {
 		infoFrameFam.setPhysicalWork(famList.get(modelrow).getPhysicalWork());
 		infoFrameFam.setExperience(famList.get(modelrow).getExperience());
 		infoFrameFam.setEmployeeAge(famList.get(modelrow).getEmployeeAge());
+	}
+	
+	//Link and save selected rows into DataBase
+	public void insertLinkRows(String dateFrom, String dateTo) {
+		dao=new WorkOfficeDAO();
+		dao.ifLinkTablesExist();
+		int empRow=employeeTable.convertColumnIndexToModel(employeeTable.getSelectedRow());
+		int famRow=familyTable.convertRowIndexToModel(familyTable.getSelectedRow());
+		
+		dao.insertLinkData(empList.get(empRow).getId(), empList.get(empRow).getName(), empList.get(empRow).getSurname(),
+							famList.get(famRow).getId(), famList.get(famRow).getName(), famList.get(famRow).getSurname(),
+							dateFrom, dateTo);
+		
+		dao.showLinkTable();
+		
 	}
 }

@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 import javax.swing.JMenuBar;
@@ -14,12 +15,19 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Font;
+import javax.swing.JTable;
+import java.awt.BorderLayout;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class MainMenu
 {
 
 	private JFrame frmWorkOffice;
-
+	private JTable table;
+	private WorkOfficeDAO dao;
+	private DefaultTableModel model;
+	private ArrayList<LinkModel>linkList;
 	/**
 	 * Launch the application.
 	 */
@@ -104,6 +112,48 @@ public class MainMenu
 					.addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
 					.addContainerGap())
 		);
+		panel_table.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 858, 218);
+		panel_table.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "Name", "Surname", "", "ID", "Name", "Surname", "", "From_Date", "To_Date"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(45);
+		table.getColumnModel().getColumn(0).setMinWidth(40);
+		table.getColumnModel().getColumn(0).setMaxWidth(60);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(30);
+		table.getColumnModel().getColumn(3).setMaxWidth(40);
+		table.getColumnModel().getColumn(4).setPreferredWidth(45);
+		table.getColumnModel().getColumn(4).setMinWidth(40);
+		table.getColumnModel().getColumn(4).setMaxWidth(60);
+		table.getColumnModel().getColumn(7).setResizable(false);
+		table.getColumnModel().getColumn(7).setPreferredWidth(30);
+		table.getColumnModel().getColumn(7).setMaxWidth(40);
+		scrollPane.setViewportView(table);
+		
+		populateLinkTable();
+		
+		
+		
+		
+		
+		
 		
 		JLabel lblWorker = new JLabel("Pracownik");
 		lblWorker.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -220,4 +270,29 @@ public class MainMenu
 
 		
 	}
+	
+	// Method populate Family Table
+		public void populateLinkTable() {
+			dao = new WorkOfficeDAO();
+			linkList = dao.getLinkList();
+			model = (DefaultTableModel) table.getModel();
+			Object[] tablerow = new Object[10];
+
+			for (int i = 0; i < linkList.size(); i++) {
+			
+				tablerow[0] = linkList.get(i).getEid();
+				tablerow[1] = linkList.get(i).getEname();
+				tablerow[2] = linkList.get(i).getEsurname();
+				tablerow[3] = " ";
+				tablerow[4] = linkList.get(i).getFid();
+				tablerow[5] = linkList.get(i).getFName();
+				tablerow[6] = linkList.get(i).getFsurname();
+				tablerow[7] = " ";
+				tablerow[8] = linkList.get(i).getFromDate();
+				tablerow[9] = linkList.get(i).getToDate();
+				
+				model.addRow(tablerow);
+			}
+			System.out.println("Tablica  Link uzupelniona");
+		}
 }
