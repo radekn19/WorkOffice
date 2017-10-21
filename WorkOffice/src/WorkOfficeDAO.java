@@ -31,7 +31,7 @@ public class WorkOfficeDAO {
 		}
 	}
 
-// ------------------------------------------------FAMILIES METHODS---------------------------------------------------------
+	// ------------------------------------------------FAMILIES METHODS---------------------------------------------------------
 
 	// Method to check if Families tables exist;
 
@@ -175,7 +175,7 @@ public class WorkOfficeDAO {
 			prst.setInt(1, id);
 			prst.executeUpdate();
 			prst.close();
-			System.out.println("Pozycja usunieta");
+			System.out.println("Data deleted");
 		} catch (SQLException e) {
 			printSQLException(e);
 		}
@@ -214,7 +214,7 @@ public class WorkOfficeDAO {
 		catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("Problem z wczytaniem listy");
+			System.out.println("Problem with loaded List");
 		}
 		return familyList;
 
@@ -250,7 +250,7 @@ public class WorkOfficeDAO {
 		}
 	}
 
-// =================================================EMPLOYEEMETHODS=========================================================
+	// =================================================EMPLOYEEMETHODS=========================================================
 
 	// Method to check if Families tables exist
 
@@ -366,7 +366,7 @@ public class WorkOfficeDAO {
 		catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("Problem z wczytaniem listy employee");
+			System.out.println("Problem with loaded List employee");
 		}
 		return employeeList;
 
@@ -456,160 +456,159 @@ public class WorkOfficeDAO {
 		}
 
 	}
-// =================================================LINK METHODS=========================================================
+	// =================================================LINK METHODS=========================================================
 	// Method to check if Link tables exist;
 
-		public void ifLinkTablesExist() {
-			try {
-				DatabaseMetaData dbmd = conn.getMetaData();
-				ResultSet res = dbmd.getTables(null, null, "LINK", null);
-				if (res.next()) {
-					System.out.println("LINK tables exists");
+	public void ifLinkTablesExist() {
+		try {
+			DatabaseMetaData dbmd = conn.getMetaData();
+			ResultSet res = dbmd.getTables(null, null, "LINK", null);
+			if (res.next()) {
+				System.out.println("LINK tables exists");
 
-				} else {
-					createLinkTables();
-					System.out.println("LINK Tables has been created");
-				}
-				res.close();
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null, e.toString());
-				printSQLException(e);
+			} else {
+				createLinkTables();
+				System.out.println("LINK Tables has been created");
 			}
-
+			res.close();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.toString());
+			printSQLException(e);
 		}
 
-		// Method to creating Link Table into Database;
+	}
 
-		public void createLinkTables() {
-			String createFamiliesT = "create table LINK("
-					+ "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-					+ "EmpID VARCHAR(20) NOT NULL,"+"EmpName VARCHAR(20) NOT NULL," + "EmpSurname VARCHAR(20) NOT NULL,"
-					+ "FamID VARCHAR(20) NOT NULL,"+"FamName VARCHAR(20) NOT NULL," + "FamSurname VARCHAR(20) NOT NULL,"
-					+ "From_Date VARCHAR(20) NOT NULL," + "To_Date VARCHAR(20) NOT NULL" + ")";
+	// Method to creating Link Table into Database;
 
-			try {
-				stm = conn.createStatement();
-				stm.execute(createFamiliesT);
-				stm.close();
+	public void createLinkTables() {
+		String createFamiliesT = "create table LINK("
+				+ "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+				+ "EmpID VARCHAR(20) NOT NULL," + "EmpName VARCHAR(20) NOT NULL," + "EmpSurname VARCHAR(20) NOT NULL,"
+				+ "FamID VARCHAR(20) NOT NULL," + "FamName VARCHAR(20) NOT NULL," + "FamSurname VARCHAR(20) NOT NULL,"
+				+ "From_Date VARCHAR(20) NOT NULL," + "To_Date VARCHAR(20) NOT NULL" + ")";
 
-			} catch (SQLException e) {
-				System.out.println("Problem with created tables Link");
-				JOptionPane.showMessageDialog(null, e.toString());
-				printSQLException(e);
-			}
+		try {
+			stm = conn.createStatement();
+			stm.execute(createFamiliesT);
+			stm.close();
 
+		} catch (SQLException e) {
+			System.out.println("Problem with created tables Link");
+			JOptionPane.showMessageDialog(null, e.toString());
+			printSQLException(e);
 		}
-		
-		// Insert data to Employee table into Database.
 
-		public boolean insertLinkData(int eId, String eName, String eSurname,
-				                      int fId, String fName, String fSurname,
-				                      String dataFrom, String dataTo) {
-			try {
-				PreparedStatement prst = conn.prepareStatement(
-						"insert into LINK(EmpID,EmpName,EmpSurname,FamID,FamName,FamSurname,From_Date,To_Date)"
-								+ "values(?,?,?,?,?,?,?,?)");
+	}
 
-				prst.setInt   (1, eId);
-				prst.setString(2, eName);
-				prst.setString(3, eSurname);
-				prst.setInt   (4, fId);
-				prst.setString(5, fName);
-				prst.setString(6, fSurname);
-				prst.setString(7, dataFrom);
-				prst.setString(8, dataTo);
-				prst.execute();
-				prst.close();
+	// Insert data to Employee table into Database.
 
-				System.out.print("Link data inserted");
-				return true;
-			} catch (SQLException e) {
-				System.out.print("Problem with insert data to Link.");
-				JOptionPane.showMessageDialog(null, e.toString());
-				printSQLException(e);
-				return false;
-			}
+	public boolean insertLinkData(int eId, String eName, String eSurname, int fId, String fName, String fSurname,
+			String dataFrom, String dataTo) {
+		try {
+			PreparedStatement prst = conn.prepareStatement(
+					"insert into LINK(EmpID,EmpName,EmpSurname,FamID,FamName,FamSurname,From_Date,To_Date)"
+							+ "values(?,?,?,?,?,?,?,?)");
+
+			prst.setInt(1, eId);
+			prst.setString(2, eName);
+			prst.setString(3, eSurname);
+			prst.setInt(4, fId);
+			prst.setString(5, fName);
+			prst.setString(6, fSurname);
+			prst.setString(7, dataFrom);
+			prst.setString(8, dataTo);
+			prst.execute();
+			prst.close();
+
+			System.out.print("Link data inserted");
+			return true;
+		} catch (SQLException e) {
+			System.out.print("Problem with insert data to Link.");
+			JOptionPane.showMessageDialog(null, e.toString());
+			printSQLException(e);
+			return false;
 		}
-		
-		// Method to print table.
+	}
 
-		public void showLinkTable() {
-			String sqlSelect = "select * from LINK";
+	// Method to print table.
 
-			try {
-				stm = conn.createStatement();
-				ResultSet res = stm.executeQuery(sqlSelect);
-				ResultSetMetaData rsmd = res.getMetaData();
-				int columnCount = rsmd.getColumnCount();
-				System.out.println("");
+	public void showLinkTable() {
+		String sqlSelect = "select * from LINK";
+
+		try {
+			stm = conn.createStatement();
+			ResultSet res = stm.executeQuery(sqlSelect);
+			ResultSetMetaData rsmd = res.getMetaData();
+			int columnCount = rsmd.getColumnCount();
+			System.out.println("");
+			for (int i = 1; i <= columnCount; i++) {
+				System.out.format("%20s", rsmd.getColumnName(i) + "|");
+			}
+			System.out.println("");
+
+			while (res.next()) {
 				for (int i = 1; i <= columnCount; i++) {
-					System.out.format("%20s", rsmd.getColumnName(i) + "|");
+					System.out.format("%20s", res.getString(i) + "|");
 				}
 				System.out.println("");
-
-				while (res.next()) {
-					for (int i = 1; i <= columnCount; i++) {
-						System.out.format("%20s", res.getString(i) + "|");
-					}
-					System.out.println("");
-				}
-				res.close();
-				conn.close();
-			} catch (SQLException e) {
-				printSQLException(e);
 			}
+			res.close();
+			conn.close();
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+	}
+
+	// Delete Employee from DataBase
+
+	public void deleteLinkData(int id) {
+		try {
+			PreparedStatement prst = conn.prepareStatement("DELETE FROM LINK WHERE id=?");
+			prst.setInt(1, id);
+			prst.executeUpdate();
+			prst.close();
+			System.out.println("Data deleted from LINK");
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+	}
+
+	// Loading data from Database to Employee Model.
+
+	public ArrayList<LinkModel> getLinkList() {
+
+		ArrayList<LinkModel> linkList = new ArrayList<>();
+		String sqlList = "select * FROM LINK";
+		try {
+			ResultSet res;
+			stm = conn.createStatement();
+			res = stm.executeQuery(sqlList);
+			LinkModel row;
+			while (res.next()) {
+				row = new LinkModel(res.getInt("id"), res.getString("EmpID"), res.getString("EmpName"),
+						res.getString("EmpSurname"), res.getString("FamID"), res.getString("FamName"),
+						res.getString("FamSurname"), res.getString("From_Date"), res.getString("To_Date"));
+
+				linkList.add(row);
+			}
+
+			stm.close();
+			conn.close();
+			res.close();
+
+			System.out.println("DB loaded to Link List");
 		}
 
-		// Delete Employee from DataBase
+		catch (SQLException e) {
 
-		public void deleteLinkData(int id) {
-			try {
-				PreparedStatement prst = conn.prepareStatement("DELETE FROM LINK WHERE id=?");
-				prst.setInt(1, id);
-				prst.executeUpdate();
-				prst.close();
-				System.out.println("Pozycja usunieta z LINK");
-			} catch (SQLException e) {
-				printSQLException(e);
-			}
+			e.printStackTrace();
+			System.out.println("Problem with loaded List Link");
 		}
-		
-		// Loading data from Database to Employee Model.
+		return linkList;
 
-		public ArrayList<LinkModel> getLinkList() {
+	}
 
-			ArrayList<LinkModel> linkList = new ArrayList<>();
-			String sqlList = "select * FROM LINK";
-			try {
-				ResultSet res;
-				stm = conn.createStatement();
-				res = stm.executeQuery(sqlList);
-				LinkModel row;
-				while (res.next()) {
-					row = new LinkModel(res.getInt("id"), res.getString("EmpID"), res.getString("EmpName"),
-							res.getString("EmpSurname"), res.getString("FamID"), res.getString("FamName"),
-							res.getString("FamSurname"), res.getString("From_Date"), res.getString("To_Date"));
-
-					linkList.add(row);
-				}
-
-				stm.close();
-				conn.close();
-				res.close();
-
-				System.out.println("DB loaded to Link List");
-			}
-
-			catch (SQLException e) {
-
-				e.printStackTrace();
-				System.out.println("Problem z wczytaniem listy Link");
-			}
-			return linkList;
-
-		}
-
-// =============================================================================================================================================================================
+	// =============================================================================================================================================================================
 
 	// Method to close connection
 	public void closeConnection() {
