@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
 public class FamiliesList extends JFrame {
@@ -101,7 +103,10 @@ public class FamiliesList extends JFrame {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deleteData();
+				int pane=JOptionPane.showConfirmDialog(null,"Do you want to delete the items?","DELETE", JOptionPane.YES_NO_OPTION);
+				if(pane==JOptionPane.YES_OPTION) {
+					deleteData();
+				}
 			}
 		});
 
@@ -154,8 +159,7 @@ public class FamiliesList extends JFrame {
 		pack();
 	}
 
-	// -----------------------ALL CLASS
-	// METHOD-----------------------------------------------------
+	// -----------------------ALL CLASS METHOD-----------------------------------------------------
 
 	// Method populate Table
 	public void populateTable() {

@@ -11,12 +11,10 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JMenuBar;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Font;
 import javax.swing.JTable;
-import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -59,6 +57,11 @@ public class MainMenu {
 		frmWorkOffice.setTitle("WORK OFFICE");
 		frmWorkOffice.setBounds(100, 100, 900, 600);
 		frmWorkOffice.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		dao=new WorkOfficeDAO();
+		dao.ifEmpTablesExist();
+		dao.ifLinkTablesExist();
+		dao.ifTablesExist();
 
 		JPanel panel_table = new JPanel();
 
@@ -125,7 +128,9 @@ public class MainMenu {
 		table.getColumnModel().getColumn(7).setPreferredWidth(30);
 		table.getColumnModel().getColumn(7).setMaxWidth(40);
 		scrollPane.setViewportView(table);
-
+		
+		dao = new WorkOfficeDAO();
+		linkList = dao.getLinkList();
 		populateLinkTable();
 
 		JLabel lblWorker = new JLabel("Worker");
@@ -213,19 +218,17 @@ public class MainMenu {
 		mnFile.add(mntmExit);
 
 	}
-
+//====================================================================================
+	
+	//Refresh
 	public void refreshTable() {
+		model=(DefaultTableModel) table.getModel();
+		model.setRowCount(0);
 		populateLinkTable();
-		this.model.fireTableDataChanged();
-
-		this.table.repaint();
-
 	}
-
+	
 	// Method populate Family Table
 	public void populateLinkTable() {
-		dao = new WorkOfficeDAO();
-		linkList = dao.getLinkList();
 		model = (DefaultTableModel) table.getModel();
 		Object[] tablerow = new Object[10];
 

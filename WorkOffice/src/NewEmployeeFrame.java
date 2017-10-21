@@ -66,10 +66,8 @@ public class NewEmployeeFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		// setContentPane(contentPane);
 
 		JLabel lblName = new JLabel("Name:");
-
 		JLabel lblSurname = new JLabel("Surname:");
 
 		nameField = new JTextField();
@@ -123,7 +121,8 @@ public class NewEmployeeFrame extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (id == 0) {
-					insertData();
+					//insertData();
+					checkFields();
 				} else {
 					updateData();
 				}
@@ -315,11 +314,18 @@ public class NewEmployeeFrame extends JFrame {
 		getContentPane().setLayout(groupLayout);
 		pack();
 	}
-
+	//Check that the name and surname fields are empty.
+	public void checkFields() {
+		if(nameField.getText().equals("")||surnameField.getText().equals("")) {
+			JOptionPane.showMessageDialog(null,"Field name and surname must be filled.");
+		}
+		else {
+			insertData();
+		}
+	}
 	// Insert data do database.
 	public void insertData() {
 		dao = new WorkOfficeDAO();
-		dao.ifEmpTablesExist();
 
 		insertProof = dao.insertDataEmp(nameField.getText(), surnameField.getText(), birthDateField.getText(),
 				phoneField.getText(), cityField.getText(), postCodeField.getText(), streetField.getText(),

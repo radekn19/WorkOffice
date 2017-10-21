@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Date;
@@ -171,11 +173,14 @@ public class LinkFrame extends JFrame {
 		JButton btnLink = new JButton("Link");
 		btnLink.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				if(dateChooserFrom.getDate()==null||dateChooserTo.getDate()==null) {
+					JOptionPane.showMessageDialog(null, "Date not selected.");
+				}
+				else {
 				fromDate = date.format(dateChooserFrom.getDate());
 				toDate = date.format(dateChooserTo.getDate());
 				insertLinkRows(fromDate, toDate);
-				menu.refreshTable();
+				}
 			}
 		});
 		btnLink.setBounds(12, 465, 97, 25);
@@ -278,7 +283,6 @@ public class LinkFrame extends JFrame {
 	// Link and save selected rows into DataBase
 	public void insertLinkRows(String dateFrom, String dateTo) {
 		dao = new WorkOfficeDAO();
-		dao.ifLinkTablesExist();
 		int empRow = employeeTable.convertColumnIndexToModel(employeeTable.getSelectedRow());
 		int famRow = familyTable.convertRowIndexToModel(familyTable.getSelectedRow());
 

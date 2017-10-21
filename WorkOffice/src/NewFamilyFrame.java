@@ -366,17 +366,26 @@ public class NewFamilyFrame extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (id == 0) {
-					saveData();
-					System.out.println("ID wynosi 0-zapisuje");
+					checkFields();
 				} else {
-					System.out.println("id pracownika to=" + id);
 					updateData();
 				}
 			}
 		});
 		pack();
 	}
-
+	
+//====================================================================================================================================================================
+	
+	//Check that the name and surname fields are empty.
+		public void checkFields() {
+			if(nameField.getText().equals("")||surnameField.getText().equals("")) {
+				JOptionPane.showMessageDialog(null,"Field name and surname must be filled.");
+			}
+			else {
+				saveData();
+			}
+		}
 	// Method to update data
 	public void updateData() {
 		dao = new WorkOfficeDAO();
@@ -392,7 +401,6 @@ public class NewFamilyFrame extends JFrame {
 	// Save data
 	public void saveData() {
 		dao = new WorkOfficeDAO();
-		dao.ifTablesExist();
 
 		insertProof = dao.insertData(nameField.getText(), surnameField.getText(), birthDateField.getText(),
 				phoneField.getText(), cityField.getText(), postcodeField.getText(), streetField.getText(),
