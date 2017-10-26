@@ -299,39 +299,72 @@ public class WorkOfficeDAO {
 
 	// Insert data to Employee table into Database.
 
-	public boolean insertDataEmp(String name, String surname, String birthdate, String phone, String city,
-			String postcode, String street, String nrhouse, String nrflat, String language, String experience,
-			String physicalwork, String married, String availability) {
+//	public boolean insertDataEmp(String name, String surname, String birthdate, String phone, String city,
+//			String postcode, String street, String nrhouse, String nrflat, String language, String experience,
+//			String physicalwork, String married, String availability) {
+//		try {
+//			PreparedStatement prst = conn.prepareStatement(
+//					"insert into EMPLOYEE(Name,Surname,Birth_Date,Phone,City,Post_Code,Street,HousNr,FlatNr,"
+//							+ "LanguageLvl,Experience,Physical_Work,Married,Availability) "
+//							+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+//
+//			prst.setString(1, name);
+//			prst.setString(2, surname);
+//			prst.setString(3, birthdate);
+//			prst.setString(4, phone);
+//			prst.setString(5, city);
+//			prst.setString(6, postcode);
+//			prst.setString(7, street);
+//			prst.setString(8, nrhouse);
+//			prst.setString(9, nrflat);
+//			prst.setString(10, language);
+//			prst.setString(11, experience);
+//			prst.setString(12, physicalwork);
+//			prst.setString(13, married);
+//			prst.setString(14, availability);
+//			prst.execute();
+//			prst.close();
+//
+//			System.out.print("EMPLOYEE data inserted");
+//			return true;
+//		} catch (SQLException e) {
+//			System.out.print("Problem with insert data to EMPLOYEE.");
+//			JOptionPane.showMessageDialog(null, e.toString());
+//			printSQLException(e);
+//			return false;
+//		}
+//	}
+	public void insertDataEmployee(EmployeeModel em) {
 		try {
 			PreparedStatement prst = conn.prepareStatement(
 					"insert into EMPLOYEE(Name,Surname,Birth_Date,Phone,City,Post_Code,Street,HousNr,FlatNr,"
 							+ "LanguageLvl,Experience,Physical_Work,Married,Availability) "
 							+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-			prst.setString(1, name);
-			prst.setString(2, surname);
-			prst.setString(3, birthdate);
-			prst.setString(4, phone);
-			prst.setString(5, city);
-			prst.setString(6, postcode);
-			prst.setString(7, street);
-			prst.setString(8, nrhouse);
-			prst.setString(9, nrflat);
-			prst.setString(10, language);
-			prst.setString(11, experience);
-			prst.setString(12, physicalwork);
-			prst.setString(13, married);
-			prst.setString(14, availability);
+			prst.setString(1, em.getName());
+			prst.setString(2, em.getSurname());
+			prst.setString(3, em.getBirthdate());
+			prst.setString(4, em.getPhone());
+			prst.setString(5, em.getCity());
+			prst.setString(6, em.getPostcode());
+			prst.setString(7, em.getStreet());
+			prst.setString(8, em.getNrhouse());
+			prst.setString(9, em.getNrflat());
+			prst.setString(10, em.getLanguage());
+			prst.setString(11, em.getExperience());
+			prst.setString(12,	em.getPhysicalwork());
+			prst.setString(13, em.getMarried());
+			prst.setString(14, em.getAvailability());
 			prst.execute();
 			prst.close();
 
 			System.out.print("EMPLOYEE data inserted");
-			return true;
+			JOptionPane.showMessageDialog(null, "Employee added");
+			
 		} catch (SQLException e) {
 			System.out.print("Problem with insert data to EMPLOYEE.");
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
-			return false;
 		}
 	}
 
@@ -341,8 +374,9 @@ public class WorkOfficeDAO {
 
 		ArrayList<EmployeeModel> employeeList = new ArrayList<>();
 		String sqlList = "select * FROM EMPLOYEE";
+		ResultSet res;
 		try {
-			ResultSet res;
+			
 			stm = conn.createStatement();
 			res = stm.executeQuery(sqlList);
 			EmployeeModel person;
@@ -373,33 +407,71 @@ public class WorkOfficeDAO {
 	}
 
 	// Update data to DataBase
-	public void updateEmployeeData(int id, String name, String surname, String birthdate, String phone, String city,
-			String postcode, String street, String housnr, String flatnr, String languagelvl, String experiencce,
-			String physicalwork, String married, String availability) {
+	
+//	public void updateEmployeeData(int id, String name, String surname, String birthdate, String phone, String city,
+//			String postcode, String street, String housnr, String flatnr, String languagelvl, String experiencce,
+//			String physicalwork, String married, String availability) {
+//		try {
+//			PreparedStatement prst = conn
+//					.prepareStatement("UPDATE EMPLOYEE SET Name=?,Surname=?,Birth_Date=?,Phone=?,City=?,"
+//							+ "Post_Code=?,Street=?,HousNr=?,FlatNr=?,LanguageLvl=?,"
+//							+ "Experience=?,Physical_Work=?,Married=?,Availability=? WHERE id=?");
+//
+//			prst.setString(1, name);
+//			prst.setString(2, surname);
+//			prst.setString(3, birthdate);
+//			prst.setString(4, phone);
+//			prst.setString(5, city);
+//			prst.setString(6, postcode);
+//			prst.setString(7, street);
+//			prst.setString(8, housnr);
+//			prst.setString(9, flatnr);
+//			prst.setString(10, languagelvl);
+//			prst.setString(11, experiencce);
+//			prst.setString(12, physicalwork);
+//			prst.setString(13, married);
+//			prst.setString(14, availability);
+//			prst.setInt(15, id);
+//
+//			prst.executeUpdate();
+//
+//			prst.close();
+//			conn.close();
+//
+//			System.out.println("EMPLOYEE Data updated");
+//			JOptionPane.showMessageDialog(null, "EMPLOYEE Data updated");
+//
+//		} catch (SQLException e) {
+//			System.out.println("Error updateData EMPLOYEE");
+//
+//			printSQLException(e);
+//		}
+//	}
+//	
+	public void updateEmployeeData(EmployeeModel emp,int id) {
 		try {
 			PreparedStatement prst = conn
 					.prepareStatement("UPDATE EMPLOYEE SET Name=?,Surname=?,Birth_Date=?,Phone=?,City=?,"
 							+ "Post_Code=?,Street=?,HousNr=?,FlatNr=?,LanguageLvl=?,"
 							+ "Experience=?,Physical_Work=?,Married=?,Availability=? WHERE id=?");
 
-			prst.setString(1, name);
-			prst.setString(2, surname);
-			prst.setString(3, birthdate);
-			prst.setString(4, phone);
-			prst.setString(5, city);
-			prst.setString(6, postcode);
-			prst.setString(7, street);
-			prst.setString(8, housnr);
-			prst.setString(9, flatnr);
-			prst.setString(10, languagelvl);
-			prst.setString(11, experiencce);
-			prst.setString(12, physicalwork);
-			prst.setString(13, married);
-			prst.setString(14, availability);
+			prst.setString(1, emp.getName());
+			prst.setString(2, emp.getSurname());
+			prst.setString(3, emp.getBirthdate());
+			prst.setString(4, emp.getPhone());
+			prst.setString(5, emp.getCity());
+			prst.setString(6, emp.getPostcode());
+			prst.setString(7, emp.getStreet());
+			prst.setString(8, emp.getNrhouse());
+			prst.setString(9, emp.getNrflat());
+			prst.setString(10, emp.getLanguage());
+			prst.setString(11, emp.getExperience());
+			prst.setString(12, emp.getPhysicalwork());
+			prst.setString(13, emp.getMarried());
+			prst.setString(14, emp.getAvailability());
 			prst.setInt(15, id);
 
 			prst.executeUpdate();
-
 			prst.close();
 			conn.close();
 
@@ -450,7 +522,7 @@ public class WorkOfficeDAO {
 			prst.setInt(1, id);
 			prst.executeUpdate();
 			prst.close();
-			System.out.println("Pozycja usunieta z EMPLOYEE");
+			JOptionPane.showMessageDialog(null, "Data deleted");
 		} catch (SQLException e) {
 			printSQLException(e);
 		}

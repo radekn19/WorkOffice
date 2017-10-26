@@ -33,7 +33,7 @@ public class EmployeeList extends JFrame {
 	private JTextField filterField;
 	private JTable table;
 	private WorkOfficeDAO dao;
-	private ArrayList<EmployeeModel> lista;
+	private ArrayList<EmployeeModel> worker;
 	private DefaultTableModel model;
 	private NewEmployeeFrame employeeFrame;
 	private InfoEmployeeFrame infoframe;
@@ -180,15 +180,15 @@ public class EmployeeList extends JFrame {
 	// Method populate Table
 	public void populateTable() {
 		dao = new WorkOfficeDAO();
-		lista = dao.getEmployeeListList();
+		worker = dao.getEmployeeListList();
 		model = (DefaultTableModel) table.getModel();
 		Object[] tablerow = new Object[4];
 
-		for (int i = 0; i < lista.size(); i++) {
-			tablerow[0] = lista.get(i).getId();
-			tablerow[1] = lista.get(i).getName();
-			tablerow[2] = lista.get(i).getSurname();
-			tablerow[3] = lista.get(i).getCity();
+		for (int i = 0; i < worker.size(); i++) {
+			tablerow[0] = worker.get(i).getId();
+			tablerow[1] = worker.get(i).getName();
+			tablerow[2] = worker.get(i).getSurname();
+			tablerow[3] = worker.get(i).getCity();
 			model.addRow(tablerow);
 		}
 		System.out.println("Tablica uzupelniona");
@@ -203,7 +203,7 @@ public class EmployeeList extends JFrame {
 
 	// Refresh jTable
 	public void refreshTable() {
-		lista = dao.getEmployeeListList();
+		worker = dao.getEmployeeListList();
 		model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		populateTable();
@@ -211,7 +211,7 @@ public class EmployeeList extends JFrame {
 
 	// Delete selected row
 	public void deleteData(int row) {
-		int delID = lista.get(table.convertRowIndexToModel(row)).getId();
+		int delID = worker.get(table.convertRowIndexToModel(row)).getId();
 		dao = new WorkOfficeDAO();
 		dao.deleteEmployeeData(delID);
 		refreshTable();
@@ -223,21 +223,21 @@ public class EmployeeList extends JFrame {
 		if(modelrow!=-1) {
 		employeeFrame = new NewEmployeeFrame();
 		
-		employeeFrame.setId(lista.get(modelrow).getId());
-		employeeFrame.setName(lista.get(modelrow).getName());
-		employeeFrame.setSurname(lista.get(modelrow).getSurname());
-		employeeFrame.setPhoneField(lista.get(modelrow).getPhone());
-		employeeFrame.setBirthDate(lista.get(modelrow).getBirthdate());
-		employeeFrame.setCityField(lista.get(modelrow).getCity());
-		employeeFrame.setStreetField(lista.get(modelrow).getStreet());
-		employeeFrame.setPostcodeField(lista.get(modelrow).getPostcode());
-		employeeFrame.setHousNrField(lista.get(modelrow).getNrhouse());
-		employeeFrame.setFlatNrField(lista.get(modelrow).getNrflat());
-		employeeFrame.setLanguage(lista.get(modelrow).getLanguage());
-		employeeFrame.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
-		employeeFrame.setExperience(lista.get(modelrow).getExperience());
-		employeeFrame.setMattied(lista.get(modelrow).getMarried());
-		employeeFrame.setAvailability(lista.get(modelrow).getAvailability());
+		employeeFrame.setId(worker.get(modelrow).getId());
+		employeeFrame.setName(worker.get(modelrow).getName());
+		employeeFrame.setSurname(worker.get(modelrow).getSurname());
+		employeeFrame.setPhoneField(worker.get(modelrow).getPhone());
+		employeeFrame.setBirthDate(worker.get(modelrow).getBirthdate());
+		employeeFrame.setCityField(worker.get(modelrow).getCity());
+		employeeFrame.setStreetField(worker.get(modelrow).getStreet());
+		employeeFrame.setPostcodeField(worker.get(modelrow).getPostcode());
+		employeeFrame.setHousNrField(worker.get(modelrow).getNrhouse());
+		employeeFrame.setFlatNrField(worker.get(modelrow).getNrflat());
+		employeeFrame.setLanguage(worker.get(modelrow).getLanguage());
+		employeeFrame.setPhysicalWork(worker.get(modelrow).getPhysicalwork());
+		employeeFrame.setExperience(worker.get(modelrow).getExperience());
+		employeeFrame.setMattied(worker.get(modelrow).getMarried());
+		employeeFrame.setAvailability(worker.get(modelrow).getAvailability());
 		
 		employeeFrame.setVisible(true);
 		}
@@ -252,20 +252,20 @@ public class EmployeeList extends JFrame {
 		if(modelrow!=-1) {
 		infoframe = new InfoEmployeeFrame();
 
-		infoframe.setName(lista.get(modelrow).getName());
-		infoframe.setSurname(lista.get(modelrow).getSurname());
-		infoframe.setPhone(lista.get(modelrow).getPhone());
-		infoframe.setBirthdate(lista.get(modelrow).getBirthdate());
-		infoframe.setCity(lista.get(modelrow).getCity());
-		infoframe.setStreet(lista.get(modelrow).getStreet());
-		infoframe.setPostCode(lista.get(modelrow).getPostcode());
-		infoframe.setHouseNr(lista.get(modelrow).getNrhouse());
-		infoframe.setFlatNr(lista.get(modelrow).getNrflat());
-		infoframe.setLanguage(lista.get(modelrow).getLanguage());
-		infoframe.setMarried(lista.get(modelrow).getMarried());
-		infoframe.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
-		infoframe.setExperience(lista.get(modelrow).getExperience());
-		infoframe.setAvailability(lista.get(modelrow).getAvailability());
+		infoframe.setName(worker.get(modelrow).getName());
+		infoframe.setSurname(worker.get(modelrow).getSurname());
+		infoframe.setPhone(worker.get(modelrow).getPhone());
+		infoframe.setBirthdate(worker.get(modelrow).getBirthdate());
+		infoframe.setCity(worker.get(modelrow).getCity());
+		infoframe.setStreet(worker.get(modelrow).getStreet());
+		infoframe.setPostCode(worker.get(modelrow).getPostcode());
+		infoframe.setHouseNr(worker.get(modelrow).getNrhouse());
+		infoframe.setFlatNr(worker.get(modelrow).getNrflat());
+		infoframe.setLanguage(worker.get(modelrow).getLanguage());
+		infoframe.setMarried(worker.get(modelrow).getMarried());
+		infoframe.setPhysicalWork(worker.get(modelrow).getPhysicalwork());
+		infoframe.setExperience(worker.get(modelrow).getExperience());
+		infoframe.setAvailability(worker.get(modelrow).getAvailability());
 		
 		infoframe.setVisible(true);
 		}

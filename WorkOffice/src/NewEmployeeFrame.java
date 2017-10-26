@@ -121,9 +121,9 @@ public class NewEmployeeFrame extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (id == 0) {
-					//insertData();
 					checkFields();
 				} else {
+					
 					updateData();
 				}
 			}
@@ -314,46 +314,76 @@ public class NewEmployeeFrame extends JFrame {
 		getContentPane().setLayout(groupLayout);
 		pack();
 	}
+	
+//============================ METHODS =======================================================
+	
 	//Check that the name and surname fields are empty.
+	
 	public void checkFields() {
 		if(nameField.getText().equals("")||surnameField.getText().equals("")) {
+			
 			JOptionPane.showMessageDialog(null,"Field name and surname must be filled.");
+		
 		}
 		else {
-			insertData();
+			
+			insertEmployee();
+			
 		}
 	}
+	
 	// Insert data do database.
-	public void insertData() {
+	
+	public void insertEmployee() {
 		dao = new WorkOfficeDAO();
-
-		insertProof = dao.insertDataEmp(nameField.getText(), surnameField.getText(), birthDateField.getText(),
-				phoneField.getText(), cityField.getText(), postCodeField.getText(), streetField.getText(),
-				houseNrField.getText(), flatNrField.getText(), languageBox.getSelectedItem().toString(),
-				experienceBox.getSelectedItem().toString(), physicalWorkBox.getSelectedItem().toString(),
-				marriedBox.getSelectedItem().toString(), availabilityField.getText());
-
-		if (insertProof == true) {
-			JOptionPane.showMessageDialog(null, "Employee added");
-			clearFields();
-			dao.showEmployeeTable();
-		} else {
-			JOptionPane.showMessageDialog(null, "Error with insert employee do data base");
-		}
-
+		EmployeeModel emp=new EmployeeModel();
+		
+		emp.setName(nameField.getText());
+		emp.setSurname(surnameField.getText());
+		emp.setBirthdate(birthDateField.getText());
+		emp.setPhone(phoneField.getText());
+		emp.setCity(cityField.getText());
+		emp.setPostcode(postCodeField.getText());
+		emp.setStreet(streetField.getText());
+		emp.setNrhouse(houseNrField.getText());
+		emp.setNrflat(flatNrField.getText());
+		emp.setLanguage(languageBox.getSelectedItem().toString());
+		emp.setExperience(experienceBox.getSelectedItem().toString());
+		emp.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
+		emp.setMarried(marriedBox.getSelectedItem().toString());
+		emp.setAvailability(availabilityField.getText());
+		
+		dao.insertDataEmployee(emp);
+		dao.getEmployeeListList();
+		dao.showEmployeeTable();
+		
+		clearFields();
 	}
 
-	// Method to update data
+	// Update data
 	public void updateData() {
+		System.out.println("nowa update data");
 		dao = new WorkOfficeDAO();
+		EmployeeModel emp=new EmployeeModel();
 
-		dao.updateEmployeeData(id, nameField.getText(), surnameField.getText(), birthDateField.getText(),
-				phoneField.getText(), cityField.getText(), postCodeField.getText(), streetField.getText(),
-				houseNrField.getText(), flatNrField.getText(), languageBox.getSelectedItem().toString(),
-				experienceBox.getSelectedItem().toString(), physicalWorkBox.getSelectedItem().toString(),
-				marriedBox.getSelectedItem().toString(), availabilityField.getText());
+			emp.setName(nameField.getText());
+			emp.setSurname(surnameField.getText());
+			emp.setBirthdate(birthDateField.getText());
+			emp.setPhone(phoneField.getText());
+			emp.setCity(cityField.getText());
+			emp.setPostcode(postCodeField.getText());
+			emp.setStreet(streetField.getText());
+			emp.setNrhouse(houseNrField.getText());
+			emp.setNrflat(flatNrField.getText());
+			emp.setLanguage(languageBox.getSelectedItem().toString());
+			emp.setExperience(experienceBox.getSelectedItem().toString());
+			emp.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
+			emp.setMarried(marriedBox.getSelectedItem().toString());
+			emp.setAvailability(availabilityField.getText());
+			
+			dao.updateEmployeeData(emp, id);
 	}
-
+	
 	// Clear fields.
 	public void clearFields() {
 
