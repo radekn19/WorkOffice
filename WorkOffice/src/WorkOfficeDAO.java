@@ -607,6 +607,19 @@ public class WorkOfficeDAO {
 		return linkList;
 
 	}
+	
+	public void deleteLinkedData(int id) {
+		try {
+			PreparedStatement prst = conn.prepareStatement("DELETE FROM LINK WHERE id=?");
+			prst.setInt(1, id);
+			prst.executeUpdate();
+			prst.close();
+			System.out.println("Pozycja usunieta z LINK");
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+
+	}
 
 	// =============================================================================================================================================================================
 

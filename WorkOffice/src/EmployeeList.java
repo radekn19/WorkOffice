@@ -25,6 +25,10 @@ import javax.swing.table.TableRowSorter;
 
 public class EmployeeList extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField filterField;
 	private JTable table;
@@ -63,28 +67,29 @@ public class EmployeeList extends JFrame {
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				setEdit();
-				employeeFrame.setVisible(true);
-
+				
 			}
 		});
 
 		JButton btnInfo = new JButton("Information");
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int modelrow = table.convertRowIndexToModel(table.getSelectedRow());
-				getInfo(modelrow);
-				infoframe.setVisible(true);
-
+				
+				getInfo();
+				
 			}
 		});
 
 		filterField = new JTextField();
 		filterField.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent arg0) {
+				
 				findUser(filterField.getText());
 			}
 		});
+		
 		filterField.setColumns(10);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -102,9 +107,15 @@ public class EmployeeList extends JFrame {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int pane=JOptionPane.showConfirmDialog(null,"Do you want to delete the items?","DELETE", JOptionPane.YES_NO_OPTION);
-				if(pane==JOptionPane.YES_OPTION) {
-					deleteData();
+				int row=table.getSelectedRow();
+				if(row!=-1) {
+					int pane=JOptionPane.showConfirmDialog(null,"Do you want to delete the items?","DELETE", JOptionPane.YES_NO_OPTION);
+					if(pane==JOptionPane.YES_OPTION) {
+						deleteData(row);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "No field selected.");
 				}
 			}
 		});
@@ -138,13 +149,13 @@ public class EmployeeList extends JFrame {
 						.addContainerGap()));
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"id", "Name", "Surname", "City"
-			}
-		) {
+		table.setModel(new DefaultTableModel(new Object[][] {},
+			new String[] {"id", "Name", "Surname", "City"})
+			{
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false
 			};
@@ -199,9 +210,9 @@ public class EmployeeList extends JFrame {
 	}
 
 	// Delete selected row
-	public void deleteData() {
+	public void deleteData(int row) {
+		int delID = lista.get(table.convertRowIndexToModel(row)).getId();
 		dao = new WorkOfficeDAO();
-		int delID = lista.get(table.convertRowIndexToModel(table.getSelectedRow())).getId();
 		dao.deleteEmployeeData(delID);
 		refreshTable();
 	}
@@ -209,43 +220,57 @@ public class EmployeeList extends JFrame {
 	// Set data in NewFamilyFrame
 	public void setEdit() {
 		int modelrow = table.convertRowIndexToModel(table.getSelectedRow());
+		if(modelrow!=-1) {
 		employeeFrame = new NewEmployeeFrame();
 		
 		employeeFrame.setId(lista.get(modelrow).getId());
 		employeeFrame.setName(lista.get(modelrow).getName());
 		employeeFrame.setSurname(lista.get(modelrow).getSurname());
 		employeeFrame.setPhoneField(lista.get(modelrow).getPhone());
-		employeeFrame.setBirthDate(lista.get(modelrow).getBirthDate());
+		employeeFrame.setBirthDate(lista.get(modelrow).getBirthdate());
 		employeeFrame.setCityField(lista.get(modelrow).getCity());
 		employeeFrame.setStreetField(lista.get(modelrow).getStreet());
-		employeeFrame.setPostcodeField(lista.get(modelrow).getPostCode());
-		employeeFrame.setHousNrField(lista.get(modelrow).getHouseNr());
-		employeeFrame.setFlatNrField(lista.get(modelrow).getFlatNr());
+		employeeFrame.setPostcodeField(lista.get(modelrow).getPostcode());
+		employeeFrame.setHousNrField(lista.get(modelrow).getNrhouse());
+		employeeFrame.setFlatNrField(lista.get(modelrow).getNrflat());
 		employeeFrame.setLanguage(lista.get(modelrow).getLanguage());
-		employeeFrame.setPhysicalWork(lista.get(modelrow).getPhysicalWork());
+		employeeFrame.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
 		employeeFrame.setExperience(lista.get(modelrow).getExperience());
 		employeeFrame.setMattied(lista.get(modelrow).getMarried());
 		employeeFrame.setAvailability(lista.get(modelrow).getAvailability());
+		
+		employeeFrame.setVisible(true);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "No field selected.");
+		}
 	}
 
 	// Selected row info
-	public void getInfo(int modelrow) {
-
+	public void getInfo() {
+		int modelrow = table.convertRowIndexToModel(table.getSelectedRow());
+		if(modelrow!=-1) {
 		infoframe = new InfoEmployeeFrame();
 
 		infoframe.setName(lista.get(modelrow).getName());
 		infoframe.setSurname(lista.get(modelrow).getSurname());
 		infoframe.setPhone(lista.get(modelrow).getPhone());
-		infoframe.setBirthdate(lista.get(modelrow).getBirthDate());
+		infoframe.setBirthdate(lista.get(modelrow).getBirthdate());
 		infoframe.setCity(lista.get(modelrow).getCity());
 		infoframe.setStreet(lista.get(modelrow).getStreet());
-		infoframe.setPostCode(lista.get(modelrow).getPostCode());
-		infoframe.setHouseNr(lista.get(modelrow).getHouseNr());
-		infoframe.setFlatNr(lista.get(modelrow).getFlatNr());
+		infoframe.setPostCode(lista.get(modelrow).getPostcode());
+		infoframe.setHouseNr(lista.get(modelrow).getNrhouse());
+		infoframe.setFlatNr(lista.get(modelrow).getNrflat());
 		infoframe.setLanguage(lista.get(modelrow).getLanguage());
 		infoframe.setMarried(lista.get(modelrow).getMarried());
-		infoframe.setPhysicalWork(lista.get(modelrow).getPhysicalWork());
+		infoframe.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
 		infoframe.setExperience(lista.get(modelrow).getExperience());
 		infoframe.setAvailability(lista.get(modelrow).getAvailability());
+		
+		infoframe.setVisible(true);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "No field selected.");
+		}
 	}
 }

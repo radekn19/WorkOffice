@@ -13,10 +13,13 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class MainMenu {
 
@@ -57,10 +60,10 @@ public class MainMenu {
 		frmWorkOffice.setTitle("WORK OFFICE");
 		frmWorkOffice.setBounds(100, 100, 900, 600);
 		frmWorkOffice.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		dao=new WorkOfficeDAO();
-		dao.ifEmpTablesExist();
+
+		dao = new WorkOfficeDAO();
 		dao.ifLinkTablesExist();
+		dao.ifEmpTablesExist();
 		dao.ifTablesExist();
 
 		JPanel panel_table = new JPanel();
@@ -78,27 +81,42 @@ public class MainMenu {
 				link.setVisible(true);
 			}
 		});
+
+		JButton btnDeleteLink = new JButton("Delete");
+		btnDeleteLink.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int pane = JOptionPane.showConfirmDialog(null, "Do you want to delete the items?", "DELETE",
+						JOptionPane.YES_NO_OPTION);
+				if (pane == JOptionPane.YES_OPTION) {
+					deleteData();
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frmWorkOffice.getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(btnGetWorker)
-						.addContainerGap(723, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup().addGap(10).addGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_table, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING,
-								groupLayout.createSequentialGroup()
+						.addPreferredGap(ComponentPlacement.RELATED, 706, Short.MAX_VALUE).addComponent(btnDeleteLink)
+						.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup().addGap(10)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
+								.addGroup(groupLayout.createSequentialGroup()
 										.addComponent(panel_worker, GroupLayout.PREFERRED_SIZE, 424,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(10).addComponent(panel_family, GroupLayout.PREFERRED_SIZE, 424,
 												GroupLayout.PREFERRED_SIZE)))
 						.addGap(16)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addGap(17)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(panel_family, 0, 0, Short.MAX_VALUE)
-								.addComponent(panel_worker, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
-						.addGap(31).addComponent(btnGetWorker).addGap(18)
-						.addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE).addContainerGap()));
+		groupLayout
+				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup().addGap(17)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(panel_family, 0, 0, Short.MAX_VALUE)
+										.addComponent(panel_worker, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+								.addGap(31)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnGetWorker)
+										.addComponent(btnDeleteLink))
+								.addGap(18).addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+								.addContainerGap()));
 		panel_table.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -108,6 +126,10 @@ public class MainMenu {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Name", "Surname", "", "ID", "Name", "Surname", "", "From_Date", "To_Date" }) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, false,
 					false };
 
@@ -128,8 +150,7 @@ public class MainMenu {
 		table.getColumnModel().getColumn(7).setPreferredWidth(30);
 		table.getColumnModel().getColumn(7).setMaxWidth(40);
 		scrollPane.setViewportView(table);
-		
-		dao = new WorkOfficeDAO();
+
 		linkList = dao.getLinkList();
 		populateLinkTable();
 
@@ -218,15 +239,9 @@ public class MainMenu {
 		mnFile.add(mntmExit);
 
 	}
-//====================================================================================
 	
-	//Refresh
-	public void refreshTable() {
-		model=(DefaultTableModel) table.getModel();
-		model.setRowCount(0);
-		populateLinkTable();
-	}
-	
+// ====================================================================================
+
 	// Method populate Family Table
 	public void populateLinkTable() {
 		model = (DefaultTableModel) table.getModel();
@@ -248,5 +263,22 @@ public class MainMenu {
 			model.addRow(tablerow);
 		}
 		System.out.println("Table  Link populated");
+	}
+
+	// Delete selected row
+	public void deleteData() {
+		dao = new WorkOfficeDAO();
+		int delID = linkList.get(table.convertRowIndexToModel(table.getSelectedRow())).getId();
+		dao.deleteLinkedData(delID);
+		refreshTable();
+	}
+
+	// Refresh
+	public void refreshTable() {
+		dao = new WorkOfficeDAO();
+		linkList = dao.getLinkList();
+		model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		populateLinkTable();
 	}
 }

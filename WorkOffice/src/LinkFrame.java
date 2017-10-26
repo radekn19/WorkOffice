@@ -180,6 +180,7 @@ public class LinkFrame extends JFrame {
 				fromDate = date.format(dateChooserFrom.getDate());
 				toDate = date.format(dateChooserTo.getDate());
 				insertLinkRows(fromDate, toDate);
+				//menu.refreshTable();
 				}
 			}
 		});
@@ -243,15 +244,15 @@ public class LinkFrame extends JFrame {
 		infoFrameEmpl.setName(empList.get(modelrow).getName());
 		infoFrameEmpl.setSurname(empList.get(modelrow).getSurname());
 		infoFrameEmpl.setPhone(empList.get(modelrow).getPhone());
-		infoFrameEmpl.setBirthdate(empList.get(modelrow).getBirthDate());
+		infoFrameEmpl.setBirthdate(empList.get(modelrow).getBirthdate());
 		infoFrameEmpl.setCity(empList.get(modelrow).getCity());
 		infoFrameEmpl.setStreet(empList.get(modelrow).getStreet());
-		infoFrameEmpl.setPostCode(empList.get(modelrow).getPostCode());
-		infoFrameEmpl.setHouseNr(empList.get(modelrow).getHouseNr());
-		infoFrameEmpl.setFlatNr(empList.get(modelrow).getFlatNr());
+		infoFrameEmpl.setPostCode(empList.get(modelrow).getPostcode());
+		infoFrameEmpl.setHouseNr(empList.get(modelrow).getNrhouse());
+		infoFrameEmpl.setFlatNr(empList.get(modelrow).getNrflat());
 		infoFrameEmpl.setLanguage(empList.get(modelrow).getLanguage());
 		infoFrameEmpl.setMarried(empList.get(modelrow).getMarried());
-		infoFrameEmpl.setPhysicalWork(empList.get(modelrow).getPhysicalWork());
+		infoFrameEmpl.setPhysicalWork(empList.get(modelrow).getPhysicalwork());
 		infoFrameEmpl.setExperience(empList.get(modelrow).getExperience());
 		infoFrameEmpl.setAvailability(empList.get(modelrow).getAvailability());
 	}
@@ -264,20 +265,20 @@ public class LinkFrame extends JFrame {
 		infoFrameFam.setName(famList.get(modelrow).getName());
 		infoFrameFam.setSurname(famList.get(modelrow).getSurname());
 		infoFrameFam.setPhone(famList.get(modelrow).getPhone());
-		infoFrameFam.setFamilyPhone(famList.get(modelrow).getFamilyPhone());
-		infoFrameFam.setBirthdate(famList.get(modelrow).getBirthDate());
+		infoFrameFam.setFamilyPhone(famList.get(modelrow).getPhonetofamily());
+		infoFrameFam.setBirthdate(famList.get(modelrow).getBirthdate());
 		infoFrameFam.setCity(famList.get(modelrow).getCity());
 		infoFrameFam.setStreet(famList.get(modelrow).getStreet());
-		infoFrameFam.setPostCode(famList.get(modelrow).getPostCode());
-		infoFrameFam.setHouseNr(famList.get(modelrow).getHouseNr());
-		infoFrameFam.setFlatNr(famList.get(modelrow).getFlatNr());
-		infoFrameFam.setPhysicalFit(famList.get(modelrow).getPhysicalFit());
+		infoFrameFam.setPostCode(famList.get(modelrow).getPostcode());
+		infoFrameFam.setHouseNr(famList.get(modelrow).getNrhouse());
+		infoFrameFam.setFlatNr(famList.get(modelrow).getNrflat());
+		infoFrameFam.setPhysicalFit(famList.get(modelrow).getPhysicalfit());
 		infoFrameFam.setRate(famList.get(modelrow).getRate());
 		infoFrameFam.setLanguage(famList.get(modelrow).getLanguage());
 		infoFrameFam.setInfo(famList.get(modelrow).getInfo());
-		infoFrameFam.setPhysicalWork(famList.get(modelrow).getPhysicalWork());
+		infoFrameFam.setPhysicalWork(famList.get(modelrow).getPhysicalwork());
 		infoFrameFam.setExperience(famList.get(modelrow).getExperience());
-		infoFrameFam.setEmployeeAge(famList.get(modelrow).getEmployeeAge());
+		infoFrameFam.setEmployeeAge(famList.get(modelrow).getEmployeeage());
 	}
 
 	// Link and save selected rows into DataBase
@@ -289,7 +290,8 @@ public class LinkFrame extends JFrame {
 		dao.insertLinkData(empList.get(empRow).getId(), empList.get(empRow).getName(), empList.get(empRow).getSurname(),
 				famList.get(famRow).getId(), famList.get(famRow).getName(), famList.get(famRow).getSurname(), dateFrom,
 				dateTo);
-
+		
+		
 		dao.showLinkTable();
 
 	}

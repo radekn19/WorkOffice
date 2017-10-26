@@ -34,72 +34,146 @@ public class FamilyModel {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getSurname() {
 		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getCity() {
 		return city;
 	}
 
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	public String getStreet() {
 		return street;
 	}
 
-	public String getPhysicalFit() {
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getPhysicalfit() {
 		return physicalfit;
+	}
+
+	public void setPhysicalfit(String physicalfit) {
+		this.physicalfit = physicalfit;
 	}
 
 	public String getLanguage() {
 		return language;
 	}
 
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	public String getExperience() {
 		return experience;
 	}
 
-	public String getPhysicalWork() {
+	public void setExperience(String experience) {
+		this.experience = experience;
+	}
+
+	public String getPhysicalwork() {
 		return physicalwork;
+	}
+
+	public void setPhysicalwork(String physicalwork) {
+		this.physicalwork = physicalwork;
 	}
 
 	public String getInfo() {
 		return info;
 	}
 
-	public String getEmployeeAge() {
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public String getEmployeeage() {
 		return employeeage;
 	}
 
-	public int getId() {
-		return id;
+	public void setEmployeeage(String employeeage) {
+		this.employeeage = employeeage;
 	}
 
-	public String getBirthDate() {
+	public String getBirthdate() {
 		return birthdate;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
 	}
 
 	public String getPhone() {
 		return phone;
 	}
 
-	public String getPostCode() {
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getPostcode() {
 		return postcode;
 	}
 
-	public String getHouseNr() {
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getNrhouse() {
 		return nrhouse;
 	}
 
-	public String getFlatNr() {
+	public void setNrhouse(String nrhouse) {
+		this.nrhouse = nrhouse;
+	}
+
+	public String getNrflat() {
 		return nrflat;
 	}
 
-	public String getFamilyPhone() {
+	public void setNrflat(String nrflat) {
+		this.nrflat = nrflat;
+	}
+
+	public String getPhonetofamily() {
 		return phonetofamily;
+	}
+
+	public void setPhonetofamily(String phonetofamily) {
+		this.phonetofamily = phonetofamily;
 	}
 
 	public String getRate() {
 		return rate;
 	}
+
+	public void setRate(String rate) {
+		this.rate = rate;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	
 
 }

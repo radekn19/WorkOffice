@@ -203,20 +203,20 @@ public class FamiliesList extends JFrame {
 		info.setName(lista.get(modelrow).getName());
 		info.setSurname(lista.get(modelrow).getSurname());
 		info.setPhone(lista.get(modelrow).getPhone());
-		info.setFamilyPhone(lista.get(modelrow).getFamilyPhone());
-		info.setBirthdate(lista.get(modelrow).getBirthDate());
+		info.setFamilyPhone(lista.get(modelrow).getPhonetofamily());
+		info.setBirthdate(lista.get(modelrow).getBirthdate());
 		info.setCity(lista.get(modelrow).getCity());
 		info.setStreet(lista.get(modelrow).getStreet());
-		info.setPostCode(lista.get(modelrow).getPostCode());
-		info.setHouseNr(lista.get(modelrow).getHouseNr());
-		info.setFlatNr(lista.get(modelrow).getFlatNr());
-		info.setPhysicalFit(lista.get(modelrow).getPhysicalFit());
+		info.setPostCode(lista.get(modelrow).getPostcode());
+		info.setHouseNr(lista.get(modelrow).getNrhouse());
+		info.setFlatNr(lista.get(modelrow).getNrflat());
+		info.setPhysicalFit(lista.get(modelrow).getPhysicalfit());
 		info.setRate(lista.get(modelrow).getRate());
 		info.setLanguage(lista.get(modelrow).getLanguage());
 		info.setInfo(lista.get(modelrow).getInfo());
-		info.setPhysicalWork(lista.get(modelrow).getPhysicalWork());
+		info.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
 		info.setExperience(lista.get(modelrow).getExperience());
-		info.setEmployeeAge(lista.get(modelrow).getEmployeeAge());
+		info.setEmployeeAge(lista.get(modelrow).getEmployeeage());
 	}
 
 	// Find user method
@@ -235,19 +235,19 @@ public class FamiliesList extends JFrame {
 		familyFrame.setName(lista.get(modelrow).getName());
 		familyFrame.setSurname(lista.get(modelrow).getSurname());
 		familyFrame.setPhoneField(lista.get(modelrow).getPhone());
-		familyFrame.setPhoneToFamilyField(lista.get(modelrow).getFamilyPhone());
-		familyFrame.setBirthDate(lista.get(modelrow).getBirthDate());
+		familyFrame.setPhoneToFamilyField(lista.get(modelrow).getPhonetofamily());
+		familyFrame.setBirthDate(lista.get(modelrow).getBirthdate());
 		familyFrame.setCityField(lista.get(modelrow).getCity());
 		familyFrame.setStreetField(lista.get(modelrow).getStreet());
-		familyFrame.setPostcodeField(lista.get(modelrow).getPostCode());
-		familyFrame.setHousNrField(lista.get(modelrow).getHouseNr());
-		familyFrame.setFlatNrField(lista.get(modelrow).getFlatNr());
-		familyFrame.setPhysicalFit(lista.get(modelrow).getPhysicalFit());
+		familyFrame.setPostcodeField(lista.get(modelrow).getPostcode());
+		familyFrame.setHousNrField(lista.get(modelrow).getNrhouse());
+		familyFrame.setFlatNrField(lista.get(modelrow).getNrflat());
+		familyFrame.setPhysicalFit(lista.get(modelrow).getPhysicalfit());
 		familyFrame.setRateField(lista.get(modelrow).getRate());
 		familyFrame.setLanguagelvl(lista.get(modelrow).getLanguage());
 		familyFrame.setInfoField(lista.get(modelrow).getInfo());
-		familyFrame.setPhysicalWork(lista.get(modelrow).getPhysicalWork());
+		familyFrame.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
 		familyFrame.setExperience(lista.get(modelrow).getExperience());
-		familyFrame.setEmployeeAge(lista.get(modelrow).getEmployeeAge());
+		familyFrame.setEmployeeAge(lista.get(modelrow).getEmployeeage());
 	}
 }
