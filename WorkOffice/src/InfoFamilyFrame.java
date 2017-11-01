@@ -204,11 +204,11 @@ public class InfoFamilyFrame extends JFrame {
 		panel_2.add(setemployeeage);
 
 		JButton btnclose = new JButton("Close");
-		btnclose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
-			}
-		});
+			btnclose.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					setVisible(false);
+				}
+			});
 		btnclose.setBounds(172, 482, 89, 23);
 		contentPane.add(btnclose);
 

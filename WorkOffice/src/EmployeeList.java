@@ -1,3 +1,5 @@
+
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -6,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -149,13 +150,13 @@ public class EmployeeList extends JFrame {
 						.addContainerGap()));
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {},
-			new String[] {"id", "Name", "Surname", "City"})
-			{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"id", "Name", "Surname", "City"
+			}
+		) {
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false
 			};
@@ -163,8 +164,10 @@ public class EmployeeList extends JFrame {
 				return columnEditables[column];
 			}
 		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(25);
-		table.getColumnModel().getColumn(0).setMaxWidth(25);
+		table.getColumnModel().getColumn(0).setPreferredWidth(40);
+		table.getColumnModel().getColumn(0).setMinWidth(30);
+		table.getColumnModel().getColumn(0).setMaxWidth(80);
+		table.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(table);
 
 		// Initiate populate the ArrayList lista from database data.

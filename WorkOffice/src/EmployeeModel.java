@@ -1,4 +1,5 @@
 
+
 public class EmployeeModel {
 
 	private String name, surname, city, street, language, experience, physicalwork, birthdate, phone, postcode, nrhouse,

@@ -37,7 +37,6 @@ public class LinkFrame extends JFrame {
 	private SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
 	private String fromDate = null;
 	private String toDate = null;
-	private MainMenu menu = new MainMenu();
 
 	/**
 	 * Launch the application.
@@ -91,8 +90,9 @@ public class LinkFrame extends JFrame {
 		panelEmp.add(scrollPaneEmp);
 
 		employeeTable = new JTable();
-		employeeTable
-				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Name", "Surname", "City" }) {
+		employeeTable.setModel(new DefaultTableModel(new Object[][] {}, 
+							new String[] { "ID", "Name", "Surname", "City" }) {
+			
 					boolean[] columnEditables = new boolean[] { false, false, false, false };
 
 					public boolean isCellEditable(int row, int column) {
@@ -100,13 +100,24 @@ public class LinkFrame extends JFrame {
 					}
 
 				});
+		employeeTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+		employeeTable.getColumnModel().getColumn(0).setMinWidth(30);
+		employeeTable.getColumnModel().getColumn(0).setMaxWidth(80);
+		employeeTable.setAutoCreateRowSorter(true);
 		scrollPaneEmp.setViewportView(employeeTable);
 
 		JButton btnEmploInfo = new JButton("Information");
 		btnEmploInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getInfoEmp();
-				infoFrameEmpl.setVisible(true);
+				
+				int row=employeeTable.getSelectedRow();
+				if(row!=-1) {
+					
+					getInfoEmp();
+					infoFrameEmpl.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "Data not selected.");
+				}
 			}
 		});
 		sl_panelEmp.putConstraint(SpringLayout.NORTH, btnEmploInfo, 329, SpringLayout.NORTH, panelEmp);
@@ -140,13 +151,24 @@ public class LinkFrame extends JFrame {
 						return columnEditables[column];
 					}
 				});
+		familyTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+		familyTable.getColumnModel().getColumn(0).setMinWidth(30);
+		familyTable.getColumnModel().getColumn(0).setMaxWidth(80);
+		familyTable.setAutoCreateRowSorter(true);
 		scrollPaneFam.setViewportView(familyTable);
 
 		JButton btnFamInfo = new JButton("Information");
 		btnFamInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getInfoFam();
-				infoFrameFam.setVisible(true);
+				int row=familyTable.getSelectedRow();
+				
+				if(row!=-1) {
+					getInfoFam();
+					infoFrameFam.setVisible(true);
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Data not selected.");
+				}
 			}
 		});
 		btnFamInfo.setBounds(12, 329, 97, 25);
@@ -173,14 +195,14 @@ public class LinkFrame extends JFrame {
 		JButton btnLink = new JButton("Link");
 		btnLink.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				if(dateChooserFrom.getDate()==null||dateChooserTo.getDate()==null) {
 					JOptionPane.showMessageDialog(null, "Date not selected.");
 				}
 				else {
-				fromDate = date.format(dateChooserFrom.getDate());
-				toDate = date.format(dateChooserTo.getDate());
-				insertLinkRows(fromDate, toDate);
-				//menu.refreshTable();
+					fromDate = date.format(dateChooserFrom.getDate());
+					toDate = date.format(dateChooserTo.getDate());
+					insertLinkRows(fromDate, toDate);
 				}
 			}
 		});
@@ -205,6 +227,7 @@ public class LinkFrame extends JFrame {
 
 	// Method populate Employee Table
 	public void populateEmpTable() {
+		
 		dao = new WorkOfficeDAO();
 		empList = dao.getEmployeeListList();
 		modelEmp = (DefaultTableModel) employeeTable.getModel();
@@ -222,6 +245,7 @@ public class LinkFrame extends JFrame {
 
 	// Method populate Family Table
 	public void populateFamTable() {
+		
 		dao = new WorkOfficeDAO();
 		famList = dao.getFamilyList();
 		modelFam = (DefaultTableModel) familyTable.getModel();
@@ -239,8 +263,10 @@ public class LinkFrame extends JFrame {
 
 	// Selected row info Employee
 	public void getInfoEmp() {
+		
 		int modelrow = employeeTable.convertRowIndexToModel(employeeTable.getSelectedRow());
 		infoFrameEmpl = new InfoEmployeeFrame();
+		
 		infoFrameEmpl.setName(empList.get(modelrow).getName());
 		infoFrameEmpl.setSurname(empList.get(modelrow).getSurname());
 		infoFrameEmpl.setPhone(empList.get(modelrow).getPhone());
@@ -257,11 +283,12 @@ public class LinkFrame extends JFrame {
 		infoFrameEmpl.setAvailability(empList.get(modelrow).getAvailability());
 	}
 
-	// Selected row info
+	// Selected row info Family
 	public void getInfoFam() {
 
 		int modelrow = familyTable.convertRowIndexToModel(familyTable.getSelectedRow());
 		infoFrameFam = new InfoFamilyFrame();
+		
 		infoFrameFam.setName(famList.get(modelrow).getName());
 		infoFrameFam.setSurname(famList.get(modelrow).getSurname());
 		infoFrameFam.setPhone(famList.get(modelrow).getPhone());
@@ -281,18 +308,39 @@ public class LinkFrame extends JFrame {
 		infoFrameFam.setEmployeeAge(famList.get(modelrow).getEmployeeage());
 	}
 
-	// Link and save selected rows into DataBase
+ // Link and save selected rows into DataBase
 	public void insertLinkRows(String dateFrom, String dateTo) {
+		
 		dao = new WorkOfficeDAO();
-		int empRow = employeeTable.convertColumnIndexToModel(employeeTable.getSelectedRow());
+		
+		int empRow = employeeTable.convertRowIndexToModel(employeeTable.getSelectedRow());
 		int famRow = familyTable.convertRowIndexToModel(familyTable.getSelectedRow());
 
 		dao.insertLinkData(empList.get(empRow).getId(), empList.get(empRow).getName(), empList.get(empRow).getSurname(),
 				famList.get(famRow).getId(), famList.get(famRow).getName(), famList.get(famRow).getSurname(), dateFrom,
 				dateTo);
 		
-		
 		dao.showLinkTable();
 
 	}
+	
+//public void insertLinkRows(String dateFrom, String dateTo) {
+//		EmployeeModel emp=new EmployeeModel();
+//		FamilyModel fam=new FamilyModel();
+//		LinkModel link=new LinkModel();
+//		dao = new WorkOfficeDAO();
+//		int empRow = employeeTable.convertColumnIndexToModel(employeeTable.getSelectedRow());
+//		int famRow = familyTable.convertRowIndexToModel(familyTable.getSelectedRow());
+//	
+//		link.seteId(empList.get(empRow).getId());
+//		link.seteName(empList.get(empRow).getName());
+//		link.seteSurname(empList.get(empRow).getSurname());
+//		link.setfId(famList.get(famRow).getId());
+//		link.setfName(famList.get(famRow).getName());
+//		link.setfSurname(famList.get(famRow).getSurname());
+//	
+//		dao.insertLinkData(link, dateFrom, dateTo);
+//		
+//		dao.showLinkTable();
+//	}
 }

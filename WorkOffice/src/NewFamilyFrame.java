@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class NewFamilyFrame extends JFrame {
-	private boolean insertProof = false;
+	
 	private JPanel contentPane;
 	private WorkOfficeDAO dao;
 	private int id;
@@ -62,7 +62,6 @@ public class NewFamilyFrame extends JFrame {
 	 */
 	public NewFamilyFrame() {
 		setTitle("Family");
-		// setBounds(100, 100, 700, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -368,7 +367,7 @@ public class NewFamilyFrame extends JFrame {
 				if (id == 0) {
 					checkFields();
 				} else {
-					updateData();
+					updateFamily();
 				}
 			}
 		});
@@ -383,41 +382,66 @@ public class NewFamilyFrame extends JFrame {
 				JOptionPane.showMessageDialog(null,"Field name and surname must be filled.");
 			}
 			else {
-				saveData();
+				insertFamily();
 			}
 		}
 	// Method to update data
-	public void updateData() {
-		dao = new WorkOfficeDAO();
 
-		dao.updateData(id, nameField.getText(), surnameField.getText(), birthDateField.getText(), phoneField.getText(),
-				cityField.getText(), postcodeField.getText(), streetField.getText(), housNrField.getText(),
-				flatNrField.getText(), phoneToFamilyField.getText(), physicalFitBox.getSelectedItem().toString(),
-				rateField.getText(), infoField.getText(), languagelvlBox.getSelectedItem().toString(),
-				experienceBox.getSelectedItem().toString(), physicalWorkBox.getSelectedItem().toString(),
-				workerAgeBox.getSelectedItem().toString());
+	public void updateFamily() {
+		dao= new WorkOfficeDAO();
+		FamilyModel fam=new FamilyModel();
+		
+		fam.setName(nameField.getText());
+		fam.setSurname(surnameField.getText());
+		fam.setBirthdate(birthDateField.getText());
+		fam.setPhone(phoneField.getText());
+		fam.setCity(cityField.getText());
+		fam.setPostcode(postcodeField.getText());
+		fam.setStreet(streetField.getText());
+		fam.setNrhouse(housNrField.getText());
+		fam.setNrflat(flatNrField.getText());
+		fam.setPhonetofamily(phoneToFamilyField.getText());
+		fam.setPhysicalfit(physicalFitBox.getSelectedItem().toString());
+		fam.setRate(rateField.getText());
+		fam.setInfo(infoField.getText());
+		fam.setLanguage(languagelvlBox.getSelectedItem().toString());
+		fam.setExperience(experienceBox.getSelectedItem().toString());
+		fam.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
+		fam.setEmployeeage(workerAgeBox.getSelectedItem().toString());
+		
+		dao.updateData(fam, id);
 	}
 
-	// Save data
-	public void saveData() {
-		dao = new WorkOfficeDAO();
+	// Insert new family data
 
-		insertProof = dao.insertData(nameField.getText(), surnameField.getText(), birthDateField.getText(),
-				phoneField.getText(), cityField.getText(), postcodeField.getText(), streetField.getText(),
-				housNrField.getText(), flatNrField.getText(), phoneToFamilyField.getText(),
-				physicalFitBox.getSelectedItem().toString(), rateField.getText(), infoField.getText(),
-				languagelvlBox.getSelectedItem().toString(), experienceBox.getSelectedItem().toString(),
-				physicalWorkBox.getSelectedItem().toString(), workerAgeBox.getSelectedItem().toString());
-		dao.showTable();
-
-		if (insertProof == true) {
-			JOptionPane.showMessageDialog(null, "Family added");
-			clearFields();
-		} else {
-			JOptionPane.showMessageDialog(null, "Error with insert family do data base");
-		}
+	public void insertFamily() {
+		
+		dao= new WorkOfficeDAO();
+		FamilyModel fam=new FamilyModel();
+		
+		fam.setName(nameField.getText());
+		fam.setSurname(surnameField.getText());
+		fam.setBirthdate(birthDateField.getText());
+		fam.setPhone(phoneField.getText());
+		fam.setCity(cityField.getText());
+		fam.setPostcode(postcodeField.getText());
+		fam.setStreet(streetField.getText());
+		fam.setNrhouse(housNrField.getText());
+		fam.setNrflat(flatNrField.getText());
+		fam.setPhonetofamily(phoneToFamilyField.getText());
+		fam.setPhysicalfit(physicalFitBox.getSelectedItem().toString());
+		fam.setRate(rateField.getText());
+		fam.setInfo(infoField.getText());
+		fam.setLanguage(languagelvlBox.getSelectedItem().toString());
+		fam.setExperience(experienceBox.getSelectedItem().toString());
+		fam.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
+		fam.setEmployeeage(workerAgeBox.getSelectedItem().toString());
+		
+		dao.insertDataFamily(fam);
+		clearFields();
+		
 	}
-
+	
 	// Method to clear all fields in Family frame class.
 
 	public void clearFields() {

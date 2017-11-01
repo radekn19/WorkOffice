@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
@@ -19,6 +20,9 @@ import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
+import com.sun.glass.ui.Timer;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class MainMenu {
@@ -38,6 +42,19 @@ public class MainMenu {
 				try {
 					MainMenu window = new MainMenu();
 					window.frmWorkOffice.setVisible(true);
+					
+			//Checking link expiration date 2s after start program in new thread.	
+					
+							new Thread(new Runnable() {
+								public void run() {
+									try {
+										Thread.sleep(1000);
+									} catch (InterruptedException e) {}
+									
+									DateTime dateTime = new DateTime();
+								}
+							}).start();
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,6 +67,7 @@ public class MainMenu {
 	 */
 	public MainMenu() {
 		initialize();
+
 	}
 
 	/**
@@ -85,10 +103,15 @@ public class MainMenu {
 		JButton btnDeleteLink = new JButton("Delete");
 		btnDeleteLink.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int pane = JOptionPane.showConfirmDialog(null, "Do you want to delete the items?", "DELETE",
-						JOptionPane.YES_NO_OPTION);
-				if (pane == JOptionPane.YES_OPTION) {
-					deleteData();
+				int row = table.getSelectedRow();
+				if (row != -1) {
+					int pane = JOptionPane.showConfirmDialog(null, "Do you want to delete the items?", "DELETE",
+							JOptionPane.YES_NO_OPTION);
+					if (pane == JOptionPane.YES_OPTION) {
+						deleteData(row);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Data not selected");
 				}
 			}
 		});
@@ -126,10 +149,6 @@ public class MainMenu {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Name", "Surname", "", "ID", "Name", "Surname", "", "From_Date", "To_Date" }) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, false,
 					false };
 
@@ -140,16 +159,16 @@ public class MainMenu {
 		table.getColumnModel().getColumn(0).setPreferredWidth(45);
 		table.getColumnModel().getColumn(0).setMinWidth(40);
 		table.getColumnModel().getColumn(0).setMaxWidth(60);
-		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(3).setPreferredWidth(30);
 		table.getColumnModel().getColumn(3).setMaxWidth(40);
 		table.getColumnModel().getColumn(4).setPreferredWidth(45);
 		table.getColumnModel().getColumn(4).setMinWidth(40);
 		table.getColumnModel().getColumn(4).setMaxWidth(60);
-		table.getColumnModel().getColumn(7).setResizable(false);
 		table.getColumnModel().getColumn(7).setPreferredWidth(30);
 		table.getColumnModel().getColumn(7).setMaxWidth(40);
+
 		scrollPane.setViewportView(table);
+		table.setAutoCreateRowSorter(true);
 
 		linkList = dao.getLinkList();
 		populateLinkTable();
@@ -239,37 +258,40 @@ public class MainMenu {
 		mnFile.add(mntmExit);
 
 	}
-	
-// ====================================================================================
 
-	// Method populate Family Table
+	// ====================================================================================
+
+	// Method populate Link Table and check expiration date.
 	public void populateLinkTable() {
+
 		model = (DefaultTableModel) table.getModel();
 		Object[] tablerow = new Object[10];
 
 		for (int i = 0; i < linkList.size(); i++) {
 
-			tablerow[0] = linkList.get(i).getEid();
-			tablerow[1] = linkList.get(i).getEname();
-			tablerow[2] = linkList.get(i).getEsurname();
+			tablerow[0] = linkList.get(i).geteId();
+			tablerow[1] = linkList.get(i).geteName();
+			tablerow[2] = linkList.get(i).geteSurname();
 			tablerow[3] = " ";
-			tablerow[4] = linkList.get(i).getFid();
-			tablerow[5] = linkList.get(i).getFName();
-			tablerow[6] = linkList.get(i).getFsurname();
+			tablerow[4] = linkList.get(i).getfId();
+			tablerow[5] = linkList.get(i).getfName();
+			tablerow[6] = linkList.get(i).getfSurname();
 			tablerow[7] = " ";
-			tablerow[8] = linkList.get(i).getFromDate();
-			tablerow[9] = linkList.get(i).getToDate();
+			tablerow[8] = linkList.get(i).getDataFrom();
+			tablerow[9] = linkList.get(i).getDataTo();
 
 			model.addRow(tablerow);
 		}
 		System.out.println("Table  Link populated");
+
 	}
 
 	// Delete selected row
-	public void deleteData() {
+	public void deleteData(int row) {
+
 		dao = new WorkOfficeDAO();
-		int delID = linkList.get(table.convertRowIndexToModel(table.getSelectedRow())).getId();
-		dao.deleteLinkedData(delID);
+		int delID = linkList.get(table.convertRowIndexToModel(row)).getId();
+		dao.deleteLinkData(delID);
 		refreshTable();
 	}
 
@@ -281,4 +303,5 @@ public class MainMenu {
 		model.setRowCount(0);
 		populateLinkTable();
 	}
+
 }

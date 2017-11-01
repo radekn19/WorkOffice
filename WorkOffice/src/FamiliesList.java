@@ -141,16 +141,27 @@ public class FamiliesList extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null},
 			},
 			new String[] {
 				"id", "Name", "Surname", "City"
 			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(25);
-		table.getColumnModel().getColumn(0).setMaxWidth(25);
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(40);
+		table.getColumnModel().getColumn(0).setMinWidth(30);
+		table.getColumnModel().getColumn(0).setMaxWidth(80);
+		table.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(table);
 
-		// Initiate populate the ArrayList lista from database data.
+		// Initiate populate the ArrayList list from database data.
+		
 		dao = new WorkOfficeDAO();
 		lista = dao.getFamilyList();
 		populateTable();
@@ -221,16 +232,18 @@ public class FamiliesList extends JFrame {
 
 	// Find user method
 	public void findUser(String query) {
+		
 		TableRowSorter<DefaultTableModel> trs = new TableRowSorter<DefaultTableModel>(model);
 		table.setRowSorter(trs);
 		trs.setRowFilter(RowFilter.regexFilter(query));
 	}
 
-	// Set data in NewFamilyFrame
+	// Set data in NewFamilyFrame 
 	public void setEdit() {
-		familyFrame = new NewFamilyFrame();
+		
 		int modelrow = table.convertRowIndexToModel(table.getSelectedRow());
-
+		familyFrame = new NewFamilyFrame();
+	
 		familyFrame.setId(lista.get(modelrow).getId());
 		familyFrame.setName(lista.get(modelrow).getName());
 		familyFrame.setSurname(lista.get(modelrow).getSurname());

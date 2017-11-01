@@ -1,9 +1,15 @@
 
+
 public class LinkModel {
 
-	private String eId, eName, eSurname, fId, fName, fSurname, dataFrom, dataTo;
+	private String  eName, eSurname, fName, fSurname, dataFrom, dataTo;
+	private String eId ,fId;
 	private int id;
 
+	public LinkModel() {
+		
+	}
+	
 	public LinkModel(int id, String eId, String eName, String eSurname, String fId, String fName, String fSurname,
 			String dataFrom, String dataTo) {
 
@@ -19,40 +25,76 @@ public class LinkModel {
 
 	}
 
+	public String geteId() {
+		return eId;
+	}
+
+	public void seteId(String eId) {
+		this.eId = eId;
+	}
+
+	public String geteName() {
+		return eName;
+	}
+
+	public void seteName(String eName) {
+		this.eName = eName;
+	}
+
+	public String geteSurname() {
+		return eSurname;
+	}
+
+	public void seteSurname(String eSurname) {
+		this.eSurname = eSurname;
+	}
+
+	public String getfId() {
+		return fId;
+	}
+
+	public void setfId(String fId) {
+		this.fId = fId;
+	}
+
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getfSurname() {
+		return fSurname;
+	}
+
+	public void setfSurname(String fSurname) {
+		this.fSurname = fSurname;
+	}
+
+	public String getDataFrom() {
+		return dataFrom;
+	}
+
+	public void setDataFrom(String dataFrom) {
+		this.dataFrom = dataFrom;
+	}
+
+	public String getDataTo() {
+		return dataTo;
+	}
+
+	public void setDataTo(String dataTo) {
+		this.dataTo = dataTo;
+	}
+
 	public int getId() {
 		return id;
 	}
 
-	public String getEid() {
-		return eId;
-	}
-
-	public String getEname() {
-		return eName;
-	}
-
-	public String getEsurname() {
-		return eSurname;
-	}
-
-	public String getFid() {
-		return fId;
-	}
-
-	public String getFName() {
-		return fName;
-	}
-
-	public String getFsurname() {
-		return fSurname;
-	}
-
-	public String getFromDate() {
-		return dataFrom;
-	}
-
-	public String getToDate() {
-		return dataTo;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	

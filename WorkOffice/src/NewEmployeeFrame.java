@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -354,15 +355,15 @@ public class NewEmployeeFrame extends JFrame {
 		emp.setAvailability(availabilityField.getText());
 		
 		dao.insertDataEmployee(emp);
-		dao.getEmployeeListList();
-		dao.showEmployeeTable();
+		//dao.getEmployeeListList();
+		//dao.showEmployeeTable();
 		
 		clearFields();
 	}
 
 	// Update data
 	public void updateData() {
-		System.out.println("nowa update data");
+	
 		dao = new WorkOfficeDAO();
 		EmployeeModel emp=new EmployeeModel();
 
