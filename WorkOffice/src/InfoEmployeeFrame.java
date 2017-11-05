@@ -1,18 +1,19 @@
-
-
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-public class InfoEmployeeFrame extends JFrame {
+public class InfoEmployeeFrame extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel setname, setsurname, setphone, setbirthdate, setcity, setpostcode, setstreet, sethousenr, setflatnr,
 			setphysicalwork, setlanguage, setmarried, setexperience, setavailability;
@@ -20,25 +21,28 @@ public class InfoEmployeeFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InfoEmployeeFrame frame = new InfoEmployeeFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					InfoEmployeeFrame frame = new InfoEmployeeFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public InfoEmployeeFrame() {
+		setResizable(false);
 		setTitle("Informacje");
-		setBounds(100, 100, 450, 540);
+		setBounds(100, 100, 450, 500);
+		setLocation(450, 230);
+		setModal(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -181,7 +185,8 @@ public class InfoEmployeeFrame extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnclose.setBounds(169, 443, 89, 23);
+		
+		btnclose.setBounds(177, 441, 89, 23);
 		contentPane.add(btnclose);
 
 		setname = new JLabel("");

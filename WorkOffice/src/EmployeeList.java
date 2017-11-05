@@ -1,7 +1,4 @@
-
-
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-public class EmployeeList extends JFrame {
+public class EmployeeList extends JDialog {
 
 	/**
 	 * 
@@ -38,28 +35,33 @@ public class EmployeeList extends JFrame {
 	private DefaultTableModel model;
 	private NewEmployeeFrame employeeFrame;
 	private InfoEmployeeFrame infoframe;
+	
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EmployeeList frame = new EmployeeList();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					EmployeeList frame = new EmployeeList();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public EmployeeList() {
+		
+		setResizable(false);
 		setTitle("Workers list");
+		setLocation(420, 190);
+		setModal(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -69,8 +71,13 @@ public class EmployeeList extends JFrame {
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				setEdit();
-				
+				int row=table.getSelectedRow();
+				if(row!=-1) {	
+					setEdit(row);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "No data selected.");
+				}		
 			}
 		});
 
@@ -78,8 +85,13 @@ public class EmployeeList extends JFrame {
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				getInfo();
-				
+				int row=table.getSelectedRow();
+				if(row!=-1) {	
+					getInfo(row);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "No data selected.");
+				}	
 			}
 		});
 
@@ -108,7 +120,7 @@ public class EmployeeList extends JFrame {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int row=table.getSelectedRow();
+			    int row=table.getSelectedRow();
 				if(row!=-1) {
 					int pane=JOptionPane.showConfirmDialog(null,"Do you want to delete the items?","DELETE", JOptionPane.YES_NO_OPTION);
 					if(pane==JOptionPane.YES_OPTION) {
@@ -116,7 +128,7 @@ public class EmployeeList extends JFrame {
 					}
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "No field selected.");
+					JOptionPane.showMessageDialog(null, "No data selected.");
 				}
 			}
 		});
@@ -157,6 +169,10 @@ public class EmployeeList extends JFrame {
 				"id", "Name", "Surname", "City"
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false
 			};
@@ -170,8 +186,6 @@ public class EmployeeList extends JFrame {
 		table.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(table);
 
-		// Initiate populate the ArrayList lista from database data.
-
 		populateTable();
 
 		contentPane.setLayout(gl_contentPane);
@@ -182,9 +196,11 @@ public class EmployeeList extends JFrame {
 
 	// Method populate Table
 	public void populateTable() {
+		
 		dao = new WorkOfficeDAO();
 		worker = dao.getEmployeeListList();
 		model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
 		Object[] tablerow = new Object[4];
 
 		for (int i = 0; i < worker.size(); i++) {
@@ -204,26 +220,19 @@ public class EmployeeList extends JFrame {
 		trs.setRowFilter(RowFilter.regexFilter(query));
 	}
 
-	// Refresh jTable
-	public void refreshTable() {
-		worker = dao.getEmployeeListList();
-		model = (DefaultTableModel) table.getModel();
-		model.setRowCount(0);
-		populateTable();
-	}
-
 	// Delete selected row
 	public void deleteData(int row) {
+		
 		int delID = worker.get(table.convertRowIndexToModel(row)).getId();
 		dao = new WorkOfficeDAO();
 		dao.deleteEmployeeData(delID);
-		refreshTable();
+		populateTable();
 	}
 
 	// Set data in NewFamilyFrame
-	public void setEdit() {
-		int modelrow = table.convertRowIndexToModel(table.getSelectedRow());
-		if(modelrow!=-1) {
+	public void setEdit(int row) {
+		
+		int modelrow = table.convertRowIndexToModel(row);
 		employeeFrame = new NewEmployeeFrame();
 		
 		employeeFrame.setId(worker.get(modelrow).getId());
@@ -243,16 +252,12 @@ public class EmployeeList extends JFrame {
 		employeeFrame.setAvailability(worker.get(modelrow).getAvailability());
 		
 		employeeFrame.setVisible(true);
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "No field selected.");
-		}
 	}
 
 	// Selected row info
-	public void getInfo() {
-		int modelrow = table.convertRowIndexToModel(table.getSelectedRow());
-		if(modelrow!=-1) {
+	public void getInfo(int row) {
+		
+		int modelrow = table.convertRowIndexToModel(row);
 		infoframe = new InfoEmployeeFrame();
 
 		infoframe.setName(worker.get(modelrow).getName());
@@ -271,9 +276,7 @@ public class EmployeeList extends JFrame {
 		infoframe.setAvailability(worker.get(modelrow).getAvailability());
 		
 		infoframe.setVisible(true);
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "No field selected.");
-		}
+		
+	
 	}
 }

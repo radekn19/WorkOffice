@@ -1,5 +1,3 @@
-import java.awt.EventQueue;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -11,13 +9,18 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class NewFamilyFrame extends JFrame {
+public class NewFamilyFrame extends JDialog {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private WorkOfficeDAO dao;
 	private int id;
@@ -44,26 +47,29 @@ public class NewFamilyFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewFamilyFrame frame = new NewFamilyFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					NewFamilyFrame frame = new NewFamilyFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public NewFamilyFrame() {
+		setResizable(false);
 		setTitle("Family");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setModal(true);
+		setLocation(450, 230);
 		setContentPane(contentPane);
 
 		cityField = new JTextField();

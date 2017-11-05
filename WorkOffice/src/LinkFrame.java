@@ -1,18 +1,14 @@
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Date;
-
 import javax.swing.border.BevelBorder;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
@@ -22,8 +18,12 @@ import javax.swing.SpringLayout;
 import java.awt.Label;
 import com.toedter.calendar.JDateChooser;
 
-public class LinkFrame extends JFrame {
+public class LinkFrame extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable employeeTable;
 	private JTable familyTable;
@@ -41,25 +41,28 @@ public class LinkFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LinkFrame frame = new LinkFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					LinkFrame frame = new LinkFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public LinkFrame() {
+		setResizable(false);
 		setTitle("Link");
 		setBounds(100, 100, 1150, 550);
+		setLocation(250, 200);
+		setModal(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -196,8 +199,10 @@ public class LinkFrame extends JFrame {
 		btnLink.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(dateChooserFrom.getDate()==null||dateChooserTo.getDate()==null) {
-					JOptionPane.showMessageDialog(null, "Date not selected.");
+				if(dateChooserFrom.getDate()==null||dateChooserTo.getDate()==null
+					||familyTable.getSelectedRow()==-1||employeeTable.getSelectedRow()==-1) {
+					
+					JOptionPane.showMessageDialog(null, "Date or rows not selected.");
 				}
 				else {
 					fromDate = date.format(dateChooserFrom.getDate());

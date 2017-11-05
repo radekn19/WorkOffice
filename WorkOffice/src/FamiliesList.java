@@ -1,29 +1,26 @@
-import java.awt.EventQueue;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 
-public class FamiliesList extends JFrame {
+public class FamiliesList extends JDialog {
 
 	/**
 	 * 
@@ -41,25 +38,28 @@ public class FamiliesList extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FamiliesList frame = new FamiliesList();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					FamiliesList frame = new FamiliesList();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public FamiliesList() {
+		setResizable(false);
 
 		setTitle("Family list");
+		setLocation(420, 190);
+		setModal(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,16 +67,27 @@ public class FamiliesList extends JFrame {
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setEdit();
-				familyFrame.setVisible(true);
+				int row=table.getSelectedRow();
+				if(row!=-1) {	
+					setEdit(row);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "No data selected.");
+				}	
 			}
 		});
 
 		JButton btnInfo = new JButton("Information");
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getInfo();
-				info.setVisible(true);
+				
+				int row=table.getSelectedRow();
+				if(row!=-1) {	
+					getInfo(row);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "No data selected.");
+				}	
 			}
 		});
 
@@ -103,9 +114,15 @@ public class FamiliesList extends JFrame {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int pane=JOptionPane.showConfirmDialog(null,"Do you want to delete the items?","DELETE", JOptionPane.YES_NO_OPTION);
-				if(pane==JOptionPane.YES_OPTION) {
-					deleteData();
+				int row=table.getSelectedRow();
+				if(row!=-1) {
+					int pane=JOptionPane.showConfirmDialog(null,"Do you want to delete the items?","DELETE", JOptionPane.YES_NO_OPTION);
+					if(pane==JOptionPane.YES_OPTION) {
+						deleteData(row);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "No data selected.");
 				}
 			}
 		});
@@ -147,6 +164,10 @@ public class FamiliesList extends JFrame {
 				"id", "Name", "Surname", "City"
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false
 			};
@@ -160,10 +181,6 @@ public class FamiliesList extends JFrame {
 		table.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(table);
 
-		// Initiate populate the ArrayList list from database data.
-		
-		dao = new WorkOfficeDAO();
-		lista = dao.getFamilyList();
 		populateTable();
 
 		contentPane.setLayout(gl_contentPane);
@@ -174,8 +191,11 @@ public class FamiliesList extends JFrame {
 
 	// Method populate Table
 	public void populateTable() {
-
+		
+		dao = new WorkOfficeDAO();
+		lista = dao.getFamilyList();
 		model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
 		Object[] tablerow = new Object[4];
 
 		for (int i = 0; i < lista.size(); i++) {
@@ -187,28 +207,28 @@ public class FamiliesList extends JFrame {
 		}
 		System.out.println("Table populated");
 	}
+	
+	// Find user method
+		public void findUser(String query) {
+			
+			TableRowSorter<DefaultTableModel> trs = new TableRowSorter<DefaultTableModel>(model);
+			table.setRowSorter(trs);
+			trs.setRowFilter(RowFilter.regexFilter(query));
+		}
 
-	// Refresh jTable
-	public void refreshTable() {
-		lista = dao.getFamilyList();
-		model = (DefaultTableModel) table.getModel();
-		model.setRowCount(0);
+	// Delete selected row
+	public void deleteData(int row) {
+		
+		dao = new WorkOfficeDAO();
+		int delID = lista.get(table.convertRowIndexToModel(row)).getId();
+		dao.deleteData(delID);
 		populateTable();
 	}
 
-	// Delete selected row
-	public void deleteData() {
-		dao = new WorkOfficeDAO();
-		int delID = lista.get(table.convertRowIndexToModel(table.getSelectedRow())).getId();
-		dao.deleteData(delID);
-		refreshTable();
-
-	}
-
 	// Selected row info
-	public void getInfo() {
+	public void getInfo(int row) {
 
-		int modelrow = table.convertRowIndexToModel(table.getSelectedRow());
+		int modelrow = table.convertRowIndexToModel(row);
 		info = new InfoFamilyFrame();
 
 		info.setName(lista.get(modelrow).getName());
@@ -228,20 +248,14 @@ public class FamiliesList extends JFrame {
 		info.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
 		info.setExperience(lista.get(modelrow).getExperience());
 		info.setEmployeeAge(lista.get(modelrow).getEmployeeage());
-	}
-
-	// Find user method
-	public void findUser(String query) {
 		
-		TableRowSorter<DefaultTableModel> trs = new TableRowSorter<DefaultTableModel>(model);
-		table.setRowSorter(trs);
-		trs.setRowFilter(RowFilter.regexFilter(query));
+		info.setVisible(true);
 	}
 
 	// Set data in NewFamilyFrame 
-	public void setEdit() {
+	public void setEdit(int row) {
 		
-		int modelrow = table.convertRowIndexToModel(table.getSelectedRow());
+		int modelrow = table.convertRowIndexToModel(row);
 		familyFrame = new NewFamilyFrame();
 	
 		familyFrame.setId(lista.get(modelrow).getId());
@@ -262,5 +276,7 @@ public class FamiliesList extends JFrame {
 		familyFrame.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
 		familyFrame.setExperience(lista.get(modelrow).getExperience());
 		familyFrame.setEmployeeAge(lista.get(modelrow).getEmployeeage());
+		
+		familyFrame.setVisible(true);
 	}
 }

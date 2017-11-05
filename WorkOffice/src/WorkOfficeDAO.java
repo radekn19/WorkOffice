@@ -181,7 +181,7 @@ public class WorkOfficeDAO {
 			prst.setInt(1, id);
 			prst.executeUpdate();
 			prst.close();
-			System.out.println("Data deleted");
+			JOptionPane.showMessageDialog(null, "Data deleted");
 		} catch (SQLException e) {
 			printSQLException(e);
 		}
@@ -595,7 +595,20 @@ public class WorkOfficeDAO {
 //	}
 
 
-	
+	public void extendDateTo(int id,String date) {
+		try {
+			
+			PreparedStatement prst = conn.prepareStatement("UPDATE LINK SET To_Date=? WHERE id=?");
+			prst.setString(1, date);
+			prst.setInt(2, id);
+			prst.executeUpdate();
+			prst.close();
+			System.out.println("Date_To updated.");
+			
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+	}
 
 	
 	

@@ -1,42 +1,47 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class InfoFamilyFrame extends JFrame {
+public class InfoFamilyFrame extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel setname, setsurname, setphone, setfamilyphone, setbirthdate, setcity, setpostcode, setstreet,
 			sethousenr, setflatnr, setphysicalfit, setrate, setinfo, setlanguage, setphysicalwork, setexperience,
 			setemployeeage;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InfoFamilyFrame frame = new InfoFamilyFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					InfoFamilyFrame frame = new InfoFamilyFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	public InfoFamilyFrame() {
+		setResizable(false);
 		setTitle("Family information");
 
-		setBounds(100, 100, 450, 560);
+		setBounds(100, 100, 450, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setModal(true);
+		setLocation(450, 230);
 		contentPane.setLayout(null);
 
 		JLabel lblname = new JLabel("Name:");
