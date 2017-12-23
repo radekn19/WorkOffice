@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class WorkOfficeDAO {
 
 	private final String protocol = "jdbc:derby:";
-	private final String dbName = "C:/WorkOfficeDB";
+	private final String dbName = "WorkOfficeDB";
 	private Connection conn = null;
 	private Statement stm = null;
 
@@ -22,7 +22,7 @@ public class WorkOfficeDAO {
 		// Connection to DataBase
 
 		try {
-			conn = DriverManager.getConnection(protocol + dbName + ";create=true");
+			conn = DriverManager.getConnection(protocol + dbName + ";create=true;user=test;password=test");
 			System.out.println("Connected");
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.toString());
@@ -563,36 +563,6 @@ public class WorkOfficeDAO {
 			return false;
 		}
 	}
-	
-//	public void insertLinkData(LinkModel l,String dateFrom, String dateTo) {
-//		
-//		try {
-//			
-//			PreparedStatement prst = conn.prepareStatement("insert into LINK("
-//					+ "EmpID,EmpName,EmpSurname,FamID,FamName,FamSurname,From_Date,To_Date)"
-//					+ "values(?,?,?,?,?,?,?,?)");
-//
-//			prst.setInt(1, l.geteId());
-//			prst.setString(2, l.geteName());
-//			prst.setString(3, l.geteSurname());
-//			prst.setInt(4, l.getfId());
-//			prst.setString(5, l.getfName());
-//			prst.setString(6, l.getfSurname());
-//			prst.setString(7, dateFrom);
-//			prst.setString(8, dateTo);
-//			
-//			prst.execute();
-//			prst.close();
-//
-//			System.out.print("Link data inserted");
-//			
-//		} catch (SQLException e) {
-//			
-//			System.out.print("Problem with insert data to Link.");
-//			JOptionPane.showMessageDialog(null, e.toString());
-//			printSQLException(e);
-//		}
-//	}
 
 
 	public void extendDateTo(int id,String date) {
