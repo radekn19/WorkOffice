@@ -15,25 +15,13 @@ import java.awt.event.ActionEvent;
 public class ExtendDateFrame extends JDialog {
 
 	/**
-	 * 
+	 * This class creating dialog window when the link time come to the end 
+	 * you can delete, extend or cancel
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private final JDateChooser dateChooser = new JDateChooser();
 	private WorkOfficeDAO dao;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			ExtendDateFrame dialog = new ExtendDateFrame();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	/**
 	 * Create the dialog.
@@ -48,11 +36,11 @@ public class ExtendDateFrame extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
+
 		JLabel lblExtendDateTo = new JLabel("Extend date to:");
 		lblExtendDateTo.setBounds(12, 31, 111, 16);
 		contentPanel.add(lblExtendDateTo);
-		
+
 		dateChooser.setBounds(135, 25, 105, 22);
 		contentPanel.add(dateChooser);
 		{
@@ -63,15 +51,15 @@ public class ExtendDateFrame extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(dateChooser.getDate()!=null) {
-							
-							dao=new WorkOfficeDAO();
-							SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
-							String dates=format.format(dateChooser.getDate());
+						if (dateChooser.getDate() != null) {
+
+							dao = new WorkOfficeDAO();
+							SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+							String dates = format.format(dateChooser.getDate());
 							dao.extendDateTo(linkId, dates);
 							setVisible(false);
 						}
-					
+
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -89,9 +77,7 @@ public class ExtendDateFrame extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		
-		
+
 	}
-	
-	
+
 }

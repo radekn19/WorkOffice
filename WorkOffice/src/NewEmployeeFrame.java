@@ -16,11 +16,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * 
+ * This class creating new Employee Dialog window with fields to fill up.
+ * 
+ * This class also is using to edit data of existing employee.
+ * 
+ */
 public class NewEmployeeFrame extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private WorkOfficeDAO dao;
 	private JPanel contentPane;
@@ -40,22 +44,6 @@ public class NewEmployeeFrame extends JDialog {
 	private JComboBox<String> experienceBox;
 	private JComboBox<String> marriedBox;
 	private JComboBox<String> physicalWorkBox;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					NewEmployeeFrame frame = new NewEmployeeFrame();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
@@ -126,7 +114,7 @@ public class NewEmployeeFrame extends JDialog {
 				if (id == 0) {
 					checkFields();
 				} else {
-					
+
 					updateData();
 				}
 			}
@@ -238,7 +226,7 @@ public class NewEmployeeFrame extends JDialog {
 		JLabel lblLanguage = new JLabel("Language:");
 
 		languageBox = new JComboBox<String>();
-		languageBox.setModel(new DefaultComboBoxModel(new String[] {"", "LOW", "MEDIUM", "HIGH"}));
+		languageBox.setModel(new DefaultComboBoxModel(new String[] { "", "LOW", "MEDIUM", "HIGH" }));
 
 		JLabel lblPchysicalWork = new JLabel("Physical work:");
 
@@ -247,7 +235,7 @@ public class NewEmployeeFrame extends JDialog {
 		JLabel lblExperience = new JLabel("Experience:");
 
 		experienceBox = new JComboBox<String>();
-		experienceBox.setModel(new DefaultComboBoxModel(new String[] {"", "LOW", "HIGH"}));
+		experienceBox.setModel(new DefaultComboBoxModel(new String[] { "", "LOW", "HIGH" }));
 
 		JLabel lblavAvilability = new JLabel("Avilability from:");
 
@@ -317,30 +305,29 @@ public class NewEmployeeFrame extends JDialog {
 		getContentPane().setLayout(groupLayout);
 		pack();
 	}
-	
-//============================ METHODS =======================================================
-	
-	//Check that the name and surname fields are empty.
-	
+
+	// ============================ METHODS=======================================================
+
+	// Check that the name and surname fields are empty.
+
 	public void checkFields() {
-		if(nameField.getText().equals("")||surnameField.getText().equals("")) {
-			
-			JOptionPane.showMessageDialog(null,"Field name and surname must be filled.");
-		
-		}
-		else {
-			
+		if (nameField.getText().equals("") || surnameField.getText().equals("")) {
+
+			JOptionPane.showMessageDialog(null, "Field name and surname must be filled.");
+
+		} else {
+
 			insertEmployee();
-			
+
 		}
 	}
-	
+
 	// Insert data do database.
-	
+
 	public void insertEmployee() {
 		dao = new WorkOfficeDAO();
-		EmployeeModel emp=new EmployeeModel();
-		
+		EmployeeModel emp = new EmployeeModel();
+
 		emp.setName(nameField.getText());
 		emp.setSurname(surnameField.getText());
 		emp.setBirthdate(birthDateField.getText());
@@ -355,38 +342,35 @@ public class NewEmployeeFrame extends JDialog {
 		emp.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
 		emp.setMarried(marriedBox.getSelectedItem().toString());
 		emp.setAvailability(availabilityField.getText());
-		
+
 		dao.insertDataEmployee(emp);
-		//dao.getEmployeeListList();
-		//dao.showEmployeeTable();
-		
 		clearFields();
 	}
 
 	// Update data
 	public void updateData() {
-	
-		dao = new WorkOfficeDAO();
-		EmployeeModel emp=new EmployeeModel();
 
-			emp.setName(nameField.getText());
-			emp.setSurname(surnameField.getText());
-			emp.setBirthdate(birthDateField.getText());
-			emp.setPhone(phoneField.getText());
-			emp.setCity(cityField.getText());
-			emp.setPostcode(postCodeField.getText());
-			emp.setStreet(streetField.getText());
-			emp.setNrhouse(houseNrField.getText());
-			emp.setNrflat(flatNrField.getText());
-			emp.setLanguage(languageBox.getSelectedItem().toString());
-			emp.setExperience(experienceBox.getSelectedItem().toString());
-			emp.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
-			emp.setMarried(marriedBox.getSelectedItem().toString());
-			emp.setAvailability(availabilityField.getText());
-			
-			dao.updateEmployeeData(emp, id);
+		dao = new WorkOfficeDAO();
+		EmployeeModel emp = new EmployeeModel();
+
+		emp.setName(nameField.getText());
+		emp.setSurname(surnameField.getText());
+		emp.setBirthdate(birthDateField.getText());
+		emp.setPhone(phoneField.getText());
+		emp.setCity(cityField.getText());
+		emp.setPostcode(postCodeField.getText());
+		emp.setStreet(streetField.getText());
+		emp.setNrhouse(houseNrField.getText());
+		emp.setNrflat(flatNrField.getText());
+		emp.setLanguage(languageBox.getSelectedItem().toString());
+		emp.setExperience(experienceBox.getSelectedItem().toString());
+		emp.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
+		emp.setMarried(marriedBox.getSelectedItem().toString());
+		emp.setAvailability(availabilityField.getText());
+
+		dao.updateEmployeeData(emp, id);
 	}
-	
+
 	// Clear fields.
 	public void clearFields() {
 

@@ -1,14 +1,14 @@
 
-
 public class FamilyModel {
 	private String name, surname, city, street, physicalfit, language, experience, physicalwork, info, employeeage,
 			birthdate, phone, postcode, nrhouse, nrflat, phonetofamily, rate;
 
 	private int id;
-	
+
 	public FamilyModel() {
-		
+
 	}
+
 	public FamilyModel(int id, String name, String surname, String birthdate, String phone, String city,
 			String postcode, String street, String nrhouse, String nrflat, String phonetofamily, String physicalfit,
 			String rate, String info, String language, String experience, String physicalwork, String employeeage) {
@@ -177,7 +177,5 @@ public class FamilyModel {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
 
 }

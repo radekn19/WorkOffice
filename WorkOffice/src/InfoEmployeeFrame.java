@@ -8,31 +8,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-public class InfoEmployeeFrame extends JDialog {
+/**
+ * 
+ * This class creating Employee information window and populate it.
+ * 
+ */
 
-	/**
-	 * 
-	 */
+public class InfoEmployeeFrame extends JDialog {
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel setname, setsurname, setphone, setbirthdate, setcity, setpostcode, setstreet, sethousenr, setflatnr,
 			setphysicalwork, setlanguage, setmarried, setexperience, setavailability;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					InfoEmployeeFrame frame = new InfoEmployeeFrame();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
@@ -185,7 +172,7 @@ public class InfoEmployeeFrame extends JDialog {
 				setVisible(false);
 			}
 		});
-		
+
 		btnclose.setBounds(177, 441, 89, 23);
 		contentPane.add(btnclose);
 

@@ -1,15 +1,14 @@
 
-
 public class LinkModel {
 
-	private String  eName, eSurname, fName, fSurname, dataFrom, dataTo;
-	private String eId ,fId;
+	private String eName, eSurname, fName, fSurname, dataFrom, dataTo;
+	private String eId, fId;
 	private int id;
 
 	public LinkModel() {
-		
+
 	}
-	
+
 	public LinkModel(int id, String eId, String eName, String eSurname, String fId, String fName, String fSurname,
 			String dataFrom, String dataTo) {
 
@@ -96,7 +95,5 @@ public class LinkModel {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
 
 }

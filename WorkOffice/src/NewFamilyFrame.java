@@ -15,11 +15,17 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+/**
+ * 
+ * This class creating new Family Dialog window with fields to fill up.
+ * 
+ * This class also is using to edit data of existing employee.
+ * 
+ */
+
 public class NewFamilyFrame extends JDialog {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private WorkOfficeDAO dao;
@@ -43,22 +49,6 @@ public class NewFamilyFrame extends JDialog {
 	private JComboBox experienceBox;
 	private JComboBox workerAgeBox;
 	private JComboBox physicalWorkBox;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					NewFamilyFrame frame = new NewFamilyFrame();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
@@ -115,7 +105,7 @@ public class NewFamilyFrame extends JDialog {
 		JLabel lblSprawnoFizyczna = new JLabel("Physical fit:");
 
 		physicalFitBox = new JComboBox();
-		physicalFitBox.setModel(new DefaultComboBoxModel(new String[] {"", "MOVING", "LYING"}));
+		physicalFitBox.setModel(new DefaultComboBoxModel(new String[] { "", "MOVING", "LYING" }));
 
 		JLabel lblRate = new JLabel("Rate:");
 
@@ -308,7 +298,7 @@ public class NewFamilyFrame extends JDialog {
 		JLabel lblLanguage = new JLabel("Language:");
 
 		languagelvlBox = new JComboBox();
-		languagelvlBox.setModel(new DefaultComboBoxModel(new String[] {"", "LOW", "MEDIUM", "HIGH"}));
+		languagelvlBox.setModel(new DefaultComboBoxModel(new String[] { "", "LOW", "MEDIUM", "HIGH" }));
 
 		JLabel lblExperience = new JLabel("Experience:");
 
@@ -379,24 +369,23 @@ public class NewFamilyFrame extends JDialog {
 		});
 		pack();
 	}
-	
-//====================================================================================================================================================================
-	
-	//Check that the name and surname fields are empty.
-		public void checkFields() {
-			if(nameField.getText().equals("")||surnameField.getText().equals("")) {
-				JOptionPane.showMessageDialog(null,"Field name and surname must be filled.");
-			}
-			else {
-				insertFamily();
-			}
+
+	// ====================================================================================================================================================================
+
+	// Check that the name and surname fields are empty.
+	public void checkFields() {
+		if (nameField.getText().equals("") || surnameField.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Field name and surname must be filled.");
+		} else {
+			insertFamily();
 		}
+	}
 	// Method to update data
 
 	public void updateFamily() {
-		dao= new WorkOfficeDAO();
-		FamilyModel fam=new FamilyModel();
-		
+		dao = new WorkOfficeDAO();
+		FamilyModel fam = new FamilyModel();
+
 		fam.setName(nameField.getText());
 		fam.setSurname(surnameField.getText());
 		fam.setBirthdate(birthDateField.getText());
@@ -414,17 +403,17 @@ public class NewFamilyFrame extends JDialog {
 		fam.setExperience(experienceBox.getSelectedItem().toString());
 		fam.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
 		fam.setEmployeeage(workerAgeBox.getSelectedItem().toString());
-		
+
 		dao.updateData(fam, id);
 	}
 
 	// Insert new family data
 
 	public void insertFamily() {
-		
-		dao= new WorkOfficeDAO();
-		FamilyModel fam=new FamilyModel();
-		
+
+		dao = new WorkOfficeDAO();
+		FamilyModel fam = new FamilyModel();
+
 		fam.setName(nameField.getText());
 		fam.setSurname(surnameField.getText());
 		fam.setBirthdate(birthDateField.getText());
@@ -442,12 +431,12 @@ public class NewFamilyFrame extends JDialog {
 		fam.setExperience(experienceBox.getSelectedItem().toString());
 		fam.setPhysicalwork(physicalWorkBox.getSelectedItem().toString());
 		fam.setEmployeeage(workerAgeBox.getSelectedItem().toString());
-		
+
 		dao.insertDataFamily(fam);
 		clearFields();
-		
+
 	}
-	
+
 	// Method to clear all fields in Family frame class.
 
 	public void clearFields() {

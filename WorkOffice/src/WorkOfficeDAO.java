@@ -10,6 +10,13 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+
+/*
+ * 
+ * The class by which other classes connect to the database
+ * 
+ */
+
 public class WorkOfficeDAO {
 
 	private final String protocol = "jdbc:derby:";
@@ -23,7 +30,7 @@ public class WorkOfficeDAO {
 
 		try {
 			conn = DriverManager.getConnection(protocol + dbName + ";create=true;user=test;password=test");
-			System.out.println("Connected");
+			System.out.println("(WorkOfficeDAO) Connected");
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
@@ -31,12 +38,7 @@ public class WorkOfficeDAO {
 		}
 	}
 
-	
-	
-	
-	
-	
-// ------------------------------------------------FAMILIES METHODS---------------------------------------------------------
+	// ------------------------------------------------FAMILIES METHODS---------------------------------------------------------
 
 	// Method to check if Families tables exist;
 
@@ -45,11 +47,11 @@ public class WorkOfficeDAO {
 			DatabaseMetaData dbmd = conn.getMetaData();
 			ResultSet res = dbmd.getTables(null, null, "FAMILIES", null);
 			if (res.next()) {
-				System.out.println("tables exists");
+				System.out.println("(WorkOfficeDAO) Families table exists");
 
 			} else {
 				createTables();
-				System.out.println("Tables has been created");
+				System.out.println("(WorkOfficeDAO) Families table has been created");
 			}
 			res.close();
 		} catch (SQLException e) {
@@ -73,13 +75,13 @@ public class WorkOfficeDAO {
 				+ "Employee_Age VARCHAR(20) NOT NULL" + ")";
 
 		try {
-			
+
 			stm = conn.createStatement();
 			stm.execute(createFamiliesT);
 			stm.close();
 
 		} catch (SQLException e) {
-			System.out.println("Problem with created tables Families");
+			System.out.println("(WorkOfficeDAO) Problem with created Families table");
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 		}
@@ -92,11 +94,11 @@ public class WorkOfficeDAO {
 
 		try {
 
-			PreparedStatement prst = conn.prepareStatement("insert into FAMILIES("
-					+ "Name,Surname,Birth_Date,Phone,City,Post_Code,"
-					+ "Street,HousNr,FlatNr,FamilyPhone,Physical_Fit,Rate,"
-					+ "Info,LanguageLvl,Experience,Physical_Work,Employee_Age) "
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement prst = conn
+					.prepareStatement("insert into FAMILIES(" + "Name,Surname,Birth_Date,Phone,City,Post_Code,"
+							+ "Street,HousNr,FlatNr,FamilyPhone,Physical_Fit,Rate,"
+							+ "Info,LanguageLvl,Experience,Physical_Work,Employee_Age) "
+							+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 			prst.setString(1, fam.getName());
 			prst.setString(2, fam.getSurname());
@@ -115,63 +117,61 @@ public class WorkOfficeDAO {
 			prst.setString(15, fam.getExperience());
 			prst.setString(16, fam.getPhysicalwork());
 			prst.setString(17, fam.getEmployeeage());
-			
+
 			prst.execute();
 			prst.close();
-			System.out.print("Family data inserted");
-			JOptionPane.showMessageDialog(null, "Family inserted.");
+			System.out.print("(WorkOfficeDAO) Family data inserted");
+			JOptionPane.showMessageDialog(null, "Family data inserted.");
 
 		} catch (SQLException e) {
-			System.out.print("Problem with insert family data.");
+			System.out.print("(WorkOfficeDAO) Problem with insert family data.");
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 		}
 	}
 
-	// Update data to DataBase
-		public void updateData(FamilyModel fam,int id) {
-			
-			try {
-				
-				PreparedStatement prst = conn.prepareStatement("UPDATE FAMILIES SET "
-					+ "Name=?,Surname=?,Birth_Date=?,Phone=?,City=?,"
-					+ "Post_Code=?,Street=?,HousNr=?,FlatNr=?,FamilyPhone=?,"
-					+ "Physical_Fit=?,Rate=?,Info=?,LanguageLvl=?,"
-					+ "Experience=?,Physical_Work=?,Employee_Age=? "
-					+ "WHERE id=?");
+	// Update Family data to DataBase
+	public void updateData(FamilyModel fam, int id) {
 
-				prst.setString(1, fam.getName());
-				prst.setString(2, fam.getSurname());
-				prst.setString(3, fam.getBirthdate());
-				prst.setString(4, fam.getPhone());
-				prst.setString(5, fam.getCity());
-				prst.setString(6, fam.getPostcode());
-				prst.setString(7, fam.getStreet());
-				prst.setString(8, fam.getNrhouse());
-				prst.setString(9, fam.getNrflat());
-				prst.setString(10, fam.getPhonetofamily());
-				prst.setString(11, fam.getPhysicalfit());
-				prst.setString(12, fam.getRate());
-				prst.setString(13, fam.getInfo());
-				prst.setString(14, fam.getLanguage());
-				prst.setString(15, fam.getExperience());
-				prst.setString(16, fam.getPhysicalwork());
-				prst.setString(17, fam.getEmployeeage());
-				prst.setInt(18, id);
+		try {
 
-				prst.executeUpdate();
-				prst.close();
-			
-				System.out.println("Data updated");
-				JOptionPane.showMessageDialog(null, "Data updated");
+			PreparedStatement prst = conn
+					.prepareStatement("UPDATE FAMILIES SET " + "Name=?,Surname=?,Birth_Date=?,Phone=?,City=?,"
+							+ "Post_Code=?,Street=?,HousNr=?,FlatNr=?,FamilyPhone=?,"
+							+ "Physical_Fit=?,Rate=?,Info=?,LanguageLvl=?,"
+							+ "Experience=?,Physical_Work=?,Employee_Age=? " + "WHERE id=?");
 
-			} catch (SQLException e) {
-				System.out.println("Error updateData");
+			prst.setString(1, fam.getName());
+			prst.setString(2, fam.getSurname());
+			prst.setString(3, fam.getBirthdate());
+			prst.setString(4, fam.getPhone());
+			prst.setString(5, fam.getCity());
+			prst.setString(6, fam.getPostcode());
+			prst.setString(7, fam.getStreet());
+			prst.setString(8, fam.getNrhouse());
+			prst.setString(9, fam.getNrflat());
+			prst.setString(10, fam.getPhonetofamily());
+			prst.setString(11, fam.getPhysicalfit());
+			prst.setString(12, fam.getRate());
+			prst.setString(13, fam.getInfo());
+			prst.setString(14, fam.getLanguage());
+			prst.setString(15, fam.getExperience());
+			prst.setString(16, fam.getPhysicalwork());
+			prst.setString(17, fam.getEmployeeage());
+			prst.setInt(18, id);
 
-				printSQLException(e);
-			}
+			prst.executeUpdate();
+			prst.close();
+
+			System.out.println("(WorkOfficeDAO) Family data updated");
+			JOptionPane.showMessageDialog(null, "Family data updated");
+
+		} catch (SQLException e) {
+			System.out.println("(WorkOfficeDAO) Problem with update Family data");
+
+			printSQLException(e);
 		}
-
+	}
 
 	// Delete family from DataBase
 
@@ -213,14 +213,13 @@ public class WorkOfficeDAO {
 			stm.close();
 			res.close();
 
-			System.out.println("DB loaded/getFamilyList");
-			
-		}
-		catch (SQLException e) {
+			System.out.println("(WorkOfficeDAO) DB loaded/getFamilyList");
+
+		} catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("Problem with loaded/getFamilyList");
-			
+			System.out.println("(WorkOfficeDAO) Problem with loaded/getFamilyList");
+
 		}
 		return familyList;
 
@@ -229,11 +228,11 @@ public class WorkOfficeDAO {
 	// Method to print table.
 
 	public void showTable() {
-	
+
 		String sqlSelect = "select * from Families";
 
 		try {
-			System.out.println("Wyswietlam liste");
+			System.out.println("(WorkOfficeDAO) Wyswietlam liste");
 			stm = conn.createStatement();
 			ResultSet res = stm.executeQuery(sqlSelect);
 			ResultSetMetaData rsmd = res.getMetaData();
@@ -257,30 +256,27 @@ public class WorkOfficeDAO {
 		}
 	}
 
-	
-	
-	
-// =================================================EMPLOYEEMETHODS=========================================================
+	// =================================================EMPLOYEEMETHODS=========================================================
 
 	// Method to check if Employee table exist
 
 	public void ifEmpTablesExist() {
-		
+
 		try {
-			
+
 			DatabaseMetaData dbmd = conn.getMetaData();
 			ResultSet res = dbmd.getTables(null, null, "EMPLOYEE", null);
 			if (res.next()) {
-				
-				System.out.println("EMPLOYEE table exists");
+
+				System.out.println("(WorkOfficeDAO) EMPLOYEE table exists");
 
 			} else {
-				
+
 				createEmployeeTables();
-				System.out.println("EMPLOYEE table has been created");
+				System.out.println("(WorkOfficeDAO) EMPLOYEE table has been created");
 			}
 			res.close();
-			
+
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
@@ -291,7 +287,7 @@ public class WorkOfficeDAO {
 	// Create a Employee table.
 
 	public void createEmployeeTables() {
-		
+
 		String createEmployeeT = "create table EMPLOYEE("
 				+ "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
 				+ "Name VARCHAR(20) NOT NULL," + "Surname VARCHAR(20) NOT NULL," + "Birth_Date VARCHAR(20) NOT NULL,"
@@ -301,13 +297,13 @@ public class WorkOfficeDAO {
 				+ "Physical_Work VARCHAR(20) NOT NULL," + "Married VARCHAR(20) NOT NULL,"
 				+ "Availability VARCHAR(20) NOT NULL" + ")";
 		try {
-			
+
 			stm = conn.createStatement();
 			stm.execute(createEmployeeT);
 			stm.close();
 
 		} catch (SQLException e) {
-			System.out.println("Problem with created tables Employee");
+			System.out.println("(WorkOfficeDAO) Problem with created tables Employee");
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 		}
@@ -318,11 +314,11 @@ public class WorkOfficeDAO {
 
 	public void insertDataEmployee(EmployeeModel em) {
 		try {
-			
-			PreparedStatement prst = conn.prepareStatement("insert into EMPLOYEE("
-					+ "Name,Surname,Birth_Date,Phone,City,Post_Code,Street,HousNr,FlatNr,"
-					+ "LanguageLvl,Experience,Physical_Work,Married,Availability) "
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+			PreparedStatement prst = conn.prepareStatement(
+					"insert into EMPLOYEE(" + "Name,Surname,Birth_Date,Phone,City,Post_Code,Street,HousNr,FlatNr,"
+							+ "LanguageLvl,Experience,Physical_Work,Married,Availability) "
+							+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 			prst.setString(1, em.getName());
 			prst.setString(2, em.getSurname());
@@ -335,19 +331,19 @@ public class WorkOfficeDAO {
 			prst.setString(9, em.getNrflat());
 			prst.setString(10, em.getLanguage());
 			prst.setString(11, em.getExperience());
-			prst.setString(12,	em.getPhysicalwork());
+			prst.setString(12, em.getPhysicalwork());
 			prst.setString(13, em.getMarried());
 			prst.setString(14, em.getAvailability());
-			
+
 			prst.execute();
 			prst.close();
 
-			System.out.print("EMPLOYEE data inserted");
+			System.out.print("(WorkOfficeDAO) EMPLOYEE data inserted");
 			JOptionPane.showMessageDialog(null, "Employee added");
-			
+
 		} catch (SQLException e) {
-			
-			System.out.print("Problem with insert data to EMPLOYEE.");
+
+			System.out.print("(WorkOfficeDAO) Problem with insert data to EMPLOYEE.");
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 		}
@@ -361,13 +357,13 @@ public class WorkOfficeDAO {
 		String sqlList = "select * FROM EMPLOYEE";
 		ResultSet res;
 		try {
-			
+
 			stm = conn.createStatement();
 			res = stm.executeQuery(sqlList);
 			EmployeeModel person;
-			
+
 			while (res.next()) {
-				
+
 				person = new EmployeeModel(res.getInt("id"), res.getString("Name"), res.getString("Surname"),
 						res.getString("Birth_Date"), res.getString("Phone"), res.getString("City"),
 						res.getString("Post_Code"), res.getString("Street"), res.getString("HousNr"),
@@ -381,29 +377,27 @@ public class WorkOfficeDAO {
 			conn.close();
 			res.close();
 
-			System.out.println("DB loaded to Employee List");
+			System.out.println("(WorkOfficeDAO) DB loaded to Employee List");
 		}
 
 		catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("Problem with loaded List employee");
+			System.out.println("(WorkOfficeDAO) Problem with loaded List employee");
 		}
 		return employeeList;
 
 	}
 
-	
 	// Update data to DataBase
-	public void updateEmployeeData(EmployeeModel emp,int id) {
-		
+	public void updateEmployeeData(EmployeeModel emp, int id) {
+
 		try {
-			
-			PreparedStatement prst = conn.prepareStatement("UPDATE EMPLOYEE SET "
-					+ "Name=?,Surname=?,Birth_Date=?,Phone=?,City=?,"
-					+ "Post_Code=?,Street=?,HousNr=?,FlatNr=?,LanguageLvl=?,"
-					+ "Experience=?,Physical_Work=?,Married=?,Availability=? "
-					+ "WHERE id=?");
+
+			PreparedStatement prst = conn
+					.prepareStatement("UPDATE EMPLOYEE SET " + "Name=?,Surname=?,Birth_Date=?,Phone=?,City=?,"
+							+ "Post_Code=?,Street=?,HousNr=?,FlatNr=?,LanguageLvl=?,"
+							+ "Experience=?,Physical_Work=?,Married=?,Availability=? " + "WHERE id=?");
 
 			prst.setString(1, emp.getName());
 			prst.setString(2, emp.getSurname());
@@ -423,11 +417,11 @@ public class WorkOfficeDAO {
 
 			prst.executeUpdate();
 			prst.close();
-		
+
 			JOptionPane.showMessageDialog(null, "EMPLOYEE Data updated");
 
 		} catch (SQLException e) {
-			System.out.println("Error updateData EMPLOYEE");
+			System.out.println("(WorkOfficeDAO) Error updateData EMPLOYEE");
 			printSQLException(e);
 		}
 	}
@@ -465,42 +459,39 @@ public class WorkOfficeDAO {
 
 	public void deleteEmployeeData(int id) {
 		try {
-			
+
 			PreparedStatement prst = conn.prepareStatement("DELETE FROM EMPLOYEE WHERE id=?");
 			prst.setInt(1, id);
 			prst.executeUpdate();
 			prst.close();
-			
+
 			JOptionPane.showMessageDialog(null, "Data deleted");
-			
+
 		} catch (SQLException e) {
 			printSQLException(e);
 		}
 
 	}
-	
-	
-	
-	
-// =================================================LINK METHODS=========================================================
-	
+
+	// =================================================LINK METHODS=========================================================
+
 	// Method to check if Link tables exist;
 	public void ifLinkTablesExist() {
 		try {
-			
+
 			DatabaseMetaData dbmd = conn.getMetaData();
 			ResultSet res = dbmd.getTables(null, null, "LINK", null);
-			
+
 			if (res.next()) {
-				System.out.println("LINK tables exists");
+				System.out.println("(WorkOfficeDAO) LINK tables exists");
 
 			} else {
 				createLinkTables();
-				System.out.println("LINK Tables has been created");
+				System.out.println("(WorkOfficeDAO) LINK Tables has been created");
 			}
-			
+
 			res.close();
-			
+
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
@@ -511,7 +502,7 @@ public class WorkOfficeDAO {
 	// Method to creating Link Table into Database;
 
 	public void createLinkTables() {
-		
+
 		String createFamiliesT = "create table LINK("
 				+ "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
 				+ "EmpID VARCHAR(20) NOT NULL," + "EmpName VARCHAR(20) NOT NULL," + "EmpSurname VARCHAR(20) NOT NULL,"
@@ -519,13 +510,13 @@ public class WorkOfficeDAO {
 				+ "From_Date VARCHAR(20) NOT NULL," + "To_Date VARCHAR(20) NOT NULL" + ")";
 
 		try {
-			
+
 			stm = conn.createStatement();
 			stm.execute(createFamiliesT);
 			stm.close();
 
 		} catch (SQLException e) {
-			
+
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 		}
@@ -536,12 +527,12 @@ public class WorkOfficeDAO {
 
 	public boolean insertLinkData(int eId, String eName, String eSurname, int fId, String fName, String fSurname,
 			String dataFrom, String dataTo) {
-		
+
 		try {
-			
-			PreparedStatement prst = conn.prepareStatement("insert into LINK("
-					+ "EmpID,EmpName,EmpSurname,FamID,FamName,FamSurname,From_Date,To_Date)"
-					+ "values(?,?,?,?,?,?,?,?)");
+
+			PreparedStatement prst = conn.prepareStatement(
+					"insert into LINK(" + "EmpID,EmpName,EmpSurname,FamID,FamName,FamSurname,From_Date,To_Date)"
+							+ "values(?,?,?,?,?,?,?,?)");
 
 			prst.setInt(1, eId);
 			prst.setString(2, eName);
@@ -554,45 +545,42 @@ public class WorkOfficeDAO {
 			prst.execute();
 			prst.close();
 
-			System.out.print("Link data inserted");
+			System.out.print("(WorkOfficeDAO) Link data inserted");
 			return true;
 		} catch (SQLException e) {
-			System.out.print("Problem with insert data to Link.");
+			System.out.print("(WorkOfficeDAO) Problem with insert data to Link.");
 			JOptionPane.showMessageDialog(null, e.toString());
 			printSQLException(e);
 			return false;
 		}
 	}
 
-
-	public void extendDateTo(int id,String date) {
+	public void extendDateTo(int id, String date) {
 		try {
-			
+
 			PreparedStatement prst = conn.prepareStatement("UPDATE LINK SET To_Date=? WHERE id=?");
 			prst.setString(1, date);
 			prst.setInt(2, id);
 			prst.executeUpdate();
 			prst.close();
-			System.out.println("Date_To updated.");
-			
+			System.out.println("(WorkOfficeDAO) Date_To updated.");
+
 		} catch (SQLException e) {
 			printSQLException(e);
 		}
 	}
 
-	
-	
 	// Delete LinkData from DataBase
 
 	public void deleteLinkData(int id) {
 		try {
-			
+
 			PreparedStatement prst = conn.prepareStatement("DELETE FROM LINK WHERE id=?");
 			prst.setInt(1, id);
 			prst.executeUpdate();
 			prst.close();
-			System.out.println("Data deleted from LINK");
-			
+			System.out.println("(WorkOfficeDAO) Data deleted from LINK");
+
 		} catch (SQLException e) {
 			printSQLException(e);
 		}
@@ -605,69 +593,65 @@ public class WorkOfficeDAO {
 		ArrayList<LinkModel> linkList = new ArrayList<>();
 		String sqlList = "select * FROM LINK";
 		try {
-			
+
 			ResultSet res;
 			stm = conn.createStatement();
 			res = stm.executeQuery(sqlList);
 			LinkModel row;
-			
+
 			while (res.next()) {
-				
+
 				row = new LinkModel(res.getInt("id"), res.getString("EmpID"), res.getString("EmpName"),
 						res.getString("EmpSurname"), res.getString("FamID"), res.getString("FamName"),
 						res.getString("FamSurname"), res.getString("From_Date"), res.getString("To_Date"));
-				
+
 				linkList.add(row);
 			}
 
 			stm.close();
 			res.close();
 
-			System.out.println("DB loaded to Link List");
+			System.out.println("(WorkOfficeDAO) DB loaded to Link List");
 		}
 
 		catch (SQLException e) {
 
 			e.printStackTrace();
-			System.out.println("Problem with loaded List Link");
+			System.out.println("(WorkOfficeDAO) Problem with loaded List Link");
 		}
 		return linkList;
 
 	}
-	
+
 	// Method to print table.
 
-		public void showLinkTable() {
-			 String sqlSelect = "select * from LINK";
+	public void showLinkTable() {
+		String sqlSelect = "select * from LINK";
 
-			try {
-				stm = conn.createStatement();
-				ResultSet res = stm.executeQuery(sqlSelect);
-				ResultSetMetaData rsmd = res.getMetaData();
-				int columnCount = rsmd.getColumnCount();
-				System.out.println("");
-				for (int i = 1; i <= columnCount; i++) {
-					System.out.format("%20s", rsmd.getColumnName(i) + "|");
-				}
-				System.out.println("");
-
-				while (res.next()) {
-					for (int i = 1; i <= columnCount; i++) {
-						System.out.format("%20s", res.getString(i) + "|");
-					}
-					System.out.println("");
-				}
-				res.close();
-				conn.close();
-			} catch (SQLException e) {
-				printSQLException(e);
+		try {
+			stm = conn.createStatement();
+			ResultSet res = stm.executeQuery(sqlSelect);
+			ResultSetMetaData rsmd = res.getMetaData();
+			int columnCount = rsmd.getColumnCount();
+			System.out.println("");
+			for (int i = 1; i <= columnCount; i++) {
+				System.out.format("%20s", rsmd.getColumnName(i) + "|");
 			}
-		}
+			System.out.println("");
 
-		
-	
-		
-		
+			while (res.next()) {
+				for (int i = 1; i <= columnCount; i++) {
+					System.out.format("%20s", res.getString(i) + "|");
+				}
+				System.out.println("");
+			}
+			res.close();
+			conn.close();
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+	}
+
 	// =============================================================================================================================================================================
 	// Method to close connection
 	public void closeConnection() {
@@ -676,10 +660,10 @@ public class WorkOfficeDAO {
 
 		} catch (SQLException e) {
 			if (((e.getErrorCode() == 50000) && ("XJ015".equals(e.getSQLState())))) {
-				System.out.println("Derby shut down normally");
+				System.out.println("(WorkOfficeDAO) Derby shut down normally");
 			} else {
 				printSQLException(e);
-				System.err.println("Derby did not shut down normally");
+				System.err.println("(WorkOfficeDAO) Derby did not shut down normally");
 
 			}
 		}

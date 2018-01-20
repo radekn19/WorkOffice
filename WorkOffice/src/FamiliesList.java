@@ -20,11 +20,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 
+
+/**
+ * This class creating FamiliesList window and operate it.
+ */
+
 public class FamiliesList extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField filterField;
@@ -34,22 +36,6 @@ public class FamiliesList extends JDialog {
 	private DefaultTableModel model;
 	private NewFamilyFrame familyFrame;
 	private InfoFamilyFrame info;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					FamiliesList frame = new FamiliesList();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
@@ -67,27 +53,25 @@ public class FamiliesList extends JDialog {
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int row=table.getSelectedRow();
-				if(row!=-1) {	
+				int row = table.getSelectedRow();
+				if (row != -1) {
 					setEdit(row);
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog(null, "No data selected.");
-				}	
+				}
 			}
 		});
 
 		JButton btnInfo = new JButton("Information");
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				int row=table.getSelectedRow();
-				if(row!=-1) {	
+
+				int row = table.getSelectedRow();
+				if (row != -1) {
 					getInfo(row);
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog(null, "No data selected.");
-				}	
+				}
 			}
 		});
 
@@ -114,14 +98,14 @@ public class FamiliesList extends JDialog {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int row=table.getSelectedRow();
-				if(row!=-1) {
-					int pane=JOptionPane.showConfirmDialog(null,"Do you want to delete the items?","DELETE", JOptionPane.YES_NO_OPTION);
-					if(pane==JOptionPane.YES_OPTION) {
+				int row = table.getSelectedRow();
+				if (row != -1) {
+					int pane = JOptionPane.showConfirmDialog(null, "Do you want to delete the items?", "DELETE",
+							JOptionPane.YES_NO_OPTION);
+					if (pane == JOptionPane.YES_OPTION) {
 						deleteData(row);
 					}
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog(null, "No data selected.");
 				}
 			}
@@ -156,21 +140,14 @@ public class FamiliesList extends JDialog {
 						.addContainerGap()));
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-			},
-			new String[] {
-				"id", "Name", "Surname", "City"
-			}
-		) {
+		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null }, },
+				new String[] { "id", "Name", "Surname", "City" }) {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
-			};
+			boolean[] columnEditables = new boolean[] { false, false, false, false };
+
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
@@ -187,11 +164,11 @@ public class FamiliesList extends JDialog {
 		pack();
 	}
 
-	// -----------------------ALL CLASS METHOD-----------------------------------------------------
+	// -----------------------METHODS-----------------------------------------------------
 
 	// Method populate Table
 	public void populateTable() {
-		
+
 		dao = new WorkOfficeDAO();
 		lista = dao.getFamilyList();
 		model = (DefaultTableModel) table.getModel();
@@ -205,20 +182,20 @@ public class FamiliesList extends JDialog {
 			tablerow[3] = lista.get(i).getCity();
 			model.addRow(tablerow);
 		}
-		System.out.println("Table populated");
+		System.out.println("(FamiliesList) Table populated");
 	}
-	
+
 	// Find user method
-		public void findUser(String query) {
-			
-			TableRowSorter<DefaultTableModel> trs = new TableRowSorter<DefaultTableModel>(model);
-			table.setRowSorter(trs);
-			trs.setRowFilter(RowFilter.regexFilter(query));
-		}
+	public void findUser(String query) {
+
+		TableRowSorter<DefaultTableModel> trs = new TableRowSorter<DefaultTableModel>(model);
+		table.setRowSorter(trs);
+		trs.setRowFilter(RowFilter.regexFilter(query));
+	}
 
 	// Delete selected row
 	public void deleteData(int row) {
-		
+
 		dao = new WorkOfficeDAO();
 		int delID = lista.get(table.convertRowIndexToModel(row)).getId();
 		dao.deleteData(delID);
@@ -248,16 +225,16 @@ public class FamiliesList extends JDialog {
 		info.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
 		info.setExperience(lista.get(modelrow).getExperience());
 		info.setEmployeeAge(lista.get(modelrow).getEmployeeage());
-		
+
 		info.setVisible(true);
 	}
 
-	// Set data in NewFamilyFrame 
+	// Set data in NewFamilyFrame
 	public void setEdit(int row) {
-		
+
 		int modelrow = table.convertRowIndexToModel(row);
 		familyFrame = new NewFamilyFrame();
-	
+
 		familyFrame.setId(lista.get(modelrow).getId());
 		familyFrame.setName(lista.get(modelrow).getName());
 		familyFrame.setSurname(lista.get(modelrow).getSurname());
@@ -276,7 +253,7 @@ public class FamiliesList extends JDialog {
 		familyFrame.setPhysicalWork(lista.get(modelrow).getPhysicalwork());
 		familyFrame.setExperience(lista.get(modelrow).getExperience());
 		familyFrame.setEmployeeAge(lista.get(modelrow).getEmployeeage());
-		
+
 		familyFrame.setVisible(true);
 	}
 }

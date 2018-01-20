@@ -1,4 +1,3 @@
-
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,14 +19,15 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-
 /** 
 * @author Radoslaw Nadolny
-*/ 
+*/
 
 /**
- * Small employee management program for 
- * companies taking care of elderly.
+ * Small employee management program for companies taking care of elderly.
+ * 
+ * Main window with one Link table
+ * 
  */
 
 public class MainMenu extends JFrame {
@@ -44,33 +44,34 @@ public class MainMenu extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				
-				
-					try {
-						MainMenu window = new MainMenu();
-						window.setLocation(390, 140);
-						window.setVisible(true);
-						
-				               //Checking link expiration date 2s after start program in new thread.	
-						
-								new Thread(new Runnable() {
-									public void run() {
-										try {
-											Thread.sleep(1000);
-										} catch (InterruptedException e) {}
-										
-										new DateTime();
-									}
-								}).start();
-	
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				
+
+				try {
+					MainMenu window = new MainMenu();
+					window.setLocation(390, 140);
+					window.setVisible(true);
+
+					/**
+					 * Checking link expiration date 1s after start program in new thread.
+					 */
+
+					new Thread(new Runnable() {
+						public void run() {
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+							}
+
+							new DateTime();
+						}
+					}).start();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 			}
 		});
 	}
-
 
 	private MainMenu() {
 		setResizable(false);
@@ -114,52 +115,40 @@ public class MainMenu extends JFrame {
 				}
 			}
 		});
-		
+
 		JButton btnR = new JButton("R");
 		btnR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				populateLinkTable();
-				
+
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnGetWorker)
-							.addPreferredGap(ComponentPlacement.RELATED, 355, Short.MAX_VALUE)
-							.addComponent(btnR)
-							.addGap(346)
-							.addComponent(btnDeleteLink))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
+				groupLayout.createSequentialGroup().addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(btnGetWorker)
+								.addPreferredGap(ComponentPlacement.RELATED, 355, Short.MAX_VALUE).addComponent(btnR)
+								.addGap(346).addComponent(btnDeleteLink))
+						.addGroup(groupLayout.createSequentialGroup().addGap(10).addGroup(groupLayout
+								.createParallelGroup(Alignment.LEADING)
 								.addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(panel_worker, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)
-									.addGap(10)
-									.addComponent(panel_family, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)))))
-					.addGap(16))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(17)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(panel_family, 0, 0, Short.MAX_VALUE)
-						.addComponent(panel_worker, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
-					.addGap(31)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnGetWorker)
-						.addComponent(btnDeleteLink)
-						.addComponent(btnR))
-					.addGap(18)
-					.addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+										.addComponent(panel_worker, GroupLayout.PREFERRED_SIZE, 424,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(10).addComponent(panel_family, GroupLayout.PREFERRED_SIZE, 424,
+												GroupLayout.PREFERRED_SIZE)))))
+						.addGap(16)));
+		groupLayout
+				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup().addGap(17)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(panel_family, 0, 0, Short.MAX_VALUE)
+										.addComponent(panel_worker, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+								.addGap(31)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnGetWorker)
+										.addComponent(btnDeleteLink).addComponent(btnR))
+								.addGap(18).addComponent(panel_table, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+								.addContainerGap()));
 		panel_table.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -169,10 +158,8 @@ public class MainMenu extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Name", "Surname", "", "ID", "Name", "Surname", "", "From_Date", "To_Date" }) {
-			/**
-					 * 
-					 */
-					private static final long serialVersionUID = 1L;
+
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, false,
 					false };
 
@@ -283,9 +270,12 @@ public class MainMenu extends JFrame {
 
 	// ====================================================================================
 
-	// Method populate Link Table and check expiration date.
+	/*
+	 * Method to populate Link Table and check expiration date.
+	 */
+
 	public void populateLinkTable() {
-		
+
 		linkList = dao.getLinkList();
 		model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
@@ -305,10 +295,13 @@ public class MainMenu extends JFrame {
 
 			model.addRow(tablerow);
 		}
-		System.out.println("Table  Link populated");
+		System.out.println("(MainMenu) Table  Link populated");
 	}
 
-	// Delete selected row
+	/*
+	 * Delete selected row
+	 */
+
 	public void deleteData(int row) {
 
 		dao = new WorkOfficeDAO();

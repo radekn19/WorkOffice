@@ -8,29 +8,19 @@ import javax.swing.JDialog;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * 
+ *  This class creating Family information window and populate it.
+ *  
+ */
+
 public class InfoFamilyFrame extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel setname, setsurname, setphone, setfamilyphone, setbirthdate, setcity, setpostcode, setstreet,
 			sethousenr, setflatnr, setphysicalfit, setrate, setinfo, setlanguage, setphysicalwork, setexperience,
 			setemployeeage;
-
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					InfoFamilyFrame frame = new InfoFamilyFrame();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	public InfoFamilyFrame() {
 		setResizable(false);
@@ -209,11 +199,11 @@ public class InfoFamilyFrame extends JDialog {
 		panel_2.add(setemployeeage);
 
 		JButton btnclose = new JButton("Close");
-			btnclose.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false);
-				}
-			});
+		btnclose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
 		btnclose.setBounds(172, 482, 89, 23);
 		contentPane.add(btnclose);
 

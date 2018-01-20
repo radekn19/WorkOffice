@@ -1,13 +1,12 @@
 
-
 public class EmployeeModel {
 
-	private String name, surname, city, street, language, experience, physicalwork, birthdate, phone, postcode, nrhouse,
-			nrflat, married, availability;
+	private String name, surname, city, street, language, experience, physicalwork, 
+			birthdate, phone, postcode, nrhouse, nrflat, married, availability;
 	private int id;
-	
+
 	public EmployeeModel() {
-		
+
 	}
 
 	public EmployeeModel(int id, String name, String surname, String birthdate, String phone, String city,
@@ -152,5 +151,4 @@ public class EmployeeModel {
 		this.id = id;
 	}
 
-	
 }
